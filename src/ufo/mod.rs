@@ -11,19 +11,19 @@ use math::MathExpr;
 pub struct UfoModel {
     pub function_library: HashMap<String, FunctionDefinition>,
     pub parameters: HashMap<String, Parameter>,
-    pub particles: HashMap<String, Particle>,
+    pub particles: HashMap<i64, Particle>,
     pub coupling_orders: HashMap<String, CouplingOrder>,
     pub couplings: HashMap<String, Coupling>,
     pub lorentz_structures: HashMap<String, Lorentz>,
-    pub decays: HashMap<String, Decay>,
+    pub decays: HashMap<i64, Decay>,
     pub propagators: HashMap<String, Propagator>,
     pub vertices: Vec<Vertex>,
 }
 impl UfoModel {
     pub fn load<P: AsRef<path::Path>>(path: P) -> Result<UfoModel, UfoError> {
         let function_library = read_into_map(&path, "function_library.json")?;
-        let parameters: HashMap<String, Parameter> = read_into_map(&path, "parameters.json")?;
-        let particles: HashMap<String, Particle> = read_into_map(&path, "particles.json")?;
+        let parameters = read_into_map(&path, "parameters.json")?;
+        let particles = read_into_map(&path, "particles.json")?;
         let coupling_orders = read_into_map(&path, "coupling_orders.json")?;
         let couplings = read_into_map(&path, "couplings.json")?;
         let lorentz_structures = read_into_map(&path, "lorentz_structures.json")?;
@@ -60,36 +60,49 @@ impl From<serde_json::Error> for UfoError {
     }
 }
 
-fn read_into_map<P, T>(path: &P, name: &str) -> Result<HashMap<String, T>, UfoError>
+fn read_into_map<P, T>(path: &P, name: &str) -> Result<HashMap<T::Name, T>, UfoError>
 where
     P: AsRef<path::Path>,
     T: DeserializeOwned + Named,
+    <T as Named>::Name: Eq + std::hash::Hash,
 {
     let file = fs::File::open(path.as_ref().join(name))?;
     let list: Vec<T> = serde_json::from_reader(file)?;
-    Ok(list.into_iter().map(|t| (t.name().to_owned(), t)).collect())
+    Ok(list.into_iter().map(|t| (t.name(), t)).collect())
 }
 
 trait Named {
-    fn name(&self) -> &str;
+    type Name;
+    fn name(&self) -> Self::Name;
 }
-macro_rules! derive_named {
+impl Named for Decay {
+    type Name = i64;
+    fn name(&self) -> i64 {
+        self.particle
+    }
+}
+impl Named for Particle {
+    type Name = i64;
+    fn name(&self) -> i64 {
+        self.pdg_code
+    }
+}
+macro_rules! derive_named_string {
     ($for:ident) => {
         impl Named for $for {
-            fn name(&self) -> &str {
-                &self.name
+            type Name = String;
+            fn name(&self) -> String {
+                self.name.clone()
             }
         }
     };
 }
-derive_named!(CouplingOrder);
-derive_named!(Coupling);
-derive_named!(Decay);
-derive_named!(FunctionDefinition);
-derive_named!(Lorentz);
-derive_named!(Parameter);
-derive_named!(Particle);
-derive_named!(Propagator);
+derive_named_string!(CouplingOrder);
+derive_named_string!(Coupling);
+derive_named_string!(FunctionDefinition);
+derive_named_string!(Lorentz);
+derive_named_string!(Parameter);
+derive_named_string!(Propagator);
 
 #[derive(Serialize, Deserialize)]
 pub struct CouplingOrder {
@@ -173,7 +186,7 @@ pub struct VertexCoupling {
 #[derive(Serialize, Deserialize)]
 pub struct Vertex {
     pub name: String,
-    pub particles: Vec<String>,
+    pub particles: Vec<i64>,
     pub color: Vec<MathExpr>,
     pub lorentz: Vec<String>,
     pub couplings: Vec<VertexCoupling>,
@@ -195,7 +208,7 @@ pub struct PartialWidth {
 #[derive(Serialize, Deserialize)]
 pub struct Decay {
     pub name: String,
-    pub particle: String,
+    pub particle: i64,
     pub partial_widths: Vec<PartialWidth>,
 }
 

@@ -20,7 +20,7 @@ def convert_particle(particle):
 
 def convert_vertex(vertex):
     d = vertex.__dict__
-    d["particles"] = map(lambda p: p.name, d["particles"])
+    d["particles"] = map(lambda p: p.pdg_code, d["particles"])
     d["lorentz"] = map(lambda l: l.name, d["lorentz"])
     d["color"] = map(lambda c: parse_math(c, mode="color", location="the color structure of vertex {}".format(vertex.name)), d["color"])
     d["couplings"] = map(lambda ((c,l),v): {"color": c, "lorentz": l, "coupling": v.name}, d["couplings"].iteritems())
@@ -158,7 +158,6 @@ def comparison_operator(op):
         raise "Unexpected comparison operator: {}".format(op)
 
 def convert_comparison(expr, mode=None):
-    print "\n\n{}\n\n".format(expr.ops)
     return {
         "type": "comparison",
         "operators": map(comparison_operator, expr.ops),
@@ -179,7 +178,7 @@ def convert_parameter(parameter):
 
 def convert_decay(decay):
     d = decay.__dict__
-    d["particle"] = d["particle"].name
+    d["particle"] = d["particle"].pdg_code
     d["partial_widths"] = map(lambda (prods, width): {"decay_products": map(lambda p: p.name, prods), "width": parse_math(width, location="the width of particle {}".format(decay.particle))}, d["partial_widths"].iteritems())
     return d
 
@@ -192,10 +191,8 @@ def convert_propagator(propagator):
 def convert_function(function):
     d = function.__dict__
     d["expr"] = parse_math(d["expr"], location="the definition of the function {}".format(function.name))
-    print type(d["arguments"]), isinstance(d["arguments"], tuple)
     if not isinstance(d["arguments"], tuple) and not isinstance(d["arguments"], list):
         d["arguments"] = (d["arguments"],)
-    print d
     return d
 
 def convert(model_path, model_name, output_path):

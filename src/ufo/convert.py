@@ -29,7 +29,7 @@ def convert_vertex(vertex):
     d["particles"] = map(lambda p: p.pdg_code, d["particles"])
     d["lorentz"] = map(lambda l: l.name, d["lorentz"])
     d["color"] = map(lambda c: parse_math(c, mode="color", location="the color structure of vertex {}".format(vertex.name)), d["color"])
-    d["couplings"] = map(lambda ((c,l),v): {"color": c, "lorentz": l, "coupling": v.name}, d["couplings"].iteritems())
+    d["couplings"] = map(lambda (pieces,v): {"color": pieces[0], "lorentz": pieces[1], "coupling": v.name}, d["couplings"].iteritems())
     return d
 
 def convert_coupling(coupling):

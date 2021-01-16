@@ -1,0 +1,612 @@
+[
+  {
+    "denominator": {
+      "operator": "add", 
+      "right": {
+        "operator": "mul", 
+        "right": {
+          "function": "Width", 
+          "args": [
+            {
+              "type": "variable", 
+              "name": "id"
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "sub", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }
+    }, 
+    "numerator": {
+      "function": "complex", 
+      "args": [
+        {
+          "type": "number", 
+          "value": 0
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "S"
+  }, 
+  {
+    "denominator": {
+      "operator": "add", 
+      "right": {
+        "operator": "mul", 
+        "right": {
+          "function": "Width", 
+          "args": [
+            {
+              "type": "variable", 
+              "name": "id"
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "sub", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }
+    }, 
+    "numerator": {
+      "operator": "mul", 
+      "right": {
+        "operator": "add", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "Identity", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 1
+              }, 
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "Gamma", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }, 
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "function": "complex", 
+        "args": [
+          {
+            "type": "number", 
+            "value": 0
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "call"
+      }
+    }, 
+    "name": "F"
+  }, 
+  {
+    "denominator": {
+      "operator": "add", 
+      "right": {
+        "operator": "mul", 
+        "right": {
+          "function": "Width", 
+          "args": [
+            {
+              "type": "variable", 
+              "name": "id"
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "sub", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "Mass", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "function": "P", 
+            "args": [
+              {
+                "type": "string", 
+                "value": "mu"
+              }, 
+              {
+                "type": "variable", 
+                "name": "id"
+              }
+            ], 
+            "type": "call"
+          }
+        }
+      }
+    }, 
+    "numerator": {
+      "operator": "mul", 
+      "right": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "Mass", 
+              "args": [
+                {
+                  "type": "variable", 
+                  "name": "id"
+                }
+              ], 
+              "type": "call"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "P", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                {
+                  "type": "variable", 
+                  "name": "id"
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "P", 
+                "args": [
+                  {
+                    "type": "string", 
+                    "value": "mu"
+                  }, 
+                  {
+                    "type": "variable", 
+                    "name": "id"
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "Metric", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }, 
+                  {
+                    "type": "string", 
+                    "value": "mu"
+                  }
+                ], 
+                "type": "call"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "Metric", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 1
+              }, 
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": -1
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "function": "complex", 
+        "args": [
+          {
+            "type": "number", 
+            "value": 0
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "call"
+      }
+    }, 
+    "name": "V1"
+  }, 
+  {
+    "denominator": {
+      "operator": "mul", 
+      "right": {
+        "function": "P", 
+        "args": [
+          {
+            "type": "string", 
+            "value": "mu"
+          }, 
+          {
+            "type": "variable", 
+            "name": "id"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "function": "P", 
+        "args": [
+          {
+            "type": "string", 
+            "value": "mu"
+          }, 
+          {
+            "type": "variable", 
+            "name": "id"
+          }
+        ], 
+        "type": "call"
+      }
+    }, 
+    "numerator": {
+      "operator": "mul", 
+      "right": {
+        "function": "Metric", 
+        "args": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "function": "complex", 
+        "args": [
+          {
+            "type": "number", 
+            "value": 0
+          }, 
+          {
+            "type": "number", 
+            "value": -1
+          }
+        ], 
+        "type": "call"
+      }
+    }, 
+    "name": "V2"
+  }
+]

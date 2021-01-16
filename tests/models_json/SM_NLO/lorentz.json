@@ -1,0 +1,1162 @@
+[
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": -1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Gamma"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": -1
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "FF1", 
+    "spins": [
+      2, 
+      2
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "ProjM"
+    }, 
+    "name": "FF2", 
+    "spins": [
+      2, 
+      2
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": -2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "ProjM"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 2
+            }, 
+            {
+              "type": "number", 
+              "value": -2
+            }
+          ], 
+          "type": "lorentz_tensor", 
+          "tensor": "Gamma"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "lorentz_tensor", 
+          "tensor": "P"
+        }
+      }
+    }, 
+    "name": "FF3", 
+    "spins": [
+      2, 
+      2
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "ProjP"
+    }, 
+    "name": "FF4", 
+    "spins": [
+      2, 
+      2
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": -2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "ProjP"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 2
+            }, 
+            {
+              "type": "number", 
+              "value": -2
+            }
+          ], 
+          "type": "lorentz_tensor", 
+          "tensor": "Gamma"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "lorentz_tensor", 
+          "tensor": "P"
+        }
+      }
+    }, 
+    "name": "FF5", 
+    "spins": [
+      2, 
+      2
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VV1", 
+    "spins": [
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 1
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Metric"
+    }, 
+    "name": "VV2", 
+    "spins": [
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "pow", 
+        "right": {
+          "type": "number", 
+          "value": 2
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "lorentz_tensor", 
+          "tensor": "P"
+        }
+      }
+    }, 
+    "name": "VV3", 
+    "spins": [
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "type": "number", 
+      "value": 1
+    }, 
+    "name": "UUS1", 
+    "spins": [
+      -1, 
+      -1, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 3
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "P"
+    }, 
+    "name": "UUV1", 
+    "spins": [
+      -1, 
+      -1, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 3
+        }, 
+        {
+          "type": "number", 
+          "value": 3
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "P"
+    }, 
+    "name": "UUV2", 
+    "spins": [
+      -1, 
+      -1, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "type": "number", 
+      "value": 1
+    }, 
+    "name": "SSS1", 
+    "spins": [
+      1, 
+      1, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Gamma5"
+    }, 
+    "name": "FFS1", 
+    "spins": [
+      2, 
+      2, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Identity"
+    }, 
+    "name": "FFS2", 
+    "spins": [
+      2, 
+      2, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "ProjM"
+    }, 
+    "name": "FFS3", 
+    "spins": [
+      2, 
+      2, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "ProjP"
+    }, 
+    "name": "FFS4", 
+    "spins": [
+      2, 
+      2, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 3
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 1
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Gamma"
+    }, 
+    "name": "FFV1", 
+    "spins": [
+      2, 
+      2, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": -1
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "ProjM"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": -1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Gamma"
+      }
+    }, 
+    "name": "FFV2", 
+    "spins": [
+      2, 
+      2, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": -1
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "ProjP"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": -1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Gamma"
+      }
+    }, 
+    "name": "FFV3", 
+    "spins": [
+      2, 
+      2, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 1
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "P"
+    }, 
+    "name": "VSS1", 
+    "spins": [
+      3, 
+      1, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 1
+        }, 
+        {
+          "type": "number", 
+          "value": 3
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "P"
+    }, 
+    "name": "VSS2", 
+    "spins": [
+      3, 
+      1, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 1
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Metric"
+    }, 
+    "name": "VVS1", 
+    "spins": [
+      3, 
+      3, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV1", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV2", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV3", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV4", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV5", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV6", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV7", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "P"
+      }
+    }, 
+    "name": "VVV8", 
+    "spins": [
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "type": "number", 
+      "value": 1
+    }, 
+    "name": "SSSS1", 
+    "spins": [
+      1, 
+      1, 
+      1, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 1
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Metric"
+    }, 
+    "name": "VVSS1", 
+    "spins": [
+      3, 
+      3, 
+      1, 
+      1
+    ]
+  }, 
+  {
+    "structure": {
+      "indices": [
+        {
+          "type": "number", 
+          "value": 1
+        }, 
+        {
+          "type": "number", 
+          "value": 2
+        }, 
+        {
+          "type": "number", 
+          "value": 3
+        }, 
+        {
+          "type": "number", 
+          "value": 4
+        }
+      ], 
+      "type": "lorentz_tensor", 
+      "tensor": "Epsilon"
+    }, 
+    "name": "VVVV1", 
+    "spins": [
+      3, 
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 4
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }
+    }, 
+    "name": "VVVV2", 
+    "spins": [
+      3, 
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 4
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }
+    }, 
+    "name": "VVVV3", 
+    "spins": [
+      3, 
+      3, 
+      3, 
+      3
+    ]
+  }, 
+  {
+    "structure": {
+      "operator": "mul", 
+      "right": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 4
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "lorentz_tensor", 
+        "tensor": "Metric"
+      }
+    }, 
+    "name": "VVVV4", 
+    "spins": [
+      3, 
+      3, 
+      3, 
+      3
+    ]
+  }
+]

@@ -1,0 +1,5622 @@
+[
+  {
+    "name": "GC_1", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "type": "number", 
+          "value": 3.0
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_2", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "type": "number", 
+          "value": 3.0
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_3", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ee"
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_4", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "function": "complex", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 0
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "ee"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_5", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "function": "complex", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 0
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ee"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_6", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "function": "complex", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 0
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_7", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_8", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_9", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ee"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_10", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "G"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QCD": 1
+    }
+  }, 
+  {
+    "name": "GC_11", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "G"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "function": "complex", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 0
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "call"
+        }
+      }
+    }, 
+    "order": {
+      "QCD": 1
+    }
+  }, 
+  {
+    "name": "GC_12", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "G"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "function": "complex", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 0
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }
+          ], 
+          "type": "call"
+        }
+      }
+    }, 
+    "order": {
+      "QCD": 2
+    }
+  }, 
+  {
+    "name": "GC_13", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I1x31"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_14", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I1x32"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_15", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I1x33"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_16", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I2x12"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_17", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I2x13"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_18", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I2x22"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_19", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I2x23"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_20", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I2x32"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_21", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I2x33"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_22", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I3x21"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_23", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I3x22"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_24", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I3x23"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_25", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I3x31"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_26", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I3x32"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_27", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "I3x33"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_28", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I4x13"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_29", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I4x23"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_30", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "I4x33"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_31", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "lam"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": -2
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_32", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "lam"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": -4
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_33", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "lam"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": -6
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_34", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "sw"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_35", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "sw"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_36", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_37", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "type": "variable", 
+            "name": "ee"
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_38", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_39", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ee"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_40", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ee"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_41", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM1x1"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_42", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM1x2"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_43", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM1x3"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_44", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM2x1"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_45", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM2x2"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_46", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM2x3"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_47", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM3x1"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_48", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM3x2"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_49", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "CKM3x3"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_50", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "ee"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_51", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "cw"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_52", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "ee"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_53", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "type": "variable", 
+          "name": "sw"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ee"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "cw"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_54", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_55", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_56", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ee"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_57", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "type": "variable", 
+          "name": "sw"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complex", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 0
+              }, 
+              {
+                "type": "number", 
+                "value": 1
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "cw"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": -2
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_58", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 6.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_59", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_60", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "sub", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operand": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "ee"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }, 
+            "operator": "minus", 
+            "type": "unary_op"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_61", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operand": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "type": "variable", 
+                  "name": "ee"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "cw"
+                }
+              }
+            }, 
+            "operator": "minus", 
+            "type": "unary_op"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_62", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "ee"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_63", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "sub", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "sw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_64", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "sw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "add", 
+          "right": {
+            "operator": "div", 
+            "right": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 2.0
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "ee"
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "cw"
+                  }
+                }
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operand": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }, 
+            "operator": "minus", 
+            "type": "unary_op"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_65", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "sw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "add", 
+          "right": {
+            "operator": "div", 
+            "right": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 2.0
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "ee"
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "cw"
+                  }
+                }
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 2
+    }
+  }, 
+  {
+    "name": "GC_66", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_67", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "cw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "vev"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_68", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "vev"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "lam"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": -2
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_69", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "vev"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "lam"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": -6
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_70", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "sw"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 4.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_71", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "sw"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 4.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_72", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "sw"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "vev"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_73", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "sw"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 4.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "vev"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_74", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_75", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "sw"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2.0
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "vev"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_76", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "sub", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "sw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operand": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "vev"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }, 
+            "operator": "minus", 
+            "type": "unary_op"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_77", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "sub", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "sw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_78", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "sw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operand": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "vev"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }, 
+            "operator": "minus", 
+            "type": "unary_op"
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_79", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "sw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "cw"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "ee"
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_80", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "sub", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "function": "complex", 
+                  "args": [
+                    {
+                      "type": "number", 
+                      "value": 0
+                    }, 
+                    {
+                      "type": "number", 
+                      "value": 1
+                    }
+                  ], 
+                  "type": "call"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "ee"
+                  }
+                }
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "sub", 
+          "right": {
+            "operator": "div", 
+            "right": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 4.0
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "vev"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "function": "complex", 
+                  "args": [
+                    {
+                      "type": "number", 
+                      "value": 0
+                    }, 
+                    {
+                      "type": "number", 
+                      "value": 1
+                    }
+                  ], 
+                  "type": "call"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "ee"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "cw"
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "div", 
+            "right": {
+              "type": "number", 
+              "value": 2.0
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operand": {
+                "operator": "mul", 
+                "right": {
+                  "type": "variable", 
+                  "name": "vev"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "function": "complex", 
+                    "args": [
+                      {
+                        "type": "number", 
+                        "value": 0
+                      }, 
+                      {
+                        "type": "number", 
+                        "value": 1
+                      }
+                    ], 
+                    "type": "call"
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "ee"
+                    }
+                  }
+                }
+              }, 
+              "operator": "minus", 
+              "type": "unary_op"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_81", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "add", 
+        "right": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "cw"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2.0
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "function": "complex", 
+                  "args": [
+                    {
+                      "type": "number", 
+                      "value": 0
+                    }, 
+                    {
+                      "type": "number", 
+                      "value": 1
+                    }
+                  ], 
+                  "type": "call"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "ee"
+                  }
+                }
+              }
+            }
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "add", 
+          "right": {
+            "operator": "div", 
+            "right": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 2.0
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "variable", 
+                "name": "vev"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "function": "complex", 
+                  "args": [
+                    {
+                      "type": "number", 
+                      "value": 0
+                    }, 
+                    {
+                      "type": "number", 
+                      "value": 1
+                    }
+                  ], 
+                  "type": "call"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "ee"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "cw"
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "vev"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "function": "complex", 
+                "args": [
+                  {
+                    "type": "number", 
+                    "value": 0
+                  }, 
+                  {
+                    "type": "number", 
+                    "value": 1
+                  }
+                ], 
+                "type": "call"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "ee"
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_82", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "yb"
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_83", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "yb"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_84", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "yc"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_85", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "yc"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_86", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "ye"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_87", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "ye"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_88", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ye"
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_89", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ye"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_90", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "ym"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_91", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "ym"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_92", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ym"
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_93", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ym"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_94", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "yt"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_95", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "yt"
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_96", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "type": "variable", 
+          "name": "ytau"
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_97", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "type": "variable", 
+        "name": "ytau"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_98", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "ytau"
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_99", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operand": {
+          "operator": "div", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "type": "variable", 
+              "name": "ytau"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }
+          }
+        }, 
+        "operator": "minus", 
+        "type": "unary_op"
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_100", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM1x1"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_101", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM1x2"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_102", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM1x3"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_103", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM2x1"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_104", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM2x2"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_105", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM2x3"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_106", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM3x1"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_107", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM3x2"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }, 
+  {
+    "name": "GC_108", 
+    "value": {
+      "type": "simple", 
+      "value": {
+        "operator": "div", 
+        "right": {
+          "operator": "mul", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "type": "number", 
+                "value": 2
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "sw"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "function": "complexconjugate", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "CKM3x3"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "ee"
+            }
+          }
+        }
+      }
+    }, 
+    "order": {
+      "QED": 1
+    }
+  }
+]

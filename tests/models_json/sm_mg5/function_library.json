@@ -1,0 +1,146 @@
+[
+  {
+    "expr": {
+      "function": "__complex_conjugate__", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "z"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "complexconjugate", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "__real__", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "z"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "re", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "__imag__", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "z"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "im", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "operator": "div", 
+      "right": {
+        "function": "cos", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "z"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1.0
+      }
+    }, 
+    "name": "sec", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "acos", 
+      "args": [
+        {
+          "operator": "div", 
+          "right": {
+            "type": "variable", 
+            "name": "z"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 1.0
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "asec", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "operator": "div", 
+      "right": {
+        "function": "sin", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "z"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1.0
+      }
+    }, 
+    "name": "csc", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "asin", 
+      "args": [
+        {
+          "operator": "div", 
+          "right": {
+            "type": "variable", 
+            "name": "z"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 1.0
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "acsc", 
+    "arguments": [
+      "z"
+    ]
+  }
+]

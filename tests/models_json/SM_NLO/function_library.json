@@ -1,0 +1,303 @@
+[
+  {
+    "expr": {
+      "function": "__complex_conjugate__", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "z"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "complexconjugate", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "__real__", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "z"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "re", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "__imag__", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "z"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "im", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "operator": "div", 
+      "right": {
+        "function": "cos", 
+        "args": [
+          {
+            "function": "__real__", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "z"
+              }
+            ], 
+            "type": "call"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1.0
+      }
+    }, 
+    "name": "sec", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "acos", 
+      "args": [
+        {
+          "operator": "div", 
+          "right": {
+            "function": "__real__", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "z"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 1.0
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "asec", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "operator": "div", 
+      "right": {
+        "function": "sin", 
+        "args": [
+          {
+            "function": "__real__", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "z"
+              }
+            ], 
+            "type": "call"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1.0
+      }
+    }, 
+    "name": "csc", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "function": "asin", 
+      "args": [
+        {
+          "operator": "div", 
+          "right": {
+            "function": "__real__", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "z"
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 1.0
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "name": "acsc", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "operator": "div", 
+      "right": {
+        "function": "tan", 
+        "args": [
+          {
+            "function": "__real__", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "z"
+              }
+            ], 
+            "type": "call"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1.0
+      }
+    }, 
+    "name": "cot", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "if_false": {
+        "type": "variable", 
+        "name": "z"
+      }, 
+      "type": "conditional", 
+      "condition": {
+        "type": "variable", 
+        "name": "x"
+      }, 
+      "if_true": {
+        "type": "variable", 
+        "name": "y"
+      }
+    }, 
+    "name": "theta_function", 
+    "arguments": [
+      "x", 
+      "y", 
+      "z"
+    ]
+  }, 
+  {
+    "expr": {
+      "if_false": {
+        "type": "variable", 
+        "name": "ExprFalse"
+      }, 
+      "type": "conditional", 
+      "condition": {
+        "comparators": [
+          {
+            "type": "number", 
+            "value": 0.0
+          }
+        ], 
+        "operators": [
+          "equals"
+        ], 
+        "type": "comparison", 
+        "left": {
+          "type": "variable", 
+          "name": "condition"
+        }
+      }, 
+      "if_true": {
+        "type": "variable", 
+        "name": "ExprTrue"
+      }
+    }, 
+    "name": "cond", 
+    "arguments": [
+      "condition", 
+      "ExprTrue", 
+      "ExprFalse"
+    ]
+  }, 
+  {
+    "expr": {
+      "if_false": {
+        "function": "log", 
+        "args": [
+          {
+            "function": "__real__", 
+            "args": [
+              {
+                "type": "variable", 
+                "name": "z"
+              }
+            ], 
+            "type": "call"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "conditional", 
+      "condition": {
+        "comparators": [
+          {
+            "type": "number", 
+            "value": 0.0
+          }
+        ], 
+        "operators": [
+          "equals"
+        ], 
+        "type": "comparison", 
+        "left": {
+          "type": "variable", 
+          "name": "z"
+        }
+      }, 
+      "if_true": {
+        "type": "number", 
+        "value": 0.0
+      }
+    }, 
+    "name": "reglog", 
+    "arguments": [
+      "z"
+    ]
+  }
+]

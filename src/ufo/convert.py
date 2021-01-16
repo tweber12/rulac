@@ -248,4 +248,5 @@ def convert(model_path, model_name, output_path):
         json.dump(functions, jfile, indent=2)
 
 
-convert("tests/models", "sm", "tests/models_json")
+convert("tests/models", "SM_NLO", "tests/models_json")
+convert("tests/models", "sm_mg5", "tests/models_json")

@@ -1,0 +1,12 @@
+[
+  {
+    "hierarchy": 1, 
+    "name": "QCD", 
+    "expansion_order": 99
+  }, 
+  {
+    "hierarchy": 2, 
+    "name": "QED", 
+    "expansion_order": 99
+  }
+]

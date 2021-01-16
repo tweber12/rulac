@@ -1,0 +1,1686 @@
+[
+  {
+    "texname": "0", 
+    "name": "ZERO", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "type": "number", 
+      "value": 0.0
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{aEWM1}", 
+    "name": "aEWM1", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": 132.50698, 
+    "lhablock": "SMINPUTS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "G_f", 
+    "name": "Gf", 
+    "nature": "external", 
+    "lhacode": [
+      2
+    ], 
+    "value": 1.16639e-05, 
+    "lhablock": "SMINPUTS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\alpha _s", 
+    "name": "aS", 
+    "nature": "external", 
+    "lhacode": [
+      3
+    ], 
+    "value": 0.118, 
+    "lhablock": "SMINPUTS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{lamWS}", 
+    "name": "lamWS", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": 0.2253, 
+    "lhablock": "Wolfenstein", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{AWS}", 
+    "name": "AWS", 
+    "nature": "external", 
+    "lhacode": [
+      2
+    ], 
+    "value": 0.808, 
+    "lhablock": "Wolfenstein", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{rhoWS}", 
+    "name": "rhoWS", 
+    "nature": "external", 
+    "lhacode": [
+      3
+    ], 
+    "value": 0.132, 
+    "lhablock": "Wolfenstein", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{etaWS}", 
+    "name": "etaWS", 
+    "nature": "external", 
+    "lhacode": [
+      4
+    ], 
+    "value": 0.341, 
+    "lhablock": "Wolfenstein", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ymc}", 
+    "name": "ymc", 
+    "nature": "external", 
+    "lhacode": [
+      4
+    ], 
+    "value": 1.27, 
+    "lhablock": "YUKAWA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ymb}", 
+    "name": "ymb", 
+    "nature": "external", 
+    "lhacode": [
+      5
+    ], 
+    "value": 4.2, 
+    "lhablock": "YUKAWA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ymt}", 
+    "name": "ymt", 
+    "nature": "external", 
+    "lhacode": [
+      6
+    ], 
+    "value": 164.5, 
+    "lhablock": "YUKAWA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{yme}", 
+    "name": "yme", 
+    "nature": "external", 
+    "lhacode": [
+      11
+    ], 
+    "value": 0.000511, 
+    "lhablock": "YUKAWA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ymm}", 
+    "name": "ymm", 
+    "nature": "external", 
+    "lhacode": [
+      13
+    ], 
+    "value": 0.10566, 
+    "lhablock": "YUKAWA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ymtau}", 
+    "name": "ymtau", 
+    "nature": "external", 
+    "lhacode": [
+      15
+    ], 
+    "value": 1.777, 
+    "lhablock": "YUKAWA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MZ}", 
+    "name": "MZ", 
+    "nature": "external", 
+    "lhacode": [
+      23
+    ], 
+    "value": 91.188, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MC}", 
+    "name": "MC", 
+    "nature": "external", 
+    "lhacode": [
+      4
+    ], 
+    "value": 1.27, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MT}", 
+    "name": "MT", 
+    "nature": "external", 
+    "lhacode": [
+      6
+    ], 
+    "value": 172.0, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MB}", 
+    "name": "MB", 
+    "nature": "external", 
+    "lhacode": [
+      5
+    ], 
+    "value": 4.7, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MH}", 
+    "name": "MH", 
+    "nature": "external", 
+    "lhacode": [
+      25
+    ], 
+    "value": 125.0, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Me}", 
+    "name": "Me", 
+    "nature": "external", 
+    "lhacode": [
+      11
+    ], 
+    "value": 0.000511, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MM}", 
+    "name": "MM", 
+    "nature": "external", 
+    "lhacode": [
+      13
+    ], 
+    "value": 0.10566, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MTA}", 
+    "name": "MTA", 
+    "nature": "external", 
+    "lhacode": [
+      15
+    ], 
+    "value": 1.777, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WZ}", 
+    "name": "WZ", 
+    "nature": "external", 
+    "lhacode": [
+      23
+    ], 
+    "value": 2.44140351, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WW}", 
+    "name": "WW", 
+    "nature": "external", 
+    "lhacode": [
+      24
+    ], 
+    "value": 2.04759951, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WT}", 
+    "name": "WT", 
+    "nature": "external", 
+    "lhacode": [
+      6
+    ], 
+    "value": 1.50833649, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WH}", 
+    "name": "WH", 
+    "nature": "external", 
+    "lhacode": [
+      25
+    ], 
+    "value": 0.00638233934, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WTau}", 
+    "name": "WTau", 
+    "nature": "external", 
+    "lhacode": [
+      15
+    ], 
+    "value": 2.27e-12, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{CKM1x1}", 
+    "name": "CKM1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "sub", 
+      "right": {
+        "operator": "div", 
+        "right": {
+          "type": "number", 
+          "value": 2.0
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "lamWS"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM1x2}", 
+    "name": "CKM1x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "type": "variable", 
+      "name": "lamWS"
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM1x3}", 
+    "name": "CKM1x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "operator": "add", 
+        "right": {
+          "type": "variable", 
+          "name": "rhoWS"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operand": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "etaWS"
+            }
+          }, 
+          "operator": "minus", 
+          "type": "unary_op"
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 3
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "lamWS"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "AWS"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM2x1}", 
+    "name": "CKM2x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operand": {
+        "type": "variable", 
+        "name": "lamWS"
+      }, 
+      "operator": "minus", 
+      "type": "unary_op"
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM2x2}", 
+    "name": "CKM2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "sub", 
+      "right": {
+        "operator": "div", 
+        "right": {
+          "type": "number", 
+          "value": 2.0
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "lamWS"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM2x3}", 
+    "name": "CKM2x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "operator": "pow", 
+        "right": {
+          "type": "number", 
+          "value": 2
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "lamWS"
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "AWS"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM3x1}", 
+    "name": "CKM3x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "operator": "sub", 
+        "right": {
+          "type": "variable", 
+          "name": "rhoWS"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "sub", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "function": "complex", 
+              "args": [
+                {
+                  "type": "number", 
+                  "value": 0
+                }, 
+                {
+                  "type": "number", 
+                  "value": 1
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "etaWS"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 1
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 3
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "lamWS"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "AWS"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM3x2}", 
+    "name": "CKM3x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operand": {
+        "operator": "mul", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "lamWS"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "AWS"
+        }
+      }, 
+      "operator": "minus", 
+      "type": "unary_op"
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM3x3}", 
+    "name": "CKM3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "type": "number", 
+      "value": 1
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\alpha _{\\text{EW}}", 
+    "name": "aEW", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "aEWM1"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "G", 
+    "name": "G", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "sqrt", 
+        "args": [
+          {
+            "type": "constant", 
+            "name": "pi"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "variable", 
+              "name": "aS"
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "number", 
+          "value": 2
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "M_W", 
+    "name": "MW", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "function": "sqrt", 
+      "args": [
+        {
+          "operator": "add", 
+          "right": {
+            "function": "sqrt", 
+            "args": [
+              {
+                "operator": "sub", 
+                "right": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "function": "sqrt", 
+                      "args": [
+                        {
+                          "type": "number", 
+                          "value": 2
+                        }
+                      ], 
+                      "type": "call"
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "Gf"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "type": "constant", 
+                        "name": "pi"
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "aEW"
+                      }
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "div", 
+                  "right": {
+                    "type": "number", 
+                    "value": 4.0
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 4
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MZ"
+                    }
+                  }
+                }
+              }
+            ], 
+            "type": "call"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "div", 
+            "right": {
+              "type": "number", 
+              "value": 2.0
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "MZ"
+              }
+            }
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "e", 
+    "name": "ee", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "sqrt", 
+        "args": [
+          {
+            "type": "constant", 
+            "name": "pi"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "variable", 
+              "name": "aEW"
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "number", 
+          "value": 2
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{sw2}", 
+    "name": "sw2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "sub", 
+      "right": {
+        "operator": "div", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "MZ"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "MW"
+          }
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "number", 
+        "value": 1
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "c_w", 
+    "name": "cw", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "function": "sqrt", 
+      "args": [
+        {
+          "operator": "sub", 
+          "right": {
+            "type": "variable", 
+            "name": "sw2"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 1
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "s_w", 
+    "name": "sw", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "function": "sqrt", 
+      "args": [
+        {
+          "type": "variable", 
+          "name": "sw2"
+        }
+      ], 
+      "type": "call"
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "g_1", 
+    "name": "g1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "cw"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "ee"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "g_w", 
+    "name": "gw", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "sw"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "ee"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{vev}", 
+    "name": "vev", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "ee"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "type": "variable", 
+          "name": "sw"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "operator": "mul", 
+          "right": {
+            "type": "variable", 
+            "name": "MW"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "number", 
+            "value": 2
+          }
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{lam}", 
+    "name": "lam", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "operator": "mul", 
+        "right": {
+          "operator": "pow", 
+          "right": {
+            "type": "number", 
+            "value": 2
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "vev"
+          }
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "number", 
+          "value": 2.0
+        }
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "pow", 
+        "right": {
+          "type": "number", 
+          "value": 2
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "MH"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{yb}", 
+    "name": "yb", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "vev"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "ymb"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{yc}", 
+    "name": "yc", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "vev"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "ymc"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ye}", 
+    "name": "ye", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "vev"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "yme"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ym}", 
+    "name": "ym", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "vev"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "ymm"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{yt}", 
+    "name": "yt", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "vev"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "ymt"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{ytau}", 
+    "name": "ytau", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "div", 
+      "right": {
+        "type": "variable", 
+        "name": "vev"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "operator": "mul", 
+        "right": {
+          "function": "sqrt", 
+          "args": [
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "call"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "type": "variable", 
+          "name": "ymtau"
+        }
+      }
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\mu", 
+    "name": "muH", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "function": "sqrt", 
+      "args": [
+        {
+          "operator": "mul", 
+          "right": {
+            "operator": "pow", 
+            "right": {
+              "type": "number", 
+              "value": 2
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "variable", 
+              "name": "vev"
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "type": "variable", 
+            "name": "lam"
+          }
+        }
+      ], 
+      "type": "call"
+    }, 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{I1x31}", 
+    "name": "I1x31", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM1x3"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yb"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I1x32}", 
+    "name": "I1x32", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM2x3"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yb"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I1x33}", 
+    "name": "I1x33", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM3x3"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yb"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I2x12}", 
+    "name": "I2x12", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM2x1"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yc"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I2x13}", 
+    "name": "I2x13", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM3x1"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yt"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I2x22}", 
+    "name": "I2x22", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM2x2"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yc"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I2x23}", 
+    "name": "I2x23", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM3x2"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yt"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I2x32}", 
+    "name": "I2x32", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM2x3"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yc"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I2x33}", 
+    "name": "I2x33", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "function": "complexconjugate", 
+        "args": [
+          {
+            "type": "variable", 
+            "name": "CKM3x3"
+          }
+        ], 
+        "type": "call"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "yt"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I3x21}", 
+    "name": "I3x21", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yc"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM2x1"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I3x22}", 
+    "name": "I3x22", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yc"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM2x2"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I3x23}", 
+    "name": "I3x23", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yc"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM2x3"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I3x31}", 
+    "name": "I3x31", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yt"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM3x1"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I3x32}", 
+    "name": "I3x32", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yt"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM3x2"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I3x33}", 
+    "name": "I3x33", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yt"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM3x3"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I4x13}", 
+    "name": "I4x13", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yb"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM1x3"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I4x23}", 
+    "name": "I4x23", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yb"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM2x3"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{I4x33}", 
+    "name": "I4x33", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": {
+      "operator": "mul", 
+      "right": {
+        "type": "variable", 
+        "name": "yb"
+      }, 
+      "type": "binary_op", 
+      "left": {
+        "type": "variable", 
+        "name": "CKM3x3"
+      }
+    }, 
+    "lhablock": null, 
+    "type": "complex"
+  }
+]

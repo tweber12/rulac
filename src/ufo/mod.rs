@@ -3,9 +3,9 @@ pub mod math;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fmt;
 use std::fs;
 use std::path;
-use std::fmt;
 
 use math::MathExpr;
 
@@ -276,55 +276,55 @@ mod test {
 
     #[test]
     fn test_coupling_orders() {
-        let file = fs::File::open("SM_NLO/coupling_orders.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/coupling_orders.json").unwrap();
         let _: Vec<super::CouplingOrder> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_particles() {
-        let file = fs::File::open("SM_NLO/particles.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/particles.json").unwrap();
         let _: Vec<super::Particle> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_parameters() {
-        let file = fs::File::open("SM_NLO/parameters.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/parameters.json").unwrap();
         let _: Vec<super::Parameter> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_vertices() {
-        let file = fs::File::open("SM_NLO/vertices.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/vertices.json").unwrap();
         let _: Vec<super::Vertex> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_lorentz() {
-        let file = fs::File::open("SM_NLO/lorentz.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/lorentz.json").unwrap();
         let _: Vec<super::Lorentz> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_couplings() {
-        let file = fs::File::open("SM_NLO/couplings.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/couplings.json").unwrap();
         let _: Vec<super::Coupling> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_decays() {
-        let file = fs::File::open("SM_NLO/decays.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/decays.json").unwrap();
         let _: Vec<super::Decay> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_propagators() {
-        let file = fs::File::open("SM_NLO/propagators.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/propagators.json").unwrap();
         let _: Vec<super::Propagator> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]
     fn test_function_library() {
-        let file = fs::File::open("SM_NLO/function_library.json").unwrap();
+        let file = fs::File::open("tests/models_json/SM_NLO/function_library.json").unwrap();
         let _: Vec<super::FunctionDefinition> = serde_json::from_reader(file).unwrap();
     }
 }

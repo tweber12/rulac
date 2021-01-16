@@ -1,0 +1,3768 @@
+[
+  {
+    "particles": [
+      250, 
+      250, 
+      250, 
+      250
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSSS1"
+    ], 
+    "name": "V_1", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_22"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      250, 
+      250, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSSS1"
+    ], 
+    "name": "V_2", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_20"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -251, 
+      -251, 
+      251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSSS1"
+    ], 
+    "name": "V_3", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_21"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      250, 
+      250, 
+      25, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSSS1"
+    ], 
+    "name": "V_4", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_20"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -251, 
+      251, 
+      25, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSSS1"
+    ], 
+    "name": "V_5", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_20"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      25, 
+      25, 
+      25, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSSS1"
+    ], 
+    "name": "V_6", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_22"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      250, 
+      250, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSS1"
+    ], 
+    "name": "V_7", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_59"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -251, 
+      251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSS1"
+    ], 
+    "name": "V_8", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_59"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      25, 
+      25, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "SSS1"
+    ], 
+    "name": "V_9", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_60"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      22, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_10", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_7"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_11", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000001, 
+      -9000004, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_12", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_3"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000001, 
+      -9000003, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_13", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_4"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000001, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_14", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_66"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000001, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_15", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_3"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000004, 
+      250
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_16", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_61"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000004, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_17", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_62"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000004, 
+      22
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_18", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_4"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000004, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_19", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_38"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_38"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000002, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_20", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_69"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000004, 
+      -9000002, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_21", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_37"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_37"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000001, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_22", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_65"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000001, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_23", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_4"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000003, 
+      250
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_24", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_64"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000003, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_25", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_62"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000003, 
+      22
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_26", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_3"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000003, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_27", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_37"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_37"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000002, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_28", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_68"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000003, 
+      -9000002, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_29", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_38"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_38"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000002, 
+      -9000004, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_30", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_70"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000002, 
+      -9000004, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_31", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_37"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_37"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000002, 
+      -9000003, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_32", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_67"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000002, 
+      -9000003, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_33", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_38"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_38"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      9000002, 
+      -9000002, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "UUS1"
+    ], 
+    "name": "V_34", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_71"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      82, 
+      -82, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "f"
+      }
+    ], 
+    "lorentz": [
+      "UUV1", 
+      "UUV2"
+    ], 
+    "name": "V_35", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_11"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_11"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      21, 
+      21, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 3
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "f"
+      }
+    ], 
+    "lorentz": [
+      "VVV1", 
+      "VVV2", 
+      "VVV4", 
+      "VVV6", 
+      "VVV7", 
+      "VVV8"
+    ], 
+    "name": "V_36", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_13"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_11"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 5, 
+        "coupling": "GC_13"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 4, 
+        "coupling": "GC_11"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 3, 
+        "coupling": "GC_11"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_13"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      21, 
+      21, 
+      21, 
+      21
+    ], 
+    "color": [
+      {
+        "operator": "mul", 
+        "right": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": 3
+            }, 
+            {
+              "type": "number", 
+              "value": 4
+            }, 
+            {
+              "type": "number", 
+              "value": -1
+            }
+          ], 
+          "type": "color_tensor", 
+          "tensor": "f"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }, 
+            {
+              "type": "number", 
+              "value": 2
+            }
+          ], 
+          "type": "color_tensor", 
+          "tensor": "f"
+        }
+      }, 
+      {
+        "operator": "mul", 
+        "right": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": 2
+            }, 
+            {
+              "type": "number", 
+              "value": 4
+            }, 
+            {
+              "type": "number", 
+              "value": -1
+            }
+          ], 
+          "type": "color_tensor", 
+          "tensor": "f"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }, 
+            {
+              "type": "number", 
+              "value": 3
+            }
+          ], 
+          "type": "color_tensor", 
+          "tensor": "f"
+        }
+      }, 
+      {
+        "operator": "mul", 
+        "right": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": 2
+            }, 
+            {
+              "type": "number", 
+              "value": 3
+            }, 
+            {
+              "type": "number", 
+              "value": -1
+            }
+          ], 
+          "type": "color_tensor", 
+          "tensor": "f"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "indices": [
+            {
+              "type": "number", 
+              "value": -1
+            }, 
+            {
+              "type": "number", 
+              "value": 1
+            }, 
+            {
+              "type": "number", 
+              "value": 4
+            }
+          ], 
+          "type": "color_tensor", 
+          "tensor": "f"
+        }
+      }
+    ], 
+    "lorentz": [
+      "VVVV2", 
+      "VVVV3", 
+      "VVVV4"
+    ], 
+    "name": "V_37", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_14"
+      }, 
+      {
+        "color": 1, 
+        "lorentz": 2, 
+        "coupling": "GC_14"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_15"
+      }, 
+      {
+        "color": 2, 
+        "lorentz": 1, 
+        "coupling": "GC_15"
+      }, 
+      {
+        "color": 2, 
+        "lorentz": 2, 
+        "coupling": "GC_14"
+      }, 
+      {
+        "color": 1, 
+        "lorentz": 0, 
+        "coupling": "GC_15"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      5, 
+      251
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFS3", 
+      "FFS4"
+    ], 
+    "name": "V_38", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_17"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_16"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      5, 
+      250
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFS3", 
+      "FFS4"
+    ], 
+    "name": "V_39", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_75"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_73"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      5, 
+      25
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFS3", 
+      "FFS4"
+    ], 
+    "name": "V_40", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_74"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_74"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      6, 
+      -251
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFS3", 
+      "FFS4"
+    ], 
+    "name": "V_41", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_19"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_18"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      6, 
+      250
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFS3", 
+      "FFS4"
+    ], 
+    "name": "V_42", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_76"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_78"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      6, 
+      25
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFS3", 
+      "FFS4"
+    ], 
+    "name": "V_43", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_77"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_77"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      -24, 
+      250, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_44", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_40"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      -24, 
+      251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_45", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_39"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      -24, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVS1"
+    ], 
+    "name": "V_46", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_65"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      250, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_47", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_29"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_30"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_48", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_31"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_28"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      -24, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVV1", 
+      "VVV2", 
+      "VVV4", 
+      "VVV6", 
+      "VVV7", 
+      "VVV8"
+    ], 
+    "name": "V_49", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_3"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 5, 
+        "coupling": "GC_3"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 4, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 3, 
+        "coupling": "GC_4"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      24, 
+      250, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_50", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_40"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      24, 
+      -251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_51", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_41"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      24, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVS1"
+    ], 
+    "name": "V_52", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_66"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      24, 
+      250, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_53", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_30"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_29"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      24, 
+      -251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_54", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_31"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_28"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      24, 
+      250, 
+      250
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_55", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_23"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      24, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_56", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_23"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      24, 
+      25, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_57", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_23"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      24, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVS1"
+    ], 
+    "name": "V_58", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_63"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      22, 
+      -24, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVVV2", 
+      "VVVV3", 
+      "VVVV4"
+    ], 
+    "name": "V_59", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_5"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_5"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_6"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      24, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVV1", 
+      "VVV2", 
+      "VVV4", 
+      "VVV6", 
+      "VVV7", 
+      "VVV8"
+    ], 
+    "name": "V_60", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_37"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_38"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 5, 
+        "coupling": "GC_37"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 4, 
+        "coupling": "GC_38"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 3, 
+        "coupling": "GC_38"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_37"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      -24, 
+      24, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVVV2", 
+      "VVVV3", 
+      "VVVV4"
+    ], 
+    "name": "V_61", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_24"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_24"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_25"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      23, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_62", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_54"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      23, 
+      250, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_63", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_53"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_47"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      23, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VSS1", 
+      "VSS2"
+    ], 
+    "name": "V_64", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_50"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_51"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      23, 
+      250, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_65", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_9"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      23, 
+      251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_66", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_10"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      23, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVS1"
+    ], 
+    "name": "V_67", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_58"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      24, 
+      23, 
+      250, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_68", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_9"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      24, 
+      23, 
+      -251, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_69", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_8"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      24, 
+      23, 
+      -251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVS1"
+    ], 
+    "name": "V_70", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_57"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      22, 
+      -24, 
+      24, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVVV2", 
+      "VVVV3", 
+      "VVVV4"
+    ], 
+    "name": "V_71", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_42"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_43"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_42"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      23, 
+      23, 
+      250, 
+      250
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_72", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_56"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      23, 
+      23, 
+      -251, 
+      251
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_73", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_55"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      23, 
+      23, 
+      25, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVSS1"
+    ], 
+    "name": "V_74", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_56"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      23, 
+      23, 
+      25
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVS1"
+    ], 
+    "name": "V_75", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_72"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -24, 
+      24, 
+      23, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "VVVV2", 
+      "VVVV3", 
+      "VVVV4"
+    ], 
+    "name": "V_76", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_26"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_26"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 2, 
+        "coupling": "GC_27"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -11, 
+      11, 
+      22
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_77", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -13, 
+      13, 
+      22
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_78", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -15, 
+      15, 
+      22
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_79", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_3"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -2, 
+      2, 
+      22
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_80", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_2"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -4, 
+      4, 
+      22
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_81", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_2"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      6, 
+      22
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_82", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_2"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -1, 
+      1, 
+      22
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_83", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_1"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -3, 
+      3, 
+      22
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_84", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_1"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      5, 
+      22
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_85", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_1"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -2, 
+      2, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "T"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_86", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_12"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -4, 
+      4, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "T"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_87", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_12"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      6, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "T"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_88", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_12"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -1, 
+      1, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "T"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_89", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_12"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -3, 
+      3, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "T"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_90", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_12"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      5, 
+      21
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 3
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }, 
+          {
+            "type": "number", 
+            "value": 1
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "T"
+      }
+    ], 
+    "lorentz": [
+      "FFV1"
+    ], 
+    "name": "V_91", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_12"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -1, 
+      2, 
+      -24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_92", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_33"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -3, 
+      2, 
+      -24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_93", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_34"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -1, 
+      4, 
+      -24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_94", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_35"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -3, 
+      4, 
+      -24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_95", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_36"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      6, 
+      -24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_96", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -2, 
+      1, 
+      24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_97", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_79"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -4, 
+      1, 
+      24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_98", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_81"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -2, 
+      3, 
+      24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_99", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_80"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -4, 
+      3, 
+      24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_100", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_82"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      5, 
+      24
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_101", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -11, 
+      12, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_102", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -13, 
+      14, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_103", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -15, 
+      16, 
+      -24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_104", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -12, 
+      11, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_105", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -14, 
+      13, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_106", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -16, 
+      15, 
+      24
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_107", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_32"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -2, 
+      2, 
+      23
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_108", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_45"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_49"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -4, 
+      4, 
+      23
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_109", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_45"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_49"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -6, 
+      6, 
+      23
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_110", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_45"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_49"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -1, 
+      1, 
+      23
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_111", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_44"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_48"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -3, 
+      3, 
+      23
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_112", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_44"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_48"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -5, 
+      5, 
+      23
+    ], 
+    "color": [
+      {
+        "indices": [
+          {
+            "type": "number", 
+            "value": 1
+          }, 
+          {
+            "type": "number", 
+            "value": 2
+          }
+        ], 
+        "type": "color_tensor", 
+        "tensor": "Identity"
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_113", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_44"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_48"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -12, 
+      12, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_114", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_52"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -14, 
+      14, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_115", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_52"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -16, 
+      16, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2"
+    ], 
+    "name": "V_116", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_52"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -11, 
+      11, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_117", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_46"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_51"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -13, 
+      13, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_118", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_46"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_51"
+      }
+    ]
+  }, 
+  {
+    "particles": [
+      -15, 
+      15, 
+      23
+    ], 
+    "color": [
+      {
+        "type": "number", 
+        "value": 1
+      }
+    ], 
+    "lorentz": [
+      "FFV2", 
+      "FFV3"
+    ], 
+    "name": "V_119", 
+    "couplings": [
+      {
+        "color": 0, 
+        "lorentz": 1, 
+        "coupling": "GC_46"
+      }, 
+      {
+        "color": 0, 
+        "lorentz": 0, 
+        "coupling": "GC_51"
+      }
+    ]
+  }
+]

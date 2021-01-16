@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
 use std::path;
+use std::fmt;
 
 use math::MathExpr;
 
@@ -12,11 +13,11 @@ use math::MathExpr;
 pub struct UfoModel {
     pub function_library: HashMap<String, FunctionDefinition>,
     pub parameters: HashMap<String, Parameter>,
-    pub particles: HashMap<i64, Particle>,
+    pub particles: HashMap<PdgCode, Particle>,
     pub coupling_orders: HashMap<String, CouplingOrder>,
     pub couplings: HashMap<String, Coupling>,
     pub lorentz_structures: HashMap<String, Lorentz>,
-    pub decays: HashMap<i64, Decay>,
+    pub decays: HashMap<PdgCode, Decay>,
     pub propagators: HashMap<String, Propagator>,
     pub vertices: Vec<Vertex>,
 }
@@ -84,14 +85,14 @@ trait Named {
     fn name(&self) -> Self::Name;
 }
 impl Named for Decay {
-    type Name = i64;
-    fn name(&self) -> i64 {
+    type Name = PdgCode;
+    fn name(&self) -> PdgCode {
         self.particle
     }
 }
 impl Named for Particle {
-    type Name = i64;
-    fn name(&self) -> i64 {
+    type Name = PdgCode;
+    fn name(&self) -> PdgCode {
         self.pdg_code
     }
 }
@@ -112,6 +113,15 @@ derive_named_string!(Lorentz);
 derive_named_string!(Parameter);
 derive_named_string!(Propagator);
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct PdgCode(pub i64);
+impl fmt::Display for PdgCode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let PdgCode(p) = self;
+        p.fmt(f)
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CouplingOrder {
     pub name: String,
@@ -122,7 +132,7 @@ pub struct CouplingOrder {
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Particle {
-    pub pdg_code: i64,
+    pub pdg_code: PdgCode,
     pub name: String,
     pub antiname: String,
     pub spin: i64,
@@ -194,7 +204,7 @@ pub struct VertexCoupling {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Vertex {
     pub name: String,
-    pub particles: Vec<i64>,
+    pub particles: Vec<PdgCode>,
     pub color: Vec<MathExpr>,
     pub lorentz: Vec<String>,
     pub couplings: Vec<VertexCoupling>,
@@ -216,7 +226,7 @@ pub struct PartialWidth {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Decay {
     pub name: String,
-    pub particle: i64,
+    pub particle: PdgCode,
     pub partial_widths: Vec<PartialWidth>,
 }
 

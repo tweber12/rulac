@@ -16,6 +16,12 @@ def convert_particle(particle):
         pass
     d["mass"] = d["mass"].name
     d["width"] = d["width"].name
+    try:
+        if d["GoldstoneBoson"] != False:
+            d["goldstoneboson"] = True
+        del(d["GoldstoneBoson"])
+    except KeyError:
+        pass
     return d
 
 def convert_vertex(vertex):
@@ -197,15 +203,6 @@ def convert_function(function):
 
 def convert(model_path, model_name, output_path):
     sys.path.append(model_path)
-    model = importlib.import_module(model_name)
-    orders = convert_orders(model.all_orders)
-    particles = map(convert_particle, model.all_particles)
-    vertices = map(lambda v: convert_vertex(v), model.all_vertices)
-    couplings = map(convert_coupling, model.all_couplings)
-    lorentz = map(convert_lorentz, model.all_lorentz)
-    parameters = map(convert_parameter, model.all_parameters)
-    decays = map(convert_decay, model.all_decays)
-    propagators = map(convert_propagator, model.all_propagators)
     out_dir = os.path.join(output_path, model_name)
     try:
         os.makedirs(out_dir)
@@ -214,6 +211,26 @@ def convert(model_path, model_name, output_path):
             pass
         else:
             raise err
+    model = importlib.import_module(model_name)
+    orders = convert_orders(model.all_orders)
+    particles = map(convert_particle, model.all_particles)
+    vertices = map(lambda v: convert_vertex(v), model.all_vertices)
+    couplings = map(convert_coupling, model.all_couplings)
+    lorentz = map(convert_lorentz, model.all_lorentz)
+    parameters = map(convert_parameter, model.all_parameters)
+    try:
+        decays = map(convert_decay, model.all_decays)
+        with open(os.path.join(out_dir, "decays.json"), "w") as jfile:
+            json.dump(decays, jfile, indent=2)
+    except:
+        pass
+    try:
+        propagators = map(convert_propagator, model.all_propagators)
+        with open(os.path.join(out_dir, "propagators.json"), "w") as jfile:
+            json.dump(propagators, jfile, indent=2)
+    except:
+        pass
+
     with open(os.path.join(out_dir, "coupling_orders.json"), "w") as jfile:
         json.dump(orders, jfile, indent=2)
     with open(os.path.join(out_dir, "particles.json"), "w") as jfile:
@@ -226,13 +243,9 @@ def convert(model_path, model_name, output_path):
         json.dump(lorentz, jfile, indent=2)
     with open(os.path.join(out_dir, "parameters.json"), "w") as jfile:
         json.dump(parameters, jfile, indent=2)
-    with open(os.path.join(out_dir, "decays.json"), "w") as jfile:
-        json.dump(decays, jfile, indent=2)
-    with open(os.path.join(out_dir, "propagators.json"), "w") as jfile:
-        json.dump(propagators, jfile, indent=2)
     with open(os.path.join(out_dir, "function_library.json"), "w") as jfile:
         functions = map(convert_function, model.all_functions)
         json.dump(functions, jfile, indent=2)
 
 
-convert("ufo", "SM_NLO", ".")
+convert("tests/models", "sm", "tests/models_json")

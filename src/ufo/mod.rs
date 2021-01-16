@@ -27,9 +27,15 @@ impl UfoModel {
         let particles = read_into_map(&path, "particles.json")?;
         let coupling_orders = read_into_map(&path, "coupling_orders.json")?;
         let couplings = read_into_map(&path, "couplings.json")?;
-        let lorentz_structures = read_into_map(&path, "lorentz_structures.json")?;
-        let decays = read_into_map(&path, "decays.json")?;
-        let propagators = read_into_map(&path, "propagators.json")?;
+        let lorentz_structures = read_into_map(&path, "lorentz.json")?;
+        let decays = match read_into_map(&path, "decays.json") {
+            Ok(d) => d,
+            Err(_) => HashMap::new(),
+        };
+        let propagators = match read_into_map(&path, "propagators.json") {
+            Ok(p) => p,
+            Err(_) => HashMap::new(),
+        };
         let vertex_file = fs::File::open(&path.as_ref().join("vertices.json"))?;
         let vertices = serde_json::from_reader(vertex_file)?;
         Ok(UfoModel {
@@ -111,7 +117,7 @@ pub struct CouplingOrder {
     pub name: String,
     pub expansion_order: i64,
     pub hierarchy: i64,
-    pub perturbative_expansion: i64,
+    pub perturbative_expansion: Option<i64>,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

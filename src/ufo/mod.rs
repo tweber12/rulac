@@ -51,6 +51,10 @@ impl UfoModel {
             vertices,
         })
     }
+
+    pub fn anti_pdg_code(&self, pdg_code: PdgCode) -> PdgCode {
+        self.particles[&pdg_code].anti_pdg_code()
+    }
 }
 
 #[derive(Debug)]
@@ -150,6 +154,20 @@ pub struct Particle {
     pub ghost_number: i64,
     #[serde(rename = "LeptonNumber")]
     pub lepton_number: i64,
+}
+impl Particle {
+    pub fn self_conjugate(&self) -> bool {
+        // This is exactly the same definition as in the python object_library
+        self.name == self.antiname
+    }
+    pub fn anti_pdg_code(&self) -> PdgCode {
+        if !self.self_conjugate() {
+            let PdgCode(pdg) = self.pdg_code;
+            PdgCode(-pdg)
+        } else {
+            self.pdg_code
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]

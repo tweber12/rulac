@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub enum Function {
     Abs,
     Cos,
@@ -31,7 +31,7 @@ where
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum LorentzTensor {
     #[serde(rename = "C")]
     ChargeConjugation,
@@ -48,7 +48,7 @@ pub enum LorentzTensor {
     Sigma,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ColorTensor {
     #[serde(rename = "Identity")]
     KroneckerDelta,
@@ -68,14 +68,14 @@ pub enum ColorTensor {
     AntiSextetClebschGordan,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UnaryOperator {
     Plus,
     Minus,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum BinaryOperator {
     Add,
@@ -85,19 +85,19 @@ pub enum BinaryOperator {
     Pow,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ComparisonOperator {
     Equals,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Constant {
     Pi,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum MathExpr {
     Number {

@@ -8,6 +8,7 @@ use std::path;
 
 use math::MathExpr;
 
+#[derive(Debug)]
 pub struct UfoModel {
     pub function_library: HashMap<String, FunctionDefinition>,
     pub parameters: HashMap<String, Parameter>,
@@ -45,6 +46,7 @@ impl UfoModel {
     }
 }
 
+#[derive(Debug)]
 pub enum UfoError {
     JsonError(serde_json::Error),
     IoError(std::io::Error),
@@ -104,7 +106,7 @@ derive_named_string!(Lorentz);
 derive_named_string!(Parameter);
 derive_named_string!(Propagator);
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CouplingOrder {
     pub name: String,
     pub expansion_order: i64,
@@ -112,7 +114,7 @@ pub struct CouplingOrder {
     pub perturbative_expansion: i64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Particle {
     pub pdg_code: i64,
     pub name: String,
@@ -134,35 +136,35 @@ pub struct Particle {
     pub lepton_number: i64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ParameterNature {
     Internal,
     External,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ParameterType {
     Real,
     Complex,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ValOrExpr {
     Value(f64),
     Expr(MathExpr),
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", content = "value", rename_all = "snake_case")]
 pub enum CouplingValue {
     Simple(MathExpr),
     Orders(HashMap<i64, MathExpr>),
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Parameter {
     pub name: String,
     pub texname: String,
@@ -174,7 +176,7 @@ pub struct Parameter {
     pub lhacode: Option<Vec<i64>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct VertexCoupling {
     #[serde(rename = "color")]
     pub color_index: u64,
@@ -183,7 +185,7 @@ pub struct VertexCoupling {
     pub coupling: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Vertex {
     pub name: String,
     pub particles: Vec<i64>,
@@ -192,41 +194,41 @@ pub struct Vertex {
     pub couplings: Vec<VertexCoupling>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Lorentz {
     pub name: String,
     pub spins: Vec<i64>,
     pub structure: MathExpr,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PartialWidth {
     pub decay_products: Vec<String>,
     pub width: MathExpr,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Decay {
     pub name: String,
     pub particle: i64,
     pub partial_widths: Vec<PartialWidth>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Coupling {
     pub name: String,
     pub value: CouplingValue,
     pub order: HashMap<String, i64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Propagator {
     pub name: String,
     pub numerator: MathExpr,
     pub denominator: MathExpr,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FunctionDefinition {
     pub name: String,
     pub arguments: Vec<String>,

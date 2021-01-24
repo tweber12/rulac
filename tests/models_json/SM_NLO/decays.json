@@ -709,7 +709,7 @@
                       "type": "binary_op", 
                       "left": {
                         "type": "variable", 
-                        "name": "MT"
+                        "name": "MW"
                       }
                     }, 
                     "type": "binary_op", 
@@ -755,17 +755,41 @@
             "left": {
               "operator": "sub", 
               "right": {
-                "operator": "mul", 
+                "operator": "div", 
                 "right": {
-                  "operator": "pow", 
+                  "operator": "mul", 
                   "right": {
-                    "type": "number", 
-                    "value": 2
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 4
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "sw"
+                    }
                   }, 
                   "type": "binary_op", 
                   "left": {
-                    "type": "variable", 
-                    "name": "yt"
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MW"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "number", 
+                      "value": 4.0
+                    }
                   }
                 }, 
                 "type": "binary_op", 
@@ -780,18 +804,299 @@
                     "type": "binary_op", 
                     "left": {
                       "type": "variable", 
-                      "name": "MT"
+                      "name": "vev"
                     }
                   }, 
                   "type": "binary_op", 
                   "left": {
-                    "type": "number", 
-                    "value": 12
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MH"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 4
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "ee"
+                      }
+                    }
                   }
                 }
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "add", 
+                "right": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 4
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 4
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MW"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": 16.0
+                      }
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "vev"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 4
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MH"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 4
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 4
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "number", 
+                      "value": 4.0
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "vev"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 4
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": 3
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }, 
+        "decay_products": [
+          "W-", 
+          "W+"
+        ]
+      }, 
+      {
+        "width": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 3
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "abs", 
+                "args": [
+                  {
+                    "type": "variable", 
+                    "name": "MH"
+                  }
+                ], 
+                "type": "call"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "constant", 
+                "name": "pi"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 16.0
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "sqrt", 
+              "args": [
+                {
+                  "operator": "add", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 4
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MH"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MH"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MB"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": -4
+                      }
+                    }
+                  }
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "add", 
+              "right": {
                 "operator": "mul", 
                 "right": {
                   "operator": "pow", 
@@ -802,7 +1107,7 @@
                   "type": "binary_op", 
                   "left": {
                     "type": "variable", 
-                    "name": "yt"
+                    "name": "yb"
                   }
                 }, 
                 "type": "binary_op", 
@@ -826,13 +1131,50 @@
                     "value": 3
                   }
                 }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "yb"
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MB"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "number", 
+                    "value": -12
+                  }
+                }
               }
             }
           }
         }, 
         "decay_products": [
-          "t", 
-          "t~"
+          "b", 
+          "b~"
         ]
       }, 
       {
@@ -2309,188 +2651,6 @@
               "function": "sqrt", 
               "args": [
                 {
-                  "operator": "add", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 4
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "MH"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MH"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MB"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": -4
-                      }
-                    }
-                  }
-                }
-              ], 
-              "type": "call"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "add", 
-              "right": {
-                "operator": "mul", 
-                "right": {
-                  "operator": "pow", 
-                  "right": {
-                    "type": "number", 
-                    "value": 2
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "variable", 
-                    "name": "yb"
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "MH"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "number", 
-                    "value": 3
-                  }
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "mul", 
-                "right": {
-                  "operator": "pow", 
-                  "right": {
-                    "type": "number", 
-                    "value": 2
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "variable", 
-                    "name": "yb"
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "MB"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "number", 
-                    "value": -12
-                  }
-                }
-              }
-            }
-          }
-        }, 
-        "decay_products": [
-          "b", 
-          "b~"
-        ]
-      }, 
-      {
-        "width": {
-          "operator": "div", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "function": "abs", 
-                "args": [
-                  {
-                    "type": "variable", 
-                    "name": "MH"
-                  }
-                ], 
-                "type": "call"
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "type": "constant", 
-                "name": "pi"
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "number", 
-                "value": 16.0
-              }
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "function": "sqrt", 
-              "args": [
-                {
                   "operator": "sub", 
                   "right": {
                     "operator": "mul", 
@@ -2503,7 +2663,7 @@
                       "type": "binary_op", 
                       "left": {
                         "type": "variable", 
-                        "name": "MW"
+                        "name": "MT"
                       }
                     }, 
                     "type": "binary_op", 
@@ -2549,41 +2709,17 @@
             "left": {
               "operator": "sub", 
               "right": {
-                "operator": "div", 
+                "operator": "mul", 
                 "right": {
-                  "operator": "mul", 
+                  "operator": "pow", 
                   "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 4
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "sw"
-                    }
+                    "type": "number", 
+                    "value": 2
                   }, 
                   "type": "binary_op", 
                   "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MW"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "number", 
-                      "value": 4.0
-                    }
+                    "type": "variable", 
+                    "name": "yt"
                   }
                 }, 
                 "type": "binary_op", 
@@ -2598,186 +2734,50 @@
                     "type": "binary_op", 
                     "left": {
                       "type": "variable", 
-                      "name": "vev"
+                      "name": "MT"
                     }
                   }, 
                   "type": "binary_op", 
                   "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MH"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 4
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "ee"
-                      }
-                    }
+                    "type": "number", 
+                    "value": 12
                   }
                 }
               }, 
               "type": "binary_op", 
               "left": {
-                "operator": "add", 
+                "operator": "mul", 
                 "right": {
-                  "operator": "div", 
+                  "operator": "pow", 
                   "right": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 4
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 4
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MW"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": 16.0
-                      }
-                    }
+                    "type": "number", 
+                    "value": 2
                   }, 
                   "type": "binary_op", 
                   "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "vev"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 4
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MH"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 4
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }
-                    }
+                    "type": "variable", 
+                    "name": "yt"
                   }
                 }, 
                 "type": "binary_op", 
                 "left": {
-                  "operator": "div", 
+                  "operator": "mul", 
                   "right": {
-                    "operator": "mul", 
+                    "operator": "pow", 
                     "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 4
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
+                      "type": "number", 
+                      "value": 2
                     }, 
                     "type": "binary_op", 
                     "left": {
-                      "type": "number", 
-                      "value": 4.0
+                      "type": "variable", 
+                      "name": "MH"
                     }
                   }, 
                   "type": "binary_op", 
                   "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "vev"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 4
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": 3
-                      }
-                    }
+                    "type": "number", 
+                    "value": 3
                   }
                 }
               }
@@ -2785,8 +2785,8 @@
           }
         }, 
         "decay_products": [
-          "W-", 
-          "W+"
+          "t", 
+          "t~"
         ]
       }
     ], 
@@ -3596,7 +3596,7 @@
               "args": [
                 {
                   "type": "variable", 
-                  "name": "CKM1x1"
+                  "name": "CKM2x1"
                 }
               ], 
               "type": "call"
@@ -3634,14 +3634,14 @@
                 "type": "binary_op", 
                 "left": {
                   "type": "variable", 
-                  "name": "CKM1x1"
+                  "name": "CKM2x1"
                 }
               }
             }
           }
         }, 
         "decay_products": [
-          "u", 
+          "c", 
           "d~"
         ]
       }, 
@@ -3706,7 +3706,7 @@
               "args": [
                 {
                   "type": "variable", 
-                  "name": "CKM1x2"
+                  "name": "CKM1x1"
                 }
               ], 
               "type": "call"
@@ -3744,7 +3744,7 @@
                 "type": "binary_op", 
                 "left": {
                   "type": "variable", 
-                  "name": "CKM1x2"
+                  "name": "CKM1x1"
                 }
               }
             }
@@ -3752,7 +3752,7 @@
         }, 
         "decay_products": [
           "u", 
-          "s~"
+          "d~"
         ]
       }, 
       {
@@ -3992,7 +3992,7 @@
               "args": [
                 {
                   "type": "variable", 
-                  "name": "CKM2x1"
+                  "name": "CKM1x2"
                 }
               ], 
               "type": "call"
@@ -4030,124 +4030,14 @@
                 "type": "binary_op", 
                 "left": {
                   "type": "variable", 
-                  "name": "CKM2x1"
+                  "name": "CKM1x2"
                 }
               }
             }
           }
         }, 
         "decay_products": [
-          "c", 
-          "d~"
-        ]
-      }, 
-      {
-        "width": {
-          "operator": "div", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "function": "abs", 
-                "args": [
-                  {
-                    "type": "variable", 
-                    "name": "MW"
-                  }
-                ], 
-                "type": "call"
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "operator": "pow", 
-                "right": {
-                  "type": "number", 
-                  "value": 2
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "type": "variable", 
-                  "name": "sw"
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "mul", 
-                "right": {
-                  "type": "constant", 
-                  "name": "pi"
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "type": "number", 
-                  "value": 16.0
-                }
-              }
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "function": "complexconjugate", 
-              "args": [
-                {
-                  "type": "variable", 
-                  "name": "CKM2x2"
-                }
-              ], 
-              "type": "call"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "operator": "pow", 
-                "right": {
-                  "type": "number", 
-                  "value": 4
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "type": "variable", 
-                  "name": "MW"
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "mul", 
-                "right": {
-                  "operator": "pow", 
-                  "right": {
-                    "type": "number", 
-                    "value": 2
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "variable", 
-                    "name": "ee"
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "type": "variable", 
-                  "name": "CKM2x2"
-                }
-              }
-            }
-          }
-        }, 
-        "decay_products": [
-          "c", 
+          "u", 
           "s~"
         ]
       }, 
@@ -4796,6 +4686,116 @@
           "t", 
           "b~"
         ]
+      }, 
+      {
+        "width": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 3
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "abs", 
+                "args": [
+                  {
+                    "type": "variable", 
+                    "name": "MW"
+                  }
+                ], 
+                "type": "call"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 2
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "sw"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "type": "constant", 
+                  "name": "pi"
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "number", 
+                  "value": 16.0
+                }
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "complexconjugate", 
+              "args": [
+                {
+                  "type": "variable", 
+                  "name": "CKM2x2"
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "operator": "pow", 
+                "right": {
+                  "type": "number", 
+                  "value": 4
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "MW"
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "mul", 
+                "right": {
+                  "operator": "pow", 
+                  "right": {
+                    "type": "number", 
+                    "value": 2
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "variable", 
+                    "name": "ee"
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "type": "variable", 
+                  "name": "CKM2x2"
+                }
+              }
+            }
+          }
+        }, 
+        "decay_products": [
+          "c", 
+          "s~"
+        ]
       }
     ], 
     "name": "Decay_W__plus__", 
@@ -5051,8 +5051,240 @@
           }
         }, 
         "decay_products": [
-          "u", 
-          "u~"
+          "c", 
+          "c~"
+        ]
+      }, 
+      {
+        "width": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 3
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "abs", 
+                "args": [
+                  {
+                    "type": "variable", 
+                    "name": "MZ"
+                  }
+                ], 
+                "type": "call"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "constant", 
+                "name": "pi"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 48.0
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "operator": "add", 
+              "right": {
+                "operator": "div", 
+                "right": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "cw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "number", 
+                    "value": 2.0
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "sw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "ee"
+                      }
+                    }
+                  }
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "add", 
+                "right": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "number", 
+                      "value": 2.0
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "cw"
+                        }
+                      }
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MZ"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "ee"
+                    }
+                  }
+                }
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "MZ"
+              }
+            }
+          }
+        }, 
+        "decay_products": [
+          "vt", 
+          "vt~"
         ]
       }, 
       {
@@ -5527,8 +5759,8 @@
           }
         }, 
         "decay_products": [
-          "vt", 
-          "vt~"
+          "vm", 
+          "vm~"
         ]
       }, 
       {
@@ -5627,15 +5859,23 @@
                     }, 
                     "type": "binary_op", 
                     "left": {
-                      "operator": "pow", 
+                      "operator": "mul", 
                       "right": {
-                        "type": "number", 
-                        "value": 2
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
                       }, 
                       "type": "binary_op", 
                       "left": {
-                        "type": "variable", 
-                        "name": "ee"
+                        "type": "number", 
+                        "value": 5
                       }
                     }
                   }
@@ -5714,32 +5954,36 @@
                 }, 
                 "type": "binary_op", 
                 "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
+                  "operand": {
+                    "operator": "mul", 
                     "right": {
-                      "type": "number", 
-                      "value": 2
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
                     }, 
                     "type": "binary_op", 
                     "left": {
-                      "type": "variable", 
-                      "name": "MZ"
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "ee"
+                      }
                     }
                   }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "ee"
-                    }
-                  }
+                  "operator": "minus", 
+                  "type": "unary_op"
                 }
               }
             }, 
@@ -5759,8 +6003,8 @@
           }
         }, 
         "decay_products": [
-          "ve", 
-          "ve~"
+          "mu-", 
+          "mu+"
         ]
       }, 
       {
@@ -6011,8 +6255,924 @@
           }
         }, 
         "decay_products": [
-          "c", 
-          "c~"
+          "u", 
+          "u~"
+        ]
+      }, 
+      {
+        "width": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 3
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "abs", 
+                "args": [
+                  {
+                    "type": "variable", 
+                    "name": "MZ"
+                  }
+                ], 
+                "type": "call"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "constant", 
+                "name": "pi"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 48.0
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "sqrt", 
+              "args": [
+                {
+                  "operator": "add", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 4
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MZ"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MB"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": -4
+                      }
+                    }
+                  }
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "add", 
+              "right": {
+                "operator": "div", 
+                "right": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "cw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "number", 
+                    "value": 6.0
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "sw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": 5
+                      }
+                    }
+                  }
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "sub", 
+                "right": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "cw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "number", 
+                      "value": 6.0
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MB"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "ee"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "number", 
+                          "value": 17
+                        }
+                      }
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "add", 
+                  "right": {
+                    "operator": "div", 
+                    "right": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "sw"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": 2.0
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MZ"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "ee"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "operator": "mul", 
+                          "right": {
+                            "operator": "pow", 
+                            "right": {
+                              "type": "number", 
+                              "value": 2
+                            }, 
+                            "type": "binary_op", 
+                            "left": {
+                              "type": "variable", 
+                              "name": "cw"
+                            }
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "number", 
+                            "value": 3
+                          }
+                        }
+                      }
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "sub", 
+                    "right": {
+                      "operator": "div", 
+                      "right": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "sw"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "number", 
+                          "value": 2.0
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "MB"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "operator": "mul", 
+                          "right": {
+                            "operator": "pow", 
+                            "right": {
+                              "type": "number", 
+                              "value": 2
+                            }, 
+                            "type": "binary_op", 
+                            "left": {
+                              "type": "variable", 
+                              "name": "ee"
+                            }
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "operator": "mul", 
+                            "right": {
+                              "operator": "pow", 
+                              "right": {
+                                "type": "number", 
+                                "value": 2
+                              }, 
+                              "type": "binary_op", 
+                              "left": {
+                                "type": "variable", 
+                                "name": "cw"
+                              }
+                            }, 
+                            "type": "binary_op", 
+                            "left": {
+                              "type": "number", 
+                              "value": 3
+                            }
+                          }
+                        }
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "add", 
+                      "right": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "MZ"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "ee"
+                          }
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "MB"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "operator": "mul", 
+                          "right": {
+                            "operator": "pow", 
+                            "right": {
+                              "type": "number", 
+                              "value": 2
+                            }, 
+                            "type": "binary_op", 
+                            "left": {
+                              "type": "variable", 
+                              "name": "ee"
+                            }
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "number", 
+                            "value": -7
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }, 
+        "decay_products": [
+          "b", 
+          "b~"
+        ]
+      }, 
+      {
+        "width": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 3
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "abs", 
+                "args": [
+                  {
+                    "type": "variable", 
+                    "name": "MZ"
+                  }
+                ], 
+                "type": "call"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "constant", 
+                "name": "pi"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 48.0
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "function": "sqrt", 
+              "args": [
+                {
+                  "operator": "add", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 4
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MZ"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MW"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": -4
+                      }
+                    }
+                  }
+                }
+              ], 
+              "type": "call"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "add", 
+              "right": {
+                "operator": "div", 
+                "right": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "sw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 4
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MW"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "number", 
+                      "value": 4.0
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 6
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "MZ"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "ee"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "cw"
+                      }
+                    }
+                  }
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "add", 
+                "right": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MW"
+                      }
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 4
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "cw"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "number", 
+                          "value": 4
+                        }
+                      }
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "sub", 
+                  "right": {
+                    "operator": "div", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MZ"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "ee"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "operator": "mul", 
+                          "right": {
+                            "operator": "pow", 
+                            "right": {
+                              "type": "number", 
+                              "value": 2
+                            }, 
+                            "type": "binary_op", 
+                            "left": {
+                              "type": "variable", 
+                              "name": "cw"
+                            }
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "number", 
+                            "value": 17
+                          }
+                        }
+                      }
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "div", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "MW"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "mul", 
+                        "right": {
+                          "operator": "pow", 
+                          "right": {
+                            "type": "number", 
+                            "value": 2
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "variable", 
+                            "name": "ee"
+                          }
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "operator": "mul", 
+                          "right": {
+                            "operator": "pow", 
+                            "right": {
+                              "type": "number", 
+                              "value": 2
+                            }, 
+                            "type": "binary_op", 
+                            "left": {
+                              "type": "variable", 
+                              "name": "cw"
+                            }
+                          }, 
+                          "type": "binary_op", 
+                          "left": {
+                            "type": "number", 
+                            "value": -12
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }, 
+        "decay_products": [
+          "W-", 
+          "W+"
         ]
       }, 
       {
@@ -6259,8 +7419,252 @@
           }
         }, 
         "decay_products": [
-          "s", 
-          "s~"
+          "d", 
+          "d~"
+        ]
+      }, 
+      {
+        "width": {
+          "operator": "div", 
+          "right": {
+            "operator": "mul", 
+            "right": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 3
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "function": "abs", 
+                "args": [
+                  {
+                    "type": "variable", 
+                    "name": "MZ"
+                  }
+                ], 
+                "type": "call"
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "mul", 
+              "right": {
+                "type": "constant", 
+                "name": "pi"
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "number", 
+                "value": 48.0
+              }
+            }
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "operator": "mul", 
+            "right": {
+              "operator": "add", 
+              "right": {
+                "operator": "div", 
+                "right": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "cw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "type": "number", 
+                    "value": 2.0
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operator": "mul", 
+                  "right": {
+                    "operator": "pow", 
+                    "right": {
+                      "type": "number", 
+                      "value": 2
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "variable", 
+                      "name": "sw"
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "number", 
+                        "value": 5
+                      }
+                    }
+                  }
+                }
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "operator": "add", 
+                "right": {
+                  "operator": "div", 
+                  "right": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "sw"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "type": "number", 
+                      "value": 2.0
+                    }
+                  }, 
+                  "type": "binary_op", 
+                  "left": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "mul", 
+                      "right": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "ee"
+                        }
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "operator": "pow", 
+                        "right": {
+                          "type": "number", 
+                          "value": 2
+                        }, 
+                        "type": "binary_op", 
+                        "left": {
+                          "type": "variable", 
+                          "name": "cw"
+                        }
+                      }
+                    }
+                  }
+                }, 
+                "type": "binary_op", 
+                "left": {
+                  "operand": {
+                    "operator": "mul", 
+                    "right": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "MZ"
+                      }
+                    }, 
+                    "type": "binary_op", 
+                    "left": {
+                      "operator": "pow", 
+                      "right": {
+                        "type": "number", 
+                        "value": 2
+                      }, 
+                      "type": "binary_op", 
+                      "left": {
+                        "type": "variable", 
+                        "name": "ee"
+                      }
+                    }
+                  }, 
+                  "operator": "minus", 
+                  "type": "unary_op"
+                }
+              }
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "operator": "pow", 
+              "right": {
+                "type": "number", 
+                "value": 2
+              }, 
+              "type": "binary_op", 
+              "left": {
+                "type": "variable", 
+                "name": "MZ"
+              }
+            }
+          }
+        }, 
+        "decay_products": [
+          "ta-", 
+          "ta+"
         ]
       }, 
       {
@@ -7001,990 +8405,8 @@
           }
         }, 
         "decay_products": [
-          "d", 
-          "d~"
-        ]
-      }, 
-      {
-        "width": {
-          "operator": "div", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "function": "abs", 
-                "args": [
-                  {
-                    "type": "variable", 
-                    "name": "MZ"
-                  }
-                ], 
-                "type": "call"
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "type": "constant", 
-                "name": "pi"
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "number", 
-                "value": 48.0
-              }
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "operator": "add", 
-              "right": {
-                "operator": "div", 
-                "right": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "cw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "number", 
-                    "value": 2.0
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "sw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": 5
-                      }
-                    }
-                  }
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "add", 
-                "right": {
-                  "operator": "div", 
-                  "right": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "number", 
-                      "value": 2.0
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "cw"
-                        }
-                      }
-                    }
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operand": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "ee"
-                      }
-                    }
-                  }, 
-                  "operator": "minus", 
-                  "type": "unary_op"
-                }
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 2
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "variable", 
-                "name": "MZ"
-              }
-            }
-          }
-        }, 
-        "decay_products": [
-          "mu-", 
-          "mu+"
-        ]
-      }, 
-      {
-        "width": {
-          "operator": "div", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "function": "abs", 
-                "args": [
-                  {
-                    "type": "variable", 
-                    "name": "MZ"
-                  }
-                ], 
-                "type": "call"
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "type": "constant", 
-                "name": "pi"
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "number", 
-                "value": 48.0
-              }
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "operator": "add", 
-              "right": {
-                "operator": "div", 
-                "right": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "cw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "number", 
-                    "value": 2.0
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "sw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": 5
-                      }
-                    }
-                  }
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "add", 
-                "right": {
-                  "operator": "div", 
-                  "right": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "number", 
-                      "value": 2.0
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "cw"
-                        }
-                      }
-                    }
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operand": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "ee"
-                      }
-                    }
-                  }, 
-                  "operator": "minus", 
-                  "type": "unary_op"
-                }
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 2
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "variable", 
-                "name": "MZ"
-              }
-            }
-          }
-        }, 
-        "decay_products": [
-          "ta-", 
-          "ta+"
-        ]
-      }, 
-      {
-        "width": {
-          "operator": "div", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "function": "abs", 
-                "args": [
-                  {
-                    "type": "variable", 
-                    "name": "MZ"
-                  }
-                ], 
-                "type": "call"
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "type": "constant", 
-                "name": "pi"
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "number", 
-                "value": 48.0
-              }
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "function": "sqrt", 
-              "args": [
-                {
-                  "operator": "add", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 4
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "MZ"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MB"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": -4
-                      }
-                    }
-                  }
-                }
-              ], 
-              "type": "call"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "add", 
-              "right": {
-                "operator": "div", 
-                "right": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "cw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "type": "number", 
-                    "value": 6.0
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "sw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": 5
-                      }
-                    }
-                  }
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "sub", 
-                "right": {
-                  "operator": "div", 
-                  "right": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "cw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "number", 
-                      "value": 6.0
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MB"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "ee"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "number", 
-                          "value": 17
-                        }
-                      }
-                    }
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "add", 
-                  "right": {
-                    "operator": "div", 
-                    "right": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "sw"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": 2.0
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MZ"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "ee"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "operator": "mul", 
-                          "right": {
-                            "operator": "pow", 
-                            "right": {
-                              "type": "number", 
-                              "value": 2
-                            }, 
-                            "type": "binary_op", 
-                            "left": {
-                              "type": "variable", 
-                              "name": "cw"
-                            }
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "number", 
-                            "value": 3
-                          }
-                        }
-                      }
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "sub", 
-                    "right": {
-                      "operator": "div", 
-                      "right": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "sw"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "number", 
-                          "value": 2.0
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "MB"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "operator": "mul", 
-                          "right": {
-                            "operator": "pow", 
-                            "right": {
-                              "type": "number", 
-                              "value": 2
-                            }, 
-                            "type": "binary_op", 
-                            "left": {
-                              "type": "variable", 
-                              "name": "ee"
-                            }
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "operator": "mul", 
-                            "right": {
-                              "operator": "pow", 
-                              "right": {
-                                "type": "number", 
-                                "value": 2
-                              }, 
-                              "type": "binary_op", 
-                              "left": {
-                                "type": "variable", 
-                                "name": "cw"
-                              }
-                            }, 
-                            "type": "binary_op", 
-                            "left": {
-                              "type": "number", 
-                              "value": 3
-                            }
-                          }
-                        }
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "add", 
-                      "right": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "MZ"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "ee"
-                          }
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "MB"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "operator": "mul", 
-                          "right": {
-                            "operator": "pow", 
-                            "right": {
-                              "type": "number", 
-                              "value": 2
-                            }, 
-                            "type": "binary_op", 
-                            "left": {
-                              "type": "variable", 
-                              "name": "ee"
-                            }
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "number", 
-                            "value": -7
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }, 
-        "decay_products": [
-          "b", 
-          "b~"
+          "s", 
+          "s~"
         ]
       }, 
       {
@@ -8215,430 +8637,8 @@
           }
         }, 
         "decay_products": [
-          "vm", 
-          "vm~"
-        ]
-      }, 
-      {
-        "width": {
-          "operator": "div", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "operator": "pow", 
-              "right": {
-                "type": "number", 
-                "value": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "function": "abs", 
-                "args": [
-                  {
-                    "type": "variable", 
-                    "name": "MZ"
-                  }
-                ], 
-                "type": "call"
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "mul", 
-              "right": {
-                "type": "constant", 
-                "name": "pi"
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "type": "number", 
-                "value": 48.0
-              }
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "function": "sqrt", 
-              "args": [
-                {
-                  "operator": "add", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 4
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "MZ"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MW"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "number", 
-                        "value": -4
-                      }
-                    }
-                  }
-                }
-              ], 
-              "type": "call"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "add", 
-              "right": {
-                "operator": "div", 
-                "right": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 2
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "sw"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 4
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MW"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "number", 
-                      "value": 4.0
-                    }
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "mul", 
-                  "right": {
-                    "operator": "pow", 
-                    "right": {
-                      "type": "number", 
-                      "value": 6
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "type": "variable", 
-                      "name": "MZ"
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "ee"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "cw"
-                      }
-                    }
-                  }
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "add", 
-                "right": {
-                  "operator": "div", 
-                  "right": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MW"
-                      }
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "mul", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 4
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "MZ"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "ee"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "cw"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "number", 
-                          "value": 4
-                        }
-                      }
-                    }
-                  }
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "operator": "sub", 
-                  "right": {
-                    "operator": "div", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MZ"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "ee"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "operator": "mul", 
-                          "right": {
-                            "operator": "pow", 
-                            "right": {
-                              "type": "number", 
-                              "value": 2
-                            }, 
-                            "type": "binary_op", 
-                            "left": {
-                              "type": "variable", 
-                              "name": "cw"
-                            }
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "number", 
-                            "value": 17
-                          }
-                        }
-                      }
-                    }
-                  }, 
-                  "type": "binary_op", 
-                  "left": {
-                    "operator": "div", 
-                    "right": {
-                      "operator": "pow", 
-                      "right": {
-                        "type": "number", 
-                        "value": 2
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "type": "variable", 
-                        "name": "sw"
-                      }
-                    }, 
-                    "type": "binary_op", 
-                    "left": {
-                      "operator": "mul", 
-                      "right": {
-                        "operator": "pow", 
-                        "right": {
-                          "type": "number", 
-                          "value": 2
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "type": "variable", 
-                          "name": "MW"
-                        }
-                      }, 
-                      "type": "binary_op", 
-                      "left": {
-                        "operator": "mul", 
-                        "right": {
-                          "operator": "pow", 
-                          "right": {
-                            "type": "number", 
-                            "value": 2
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "variable", 
-                            "name": "ee"
-                          }
-                        }, 
-                        "type": "binary_op", 
-                        "left": {
-                          "operator": "mul", 
-                          "right": {
-                            "operator": "pow", 
-                            "right": {
-                              "type": "number", 
-                              "value": 2
-                            }, 
-                            "type": "binary_op", 
-                            "left": {
-                              "type": "variable", 
-                              "name": "cw"
-                            }
-                          }, 
-                          "type": "binary_op", 
-                          "left": {
-                            "type": "number", 
-                            "value": -12
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }, 
-        "decay_products": [
-          "W-", 
-          "W+"
+          "ve", 
+          "ve~"
         ]
       }
     ], 

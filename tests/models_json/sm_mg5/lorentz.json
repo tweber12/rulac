@@ -15,33 +15,17 @@
     "structure": {
       "operator": "add", 
       "right": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 3
-          }
-        ], 
+        "mu1": 3, 
         "type": "lorentz_tensor", 
-        "tensor": "P"
+        "tensor": "P", 
+        "particle": 3
       }, 
       "type": "binary_op", 
       "left": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "mu1": 3, 
         "type": "lorentz_tensor", 
-        "tensor": "P"
+        "tensor": "P", 
+        "particle": 2
       }
     }, 
     "name": "UUV1", 
@@ -65,16 +49,8 @@
   }, 
   {
     "structure": {
-      "indices": [
-        {
-          "type": "number", 
-          "value": 2
-        }, 
-        {
-          "type": "number", 
-          "value": 1
-        }
-      ], 
+      "i1": 2, 
+      "i2": 1, 
       "type": "lorentz_tensor", 
       "tensor": "ProjM"
     }, 
@@ -89,31 +65,15 @@
     "structure": {
       "operator": "sub", 
       "right": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "i1": 2, 
+        "i2": 1, 
         "type": "lorentz_tensor", 
         "tensor": "ProjP"
       }, 
       "type": "binary_op", 
       "left": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "i1": 2, 
+        "i2": 1, 
         "type": "lorentz_tensor", 
         "tensor": "ProjM"
       }
@@ -127,16 +87,8 @@
   }, 
   {
     "structure": {
-      "indices": [
-        {
-          "type": "number", 
-          "value": 2
-        }, 
-        {
-          "type": "number", 
-          "value": 1
-        }
-      ], 
+      "i1": 2, 
+      "i2": 1, 
       "type": "lorentz_tensor", 
       "tensor": "ProjP"
     }, 
@@ -151,31 +103,15 @@
     "structure": {
       "operator": "add", 
       "right": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "i1": 2, 
+        "i2": 1, 
         "type": "lorentz_tensor", 
         "tensor": "ProjP"
       }, 
       "type": "binary_op", 
       "left": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "i1": 2, 
+        "i2": 1, 
         "type": "lorentz_tensor", 
         "tensor": "ProjM"
       }
@@ -189,20 +125,9 @@
   }, 
   {
     "structure": {
-      "indices": [
-        {
-          "type": "number", 
-          "value": 3
-        }, 
-        {
-          "type": "number", 
-          "value": 2
-        }, 
-        {
-          "type": "number", 
-          "value": 1
-        }
-      ], 
+      "mu1": 3, 
+      "i3": 1, 
+      "i2": 2, 
       "type": "lorentz_tensor", 
       "tensor": "Gamma"
     }, 
@@ -215,39 +140,27 @@
   }, 
   {
     "structure": {
-      "operator": "mul", 
-      "right": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": -1
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
-        "type": "lorentz_tensor", 
-        "tensor": "ProjM"
+      "expr": {
+        "operator": "mul", 
+        "right": {
+          "i1": -1, 
+          "i2": 1, 
+          "type": "lorentz_tensor", 
+          "tensor": "ProjM"
+        }, 
+        "type": "binary_op", 
+        "left": {
+          "mu1": 3, 
+          "i3": -1, 
+          "i2": 2, 
+          "type": "lorentz_tensor", 
+          "tensor": "Gamma"
+        }
       }, 
-      "type": "binary_op", 
-      "left": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": -1
-          }
-        ], 
-        "type": "lorentz_tensor", 
-        "tensor": "Gamma"
+      "type": "sum", 
+      "index": {
+        "index": -1, 
+        "kind": "spinor"
       }
     }, 
     "name": "FFV2", 
@@ -261,84 +174,60 @@
     "structure": {
       "operator": "sub", 
       "right": {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjP"
-        }, 
-        "type": "binary_op", 
-        "left": {
+        "expr": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 3
-              }, 
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": -1
-              }
-            ], 
+            "i1": -1, 
+            "i2": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Gamma"
+            "tensor": "ProjP"
           }, 
           "type": "binary_op", 
           "left": {
-            "type": "number", 
-            "value": 2
+            "operator": "mul", 
+            "right": {
+              "mu1": 3, 
+              "i3": -1, 
+              "i2": 2, 
+              "type": "lorentz_tensor", 
+              "tensor": "Gamma"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2
+            }
           }
+        }, 
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "spinor"
         }
       }, 
       "type": "binary_op", 
       "left": {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjM"
+        "expr": {
+          "operator": "mul", 
+          "right": {
+            "i1": -1, 
+            "i2": 1, 
+            "type": "lorentz_tensor", 
+            "tensor": "ProjM"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "mu1": 3, 
+            "i3": -1, 
+            "i2": 2, 
+            "type": "lorentz_tensor", 
+            "tensor": "Gamma"
+          }
         }, 
-        "type": "binary_op", 
-        "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": -1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "Gamma"
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "spinor"
         }
       }
     }, 
@@ -353,84 +242,60 @@
     "structure": {
       "operator": "add", 
       "right": {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjP"
-        }, 
-        "type": "binary_op", 
-        "left": {
+        "expr": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 3
-              }, 
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": -1
-              }
-            ], 
+            "i1": -1, 
+            "i2": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Gamma"
+            "tensor": "ProjP"
           }, 
           "type": "binary_op", 
           "left": {
-            "type": "number", 
-            "value": 2
+            "operator": "mul", 
+            "right": {
+              "mu1": 3, 
+              "i3": -1, 
+              "i2": 2, 
+              "type": "lorentz_tensor", 
+              "tensor": "Gamma"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 2
+            }
           }
+        }, 
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "spinor"
         }
       }, 
       "type": "binary_op", 
       "left": {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjM"
+        "expr": {
+          "operator": "mul", 
+          "right": {
+            "i1": -1, 
+            "i2": 1, 
+            "type": "lorentz_tensor", 
+            "tensor": "ProjM"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "mu1": 3, 
+            "i3": -1, 
+            "i2": 2, 
+            "type": "lorentz_tensor", 
+            "tensor": "Gamma"
+          }
         }, 
-        "type": "binary_op", 
-        "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": -1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "Gamma"
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "spinor"
         }
       }
     }, 
@@ -445,84 +310,60 @@
     "structure": {
       "operator": "add", 
       "right": {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjP"
-        }, 
-        "type": "binary_op", 
-        "left": {
+        "expr": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 3
-              }, 
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": -1
-              }
-            ], 
+            "i1": -1, 
+            "i2": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Gamma"
+            "tensor": "ProjP"
           }, 
           "type": "binary_op", 
           "left": {
-            "type": "number", 
-            "value": 4
+            "operator": "mul", 
+            "right": {
+              "mu1": 3, 
+              "i3": -1, 
+              "i2": 2, 
+              "type": "lorentz_tensor", 
+              "tensor": "Gamma"
+            }, 
+            "type": "binary_op", 
+            "left": {
+              "type": "number", 
+              "value": 4
+            }
           }
+        }, 
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "spinor"
         }
       }, 
       "type": "binary_op", 
       "left": {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjM"
+        "expr": {
+          "operator": "mul", 
+          "right": {
+            "i1": -1, 
+            "i2": 1, 
+            "type": "lorentz_tensor", 
+            "tensor": "ProjM"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "mu1": 3, 
+            "i3": -1, 
+            "i2": 2, 
+            "type": "lorentz_tensor", 
+            "tensor": "Gamma"
+          }
         }, 
-        "type": "binary_op", 
-        "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": -1
-            }
-          ], 
-          "type": "lorentz_tensor", 
-          "tensor": "Gamma"
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "spinor"
         }
       }
     }, 
@@ -537,33 +378,17 @@
     "structure": {
       "operator": "sub", 
       "right": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 3
-          }
-        ], 
+        "mu1": 1, 
         "type": "lorentz_tensor", 
-        "tensor": "P"
+        "tensor": "P", 
+        "particle": 3
       }, 
       "type": "binary_op", 
       "left": {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "mu1": 1, 
         "type": "lorentz_tensor", 
-        "tensor": "P"
+        "tensor": "P", 
+        "particle": 2
       }
     }, 
     "name": "VSS1", 
@@ -575,18 +400,10 @@
   }, 
   {
     "structure": {
-      "indices": [
-        {
-          "type": "number", 
-          "value": 1
-        }, 
-        {
-          "type": "number", 
-          "value": 2
-        }
-      ], 
+      "mu1": 1, 
       "type": "lorentz_tensor", 
-      "tensor": "Metric"
+      "tensor": "Metric", 
+      "mu2": 2
     }, 
     "name": "VVS1", 
     "spins": [
@@ -601,33 +418,17 @@
       "right": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
+          "mu1": 2, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 3
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "P"
+          "tensor": "P", 
+          "particle": 3
         }
       }, 
       "type": "binary_op", 
@@ -636,33 +437,17 @@
         "right": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": 3
-              }
-            ], 
+            "mu1": 2, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 3
           }, 
           "type": "binary_op", 
           "left": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 1
-              }, 
-              {
-                "type": "number", 
-                "value": 2
-              }
-            ], 
+            "mu1": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "P"
+            "tensor": "P", 
+            "particle": 2
           }
         }, 
         "type": "binary_op", 
@@ -671,33 +456,17 @@
           "right": {
             "operator": "mul", 
             "right": {
-              "indices": [
-                {
-                  "type": "number", 
-                  "value": 1
-                }, 
-                {
-                  "type": "number", 
-                  "value": 3
-                }
-              ], 
+              "mu1": 1, 
               "type": "lorentz_tensor", 
-              "tensor": "Metric"
+              "tensor": "Metric", 
+              "mu2": 3
             }, 
             "type": "binary_op", 
             "left": {
-              "indices": [
-                {
-                  "type": "number", 
-                  "value": 2
-                }, 
-                {
-                  "type": "number", 
-                  "value": 3
-                }
-              ], 
+              "mu1": 2, 
               "type": "lorentz_tensor", 
-              "tensor": "P"
+              "tensor": "P", 
+              "particle": 3
             }
           }, 
           "type": "binary_op", 
@@ -706,33 +475,17 @@
             "right": {
               "operator": "mul", 
               "right": {
-                "indices": [
-                  {
-                    "type": "number", 
-                    "value": 1
-                  }, 
-                  {
-                    "type": "number", 
-                    "value": 3
-                  }
-                ], 
+                "mu1": 1, 
                 "type": "lorentz_tensor", 
-                "tensor": "Metric"
+                "tensor": "Metric", 
+                "mu2": 3
               }, 
               "type": "binary_op", 
               "left": {
-                "indices": [
-                  {
-                    "type": "number", 
-                    "value": 2
-                  }, 
-                  {
-                    "type": "number", 
-                    "value": 1
-                  }
-                ], 
+                "mu1": 2, 
                 "type": "lorentz_tensor", 
-                "tensor": "P"
+                "tensor": "P", 
+                "particle": 1
               }
             }, 
             "type": "binary_op", 
@@ -741,66 +494,34 @@
               "right": {
                 "operator": "mul", 
                 "right": {
-                  "indices": [
-                    {
-                      "type": "number", 
-                      "value": 1
-                    }, 
-                    {
-                      "type": "number", 
-                      "value": 2
-                    }
-                  ], 
+                  "mu1": 1, 
                   "type": "lorentz_tensor", 
-                  "tensor": "Metric"
+                  "tensor": "Metric", 
+                  "mu2": 2
                 }, 
                 "type": "binary_op", 
                 "left": {
-                  "indices": [
-                    {
-                      "type": "number", 
-                      "value": 3
-                    }, 
-                    {
-                      "type": "number", 
-                      "value": 2
-                    }
-                  ], 
+                  "mu1": 3, 
                   "type": "lorentz_tensor", 
-                  "tensor": "P"
+                  "tensor": "P", 
+                  "particle": 2
                 }
               }, 
               "type": "binary_op", 
               "left": {
                 "operator": "mul", 
                 "right": {
-                  "indices": [
-                    {
-                      "type": "number", 
-                      "value": 1
-                    }, 
-                    {
-                      "type": "number", 
-                      "value": 2
-                    }
-                  ], 
+                  "mu1": 1, 
                   "type": "lorentz_tensor", 
-                  "tensor": "Metric"
+                  "tensor": "Metric", 
+                  "mu2": 2
                 }, 
                 "type": "binary_op", 
                 "left": {
-                  "indices": [
-                    {
-                      "type": "number", 
-                      "value": 3
-                    }, 
-                    {
-                      "type": "number", 
-                      "value": 1
-                    }
-                  ], 
+                  "mu1": 3, 
                   "type": "lorentz_tensor", 
-                  "tensor": "P"
+                  "tensor": "P", 
+                  "particle": 1
                 }
               }
             }
@@ -830,18 +551,10 @@
   }, 
   {
     "structure": {
-      "indices": [
-        {
-          "type": "number", 
-          "value": 1
-        }, 
-        {
-          "type": "number", 
-          "value": 2
-        }
-      ], 
+      "mu1": 1, 
       "type": "lorentz_tensor", 
-      "tensor": "Metric"
+      "tensor": "Metric", 
+      "mu2": 2
     }, 
     "name": "VVSS1", 
     "spins": [
@@ -857,66 +570,34 @@
       "right": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 2, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 3
         }
       }, 
       "type": "binary_op", 
       "left": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
+          "mu1": 2, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 3
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }
       }
     }, 
@@ -934,35 +615,19 @@
       "right": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 3, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }, 
         "type": "binary_op", 
         "left": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 1
-              }, 
-              {
-                "type": "number", 
-                "value": 2
-              }
-            ], 
+            "mu1": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 2
           }, 
           "type": "binary_op", 
           "left": {
@@ -977,66 +642,34 @@
         "right": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": 4
-              }
-            ], 
+            "mu1": 2, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 4
           }, 
           "type": "binary_op", 
           "left": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 1
-              }, 
-              {
-                "type": "number", 
-                "value": 3
-              }
-            ], 
+            "mu1": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 3
           }
         }, 
         "type": "binary_op", 
         "left": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": 3
-              }
-            ], 
+            "mu1": 2, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 3
           }, 
           "type": "binary_op", 
           "left": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 1
-              }, 
-              {
-                "type": "number", 
-                "value": 4
-              }
-            ], 
+            "mu1": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 4
           }
         }
       }
@@ -1055,66 +688,34 @@
       "right": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 3, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 2
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 2
         }
       }, 
       "type": "binary_op", 
       "left": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
+          "mu1": 2, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 3
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }
       }
     }, 
@@ -1132,66 +733,34 @@
       "right": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 3, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 2
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 2
         }
       }, 
       "type": "binary_op", 
       "left": {
         "operator": "mul", 
         "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
+          "mu1": 2, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 4
         }, 
         "type": "binary_op", 
         "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
+          "mu1": 1, 
           "type": "lorentz_tensor", 
-          "tensor": "Metric"
+          "tensor": "Metric", 
+          "mu2": 3
         }
       }
     }, 
@@ -1216,33 +785,17 @@
         "left": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 3
-              }, 
-              {
-                "type": "number", 
-                "value": 4
-              }
-            ], 
+            "mu1": 3, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 4
           }, 
           "type": "binary_op", 
           "left": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 1
-              }, 
-              {
-                "type": "number", 
-                "value": 2
-              }
-            ], 
+            "mu1": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 2
           }
         }
       }, 
@@ -1259,33 +812,17 @@
           "left": {
             "operator": "mul", 
             "right": {
-              "indices": [
-                {
-                  "type": "number", 
-                  "value": 2
-                }, 
-                {
-                  "type": "number", 
-                  "value": 4
-                }
-              ], 
+              "mu1": 2, 
               "type": "lorentz_tensor", 
-              "tensor": "Metric"
+              "tensor": "Metric", 
+              "mu2": 4
             }, 
             "type": "binary_op", 
             "left": {
-              "indices": [
-                {
-                  "type": "number", 
-                  "value": 1
-                }, 
-                {
-                  "type": "number", 
-                  "value": 3
-                }
-              ], 
+              "mu1": 1, 
               "type": "lorentz_tensor", 
-              "tensor": "Metric"
+              "tensor": "Metric", 
+              "mu2": 3
             }
           }
         }, 
@@ -1293,33 +830,17 @@
         "left": {
           "operator": "mul", 
           "right": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 2
-              }, 
-              {
-                "type": "number", 
-                "value": 3
-              }
-            ], 
+            "mu1": 2, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 3
           }, 
           "type": "binary_op", 
           "left": {
-            "indices": [
-              {
-                "type": "number", 
-                "value": 1
-              }, 
-              {
-                "type": "number", 
-                "value": 4
-              }
-            ], 
+            "mu1": 1, 
             "type": "lorentz_tensor", 
-            "tensor": "Metric"
+            "tensor": "Metric", 
+            "mu2": 4
           }
         }
       }

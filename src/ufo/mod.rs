@@ -1,5 +1,3 @@
-pub mod math;
-
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -7,7 +5,7 @@ use std::fmt;
 use std::fs;
 use std::path;
 
-use math::MathExpr;
+use crate::math_expr::MathExpr;
 
 #[derive(Debug)]
 pub struct UfoModel {
@@ -18,7 +16,6 @@ pub struct UfoModel {
     pub couplings: HashMap<String, Coupling>,
     pub lorentz_structures: HashMap<String, Lorentz>,
     pub decays: HashMap<PdgCode, Decay>,
-    pub propagators: HashMap<String, Propagator>,
     pub vertices: Vec<Vertex>,
 }
 impl UfoModel {
@@ -33,10 +30,6 @@ impl UfoModel {
             Ok(d) => d,
             Err(_) => HashMap::new(),
         };
-        let propagators = match read_into_map(&path, "propagators.json") {
-            Ok(p) => p,
-            Err(_) => HashMap::new(),
-        };
         let vertex_file = fs::File::open(&path.as_ref().join("vertices.json"))?;
         let vertices = serde_json::from_reader(vertex_file)?;
         Ok(UfoModel {
@@ -47,7 +40,6 @@ impl UfoModel {
             couplings,
             lorentz_structures,
             decays,
-            propagators,
             vertices,
         })
     }
@@ -115,7 +107,6 @@ derive_named_string!(Coupling);
 derive_named_string!(FunctionDefinition);
 derive_named_string!(Lorentz);
 derive_named_string!(Parameter);
-derive_named_string!(Propagator);
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct PdgCode(pub i64);
@@ -256,13 +247,6 @@ pub struct Coupling {
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Propagator {
-    pub name: String,
-    pub numerator: MathExpr,
-    pub denominator: MathExpr,
-}
-
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FunctionDefinition {
     pub name: String,
     pub arguments: Vec<String>,
@@ -314,12 +298,6 @@ mod test {
     fn test_decays() {
         let file = fs::File::open("tests/models_json/SM_NLO/decays.json").unwrap();
         let _: Vec<super::Decay> = serde_json::from_reader(file).unwrap();
-    }
-
-    #[test]
-    fn test_propagators() {
-        let file = fs::File::open("tests/models_json/SM_NLO/propagators.json").unwrap();
-        let _: Vec<super::Propagator> = serde_json::from_reader(file).unwrap();
     }
 
     #[test]

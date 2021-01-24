@@ -830,20 +830,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 3
-          }
-        ], 
+        "a1": 1, 
+        "a3": 3, 
+        "a2": 2, 
         "type": "color_tensor", 
         "tensor": "f"
       }
@@ -868,20 +857,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 3
-          }
-        ], 
+        "a1": 1, 
+        "a3": 3, 
+        "a2": 2, 
         "type": "color_tensor", 
         "tensor": "f"
       }
@@ -907,123 +885,78 @@
     ], 
     "color": [
       {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }, 
-            {
-              "type": "number", 
-              "value": -1
-            }
-          ], 
-          "type": "color_tensor", 
-          "tensor": "f"
+        "expr": {
+          "operator": "mul", 
+          "right": {
+            "a1": 3, 
+            "a3": -1, 
+            "a2": 4, 
+            "type": "color_tensor", 
+            "tensor": "f"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "a1": -1, 
+            "a3": 2, 
+            "a2": 1, 
+            "type": "color_tensor", 
+            "tensor": "f"
+          }
         }, 
-        "type": "binary_op", 
-        "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 2
-            }
-          ], 
-          "type": "color_tensor", 
-          "tensor": "f"
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "adjoint"
         }
       }, 
       {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }, 
-            {
-              "type": "number", 
-              "value": -1
-            }
-          ], 
-          "type": "color_tensor", 
-          "tensor": "f"
+        "expr": {
+          "operator": "mul", 
+          "right": {
+            "a1": 2, 
+            "a3": -1, 
+            "a2": 4, 
+            "type": "color_tensor", 
+            "tensor": "f"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "a1": -1, 
+            "a3": 3, 
+            "a2": 1, 
+            "type": "color_tensor", 
+            "tensor": "f"
+          }
         }, 
-        "type": "binary_op", 
-        "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }
-          ], 
-          "type": "color_tensor", 
-          "tensor": "f"
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "adjoint"
         }
       }, 
       {
-        "operator": "mul", 
-        "right": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": 2
-            }, 
-            {
-              "type": "number", 
-              "value": 3
-            }, 
-            {
-              "type": "number", 
-              "value": -1
-            }
-          ], 
-          "type": "color_tensor", 
-          "tensor": "f"
+        "expr": {
+          "operator": "mul", 
+          "right": {
+            "a1": 2, 
+            "a3": -1, 
+            "a2": 3, 
+            "type": "color_tensor", 
+            "tensor": "f"
+          }, 
+          "type": "binary_op", 
+          "left": {
+            "a1": -1, 
+            "a3": 4, 
+            "a2": 1, 
+            "type": "color_tensor", 
+            "tensor": "f"
+          }
         }, 
-        "type": "binary_op", 
-        "left": {
-          "indices": [
-            {
-              "type": "number", 
-              "value": -1
-            }, 
-            {
-              "type": "number", 
-              "value": 1
-            }, 
-            {
-              "type": "number", 
-              "value": 4
-            }
-          ], 
-          "type": "color_tensor", 
-          "tensor": "f"
+        "type": "sum", 
+        "index": {
+          "index": -1, 
+          "kind": "adjoint"
         }
       }
     ], 
@@ -1870,18 +1803,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -1904,18 +1829,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -1938,18 +1855,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -1972,20 +1881,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "a1": 3, 
+        "jb3": 1, 
+        "i2": 2, 
         "type": "color_tensor", 
         "tensor": "T"
       }
@@ -2010,20 +1908,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "a1": 3, 
+        "jb3": 1, 
+        "i2": 2, 
         "type": "color_tensor", 
         "tensor": "T"
       }
@@ -2048,20 +1935,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "a1": 3, 
+        "jb3": 1, 
+        "i2": 2, 
         "type": "color_tensor", 
         "tensor": "T"
       }
@@ -2086,18 +1962,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2120,18 +1988,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2154,18 +2014,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2194,18 +2046,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2234,18 +2078,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2274,18 +2110,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2308,18 +2136,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2342,18 +2162,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2376,18 +2188,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2410,18 +2214,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2444,18 +2240,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2484,18 +2272,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2524,18 +2304,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2558,18 +2330,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2592,18 +2356,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2626,18 +2382,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2660,18 +2408,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2694,18 +2434,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2728,18 +2460,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2762,18 +2486,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -2796,18 +2512,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3280,18 +2988,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3314,18 +3014,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3348,18 +3040,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3382,18 +3066,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3422,18 +3098,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3456,18 +3124,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3490,18 +3150,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3530,18 +3182,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3564,18 +3208,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3598,18 +3234,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3632,18 +3260,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3666,18 +3286,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3700,18 +3312,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3734,18 +3338,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3768,18 +3364,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3802,18 +3390,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3836,18 +3416,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3870,18 +3442,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3904,18 +3468,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -3938,20 +3494,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "a1": 3, 
+        "jb3": 1, 
+        "i2": 2, 
         "type": "color_tensor", 
         "tensor": "T"
       }
@@ -3976,20 +3521,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "a1": 3, 
+        "jb3": 1, 
+        "i2": 2, 
         "type": "color_tensor", 
         "tensor": "T"
       }
@@ -4014,20 +3548,9 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 3
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }, 
-          {
-            "type": "number", 
-            "value": 1
-          }
-        ], 
+        "a1": 3, 
+        "jb3": 1, 
+        "i2": 2, 
         "type": "color_tensor", 
         "tensor": "T"
       }
@@ -4052,18 +3575,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -4086,18 +3601,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -4120,18 +3627,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -4154,18 +3653,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -4188,18 +3679,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -4228,18 +3711,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [
@@ -4268,18 +3743,10 @@
     ], 
     "color": [
       {
-        "indices": [
-          {
-            "type": "number", 
-            "value": 1
-          }, 
-          {
-            "type": "number", 
-            "value": 2
-          }
-        ], 
+        "i1": 1, 
         "type": "color_tensor", 
-        "tensor": "Identity"
+        "tensor": "Identity", 
+        "jb2": 2
       }
     ], 
     "lorentz": [

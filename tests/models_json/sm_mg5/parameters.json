@@ -363,18 +363,11 @@
           "operand": {
             "operator": "mul", 
             "right": {
-              "function": "complex", 
-              "args": [
-                {
-                  "type": "number", 
-                  "value": 0
-                }, 
-                {
-                  "type": "number", 
-                  "value": 1
-                }
-              ], 
-              "type": "call"
+              "type": "complex", 
+              "value": [
+                0, 
+                1
+              ]
             }, 
             "type": "binary_op", 
             "left": {
@@ -510,18 +503,11 @@
           "right": {
             "operator": "mul", 
             "right": {
-              "function": "complex", 
-              "args": [
-                {
-                  "type": "number", 
-                  "value": 0
-                }, 
-                {
-                  "type": "number", 
-                  "value": 1
-                }
-              ], 
-              "type": "call"
+              "type": "complex", 
+              "value": [
+                0, 
+                1
+              ]
             }, 
             "type": "binary_op", 
             "left": {

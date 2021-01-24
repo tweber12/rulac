@@ -218,6 +218,7 @@
     "nature": "internal", 
     "lhacode": null, 
     "value": {
+      "operator": "minus", 
       "operand": {
         "function": "sin", 
         "args": [
@@ -228,7 +229,6 @@
         ], 
         "type": "call"
       }, 
-      "operator": "minus", 
       "type": "unary_op"
     }, 
     "lhablock": null, 

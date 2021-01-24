@@ -360,6 +360,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -375,7 +376,6 @@
               "name": "etaWS"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }, 
@@ -410,11 +410,11 @@
     "nature": "internal", 
     "lhacode": null, 
     "value": {
+      "operator": "minus", 
       "operand": {
         "type": "variable", 
         "name": "lamWS"
       }, 
-      "operator": "minus", 
       "type": "unary_op"
     }, 
     "lhablock": null, 
@@ -553,6 +553,7 @@
     "nature": "internal", 
     "lhacode": null, 
     "value": {
+      "operator": "minus", 
       "operand": {
         "operator": "mul", 
         "right": {
@@ -573,7 +574,6 @@
           "name": "AWS"
         }
       }, 
-      "operator": "minus", 
       "type": "unary_op"
     }, 
     "lhablock": null, 

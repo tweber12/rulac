@@ -11,6 +11,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -26,7 +27,6 @@
               "name": "ee"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -77,11 +77,11 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "type": "variable", 
           "name": "G"
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -131,6 +131,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "mul", 
           "right": {
@@ -154,7 +155,6 @@
             ]
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -212,11 +212,11 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "type": "variable", 
           "name": "I2a33"
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -242,11 +242,11 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "type": "variable", 
           "name": "I4a33"
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -451,6 +451,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "div", 
           "right": {
@@ -490,7 +491,6 @@
             }
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -710,11 +710,11 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "type": "variable", 
             "name": "ee"
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -743,6 +743,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -758,7 +759,6 @@
               "name": "ee"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -772,6 +772,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "mul", 
           "right": {
@@ -787,7 +788,6 @@
             "name": "ee"
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -1131,6 +1131,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "div", 
           "right": {
@@ -1162,7 +1163,6 @@
             }
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -1230,6 +1230,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "pow", 
             "right": {
@@ -1242,7 +1243,6 @@
               "name": "ee"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -1295,6 +1295,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -1318,7 +1319,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -1663,6 +1663,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -1675,7 +1676,6 @@
                 "name": "cw"
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -1747,6 +1747,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -1770,7 +1771,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -2056,6 +2056,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -2079,7 +2080,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -2477,6 +2477,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -2500,7 +2501,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -2696,6 +2696,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -2716,7 +2717,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -2918,6 +2918,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -2938,7 +2939,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -2975,6 +2975,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -3006,7 +3007,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -3152,6 +3152,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -3172,7 +3173,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -3301,6 +3301,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -3321,7 +3322,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -3507,6 +3507,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -3527,7 +3528,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -3838,6 +3838,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -3869,7 +3870,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -4075,6 +4075,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "div", 
           "right": {
@@ -4093,7 +4094,6 @@
             "name": "yb"
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -4106,6 +4106,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "div", 
           "right": {
@@ -4135,7 +4136,6 @@
             }
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -4175,6 +4175,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "div", 
           "right": {
@@ -4193,7 +4194,6 @@
             "name": "yt"
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -4206,6 +4206,7 @@
     "value": {
       "type": "simple", 
       "value": {
+        "operator": "minus", 
         "operand": {
           "operator": "div", 
           "right": {
@@ -4235,7 +4236,6 @@
             }
           }
         }, 
-        "operator": "minus", 
         "type": "unary_op"
       }
     }, 
@@ -4350,6 +4350,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "pow", 
             "right": {
@@ -4362,7 +4363,6 @@
               "name": "ee"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -4709,6 +4709,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -4748,7 +4749,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -5320,6 +5320,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "pow", 
             "right": {
@@ -5332,7 +5333,6 @@
               "name": "G"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -5414,6 +5414,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -5437,7 +5438,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -5586,6 +5586,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -5609,7 +5610,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -5646,6 +5646,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -5669,7 +5670,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -5762,6 +5762,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -5785,7 +5786,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -5822,6 +5822,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -5845,7 +5846,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6131,6 +6131,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6154,7 +6155,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6247,6 +6247,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6278,7 +6279,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6338,6 +6338,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6377,7 +6378,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6437,6 +6437,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6482,7 +6483,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6542,6 +6542,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6581,7 +6582,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6641,6 +6641,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6686,7 +6687,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6746,6 +6746,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6785,7 +6786,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6845,6 +6845,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6890,7 +6891,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -6950,6 +6950,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -6989,7 +6990,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -7049,6 +7049,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -7094,7 +7095,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -7360,6 +7360,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -7399,7 +7400,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -7530,6 +7530,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -7550,7 +7551,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -7708,6 +7708,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -7731,7 +7732,6 @@
               ]
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -7866,6 +7866,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "pow", 
             "right": {
@@ -7878,7 +7879,6 @@
               "name": "G"
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -8502,6 +8502,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -8533,7 +8534,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -8706,6 +8706,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -8726,7 +8727,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -8818,6 +8818,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -8838,7 +8839,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9023,6 +9023,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9062,7 +9063,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9099,6 +9099,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9138,7 +9139,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9189,6 +9189,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9228,7 +9229,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9280,6 +9280,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9319,7 +9320,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9357,6 +9357,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9396,7 +9397,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9434,6 +9434,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9473,7 +9474,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -9657,6 +9657,7 @@
         }, 
         "type": "binary_op", 
         "left": {
+          "operator": "minus", 
           "operand": {
             "operator": "mul", 
             "right": {
@@ -9688,7 +9689,6 @@
               }
             }
           }, 
-          "operator": "minus", 
           "type": "unary_op"
         }
       }
@@ -10225,6 +10225,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -10264,7 +10265,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -11294,6 +11294,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -11333,7 +11334,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -11439,6 +11439,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -11478,7 +11479,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -11518,6 +11518,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -11541,7 +11542,6 @@
                 ]
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -11647,6 +11647,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -11678,7 +11679,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -11773,6 +11773,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "pow", 
               "right": {
@@ -11785,7 +11786,6 @@
                 "name": "G"
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -12168,6 +12168,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -12191,7 +12192,6 @@
                 ]
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -12420,6 +12420,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -12443,7 +12444,6 @@
                 ]
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -12871,6 +12871,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -12902,7 +12903,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -13135,6 +13135,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -13158,7 +13159,6 @@
                 ]
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -13443,6 +13443,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -13482,7 +13483,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -13647,6 +13647,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -13692,7 +13693,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -13851,6 +13851,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -13890,7 +13891,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -14055,6 +14055,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -14100,7 +14101,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -14259,6 +14259,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -14298,7 +14299,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -14463,6 +14463,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -14508,7 +14509,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -14667,6 +14667,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -14706,7 +14707,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -14871,6 +14871,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -14916,7 +14917,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -15240,6 +15240,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -15263,7 +15264,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -15622,6 +15622,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -15653,7 +15654,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -15805,6 +15805,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -15828,7 +15829,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -16044,6 +16044,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -16067,7 +16068,6 @@
                   ]
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -16423,6 +16423,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -16454,7 +16455,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -17445,6 +17445,7 @@
                   }, 
                   "type": "binary_op", 
                   "left": {
+                    "operator": "minus", 
                     "operand": {
                       "operator": "mul", 
                       "right": {
@@ -17484,7 +17485,6 @@
                         }
                       }
                     }, 
-                    "operator": "minus", 
                     "type": "unary_op"
                   }
                 }
@@ -17762,6 +17762,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -17801,7 +17802,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -18171,6 +18171,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -18210,7 +18211,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }
@@ -18652,6 +18652,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -18683,7 +18684,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -18875,6 +18875,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -18895,7 +18896,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -19211,6 +19211,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -19231,7 +19232,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }
@@ -19283,6 +19283,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -19328,7 +19329,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -19408,6 +19408,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -19431,7 +19432,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -19491,6 +19491,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -19536,7 +19537,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -19616,6 +19616,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -19639,7 +19640,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -20231,6 +20231,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -20265,7 +20266,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -20334,6 +20334,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "pow", 
                   "right": {
@@ -20346,7 +20347,6 @@
                     "name": "G"
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -20396,6 +20396,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "pow", 
               "right": {
@@ -20408,7 +20409,6 @@
                 "name": "G"
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -20512,6 +20512,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -20546,7 +20547,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -20615,6 +20615,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "pow", 
                   "right": {
@@ -20627,7 +20628,6 @@
                     "name": "G"
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -21435,6 +21435,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "pow", 
               "right": {
@@ -21447,7 +21448,6 @@
                 "name": "G"
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -21551,6 +21551,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -21596,7 +21597,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -21676,6 +21676,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -21699,7 +21700,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -21891,6 +21891,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -21936,7 +21937,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -22016,6 +22016,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -22039,7 +22040,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -22231,6 +22231,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -22276,7 +22277,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -22306,6 +22306,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -22329,7 +22330,6 @@
                   ]
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -22378,6 +22378,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -22401,7 +22402,6 @@
                 ]
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -22582,6 +22582,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -22627,7 +22628,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -22657,6 +22657,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -22680,7 +22681,6 @@
                   ]
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -24223,6 +24223,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -24246,7 +24247,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -24398,6 +24398,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -24429,7 +24430,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -24669,6 +24669,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -24700,7 +24701,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -24792,6 +24792,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -24815,7 +24816,6 @@
                     ]
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -25031,6 +25031,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -25054,7 +25055,6 @@
                   ]
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -25410,6 +25410,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -25441,7 +25442,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -25645,6 +25645,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -25676,7 +25677,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -26004,6 +26004,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -26035,7 +26036,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -26179,6 +26179,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -26210,7 +26211,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -26538,6 +26538,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -26569,7 +26570,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -26632,6 +26632,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -26663,7 +26664,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -26934,6 +26934,7 @@
                   }, 
                   "type": "binary_op", 
                   "left": {
+                    "operator": "minus", 
                     "operand": {
                       "operator": "mul", 
                       "right": {
@@ -26973,7 +26974,6 @@
                         }
                       }
                     }, 
-                    "operator": "minus", 
                     "type": "unary_op"
                   }
                 }
@@ -27748,6 +27748,7 @@
                   }, 
                   "type": "binary_op", 
                   "left": {
+                    "operator": "minus", 
                     "operand": {
                       "operator": "mul", 
                       "right": {
@@ -27787,7 +27788,6 @@
                         }
                       }
                     }, 
-                    "operator": "minus", 
                     "type": "unary_op"
                   }
                 }
@@ -28243,6 +28243,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -28282,7 +28283,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -28630,6 +28630,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -28650,7 +28651,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -28962,6 +28962,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -28982,7 +28983,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -29176,6 +29176,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -29196,7 +29197,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -29411,6 +29411,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -29431,7 +29432,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -29520,6 +29520,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -29540,7 +29541,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -29747,6 +29747,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -29767,7 +29768,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -29808,6 +29808,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -29828,7 +29829,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -30090,6 +30090,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -30110,7 +30111,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -30430,6 +30430,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -30450,7 +30451,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }, 
@@ -30644,6 +30644,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -30664,7 +30665,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -30871,6 +30871,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -30891,7 +30892,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -30980,6 +30980,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -31000,7 +31001,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -31215,6 +31215,7 @@
             }, 
             "type": "binary_op", 
             "left": {
+              "operator": "minus", 
               "operand": {
                 "operator": "mul", 
                 "right": {
@@ -31235,7 +31236,6 @@
                   }
                 }
               }, 
-              "operator": "minus", 
               "type": "unary_op"
             }
           }
@@ -31276,6 +31276,7 @@
           }, 
           "type": "binary_op", 
           "left": {
+            "operator": "minus", 
             "operand": {
               "operator": "mul", 
               "right": {
@@ -31296,7 +31297,6 @@
                 }
               }
             }, 
-            "operator": "minus", 
             "type": "unary_op"
           }
         }
@@ -31681,6 +31681,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -31701,7 +31702,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 
@@ -32206,6 +32206,7 @@
               }, 
               "type": "binary_op", 
               "left": {
+                "operator": "minus", 
                 "operand": {
                   "operator": "mul", 
                   "right": {
@@ -32237,7 +32238,6 @@
                     }
                   }
                 }, 
-                "operator": "minus", 
                 "type": "unary_op"
               }
             }, 

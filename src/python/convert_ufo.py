@@ -1,141 +1,200 @@
-import errno
+"""
+Convert a ufo model into a json format
+
+This model contains functions to convert the components of a ufo
+model into a json format that is easier to parse from other other
+programming languages.
+"""
+
+
 import importlib
 import json
 import os
 import sys
 
-sys.path.append("src/math_expr")
 from convert_math import parse_math
+import util
 
-def convert_orders(orders):
-    return map(lambda order: order.__dict__, orders)
+def _convert_orders(orders):
+    """Convert a list ufo CouplingOrder objects to a list of dictionaries"""
+    return [order.__dict__ for order in orders]
 
-def convert_particle(particle):
-    d = particle.__dict__
+def _convert_particle(particle):
+    """Convert a ufo Particle object to a dictionary"""
+    particle_dict = particle.__dict__
     try:
-        del(d["partial_widths"])
+        # Remove the widths. If there are any, they will be contained in the decays anyway
+        del particle_dict["partial_widths"]
     except KeyError:
         pass
-    d["mass"] = d["mass"].name
-    d["width"] = d["width"].name
+    particle_dict["mass"] = particle_dict["mass"].name
+    particle_dict["width"] = particle_dict["width"].name
     try:
-        if d["GoldstoneBoson"] != False:
-            d["goldstoneboson"] = True
-        del(d["GoldstoneBoson"])
+        # Try to sort out the GoldstoneBoson situation
+        # This is a bug in UFO, where all particles that are not a goldstone boson have
+        # 'goldstoneboson' set to false, while if it is one, then 'GoldstoneBoson' is set
+        # (notice the capitalisation). Additionally, it isn't always set to a bool, but
+        # at least in one case also to -1 for no apparent reason.
+        if particle_dict["GoldstoneBoson"] != False:
+            particle_dict["goldstoneboson"] = True
+        del particle_dict["GoldstoneBoson"]
     except KeyError:
         pass
-    return d
+    return particle_dict
 
-def convert_vertex(vertex):
-    d = vertex.__dict__
-    d["particles"] = map(lambda p: p.pdg_code, d["particles"])
-    d["lorentz"] = map(lambda l: l.name, d["lorentz"])
-    d["color"] = map(lambda c: parse_math(c, mode="color", location="the color structure of vertex {}".format(vertex.name)), d["color"])
-    d["couplings"] = map(lambda (pieces,v): {"color": pieces[0], "lorentz": pieces[1], "coupling": v.name}, d["couplings"].iteritems())
-    return d
+def _convert_vertex(vertex):
+    """Convert a ufo Vertex object to a dictionary"""
+    vertex_dict = vertex.__dict__
+    vertex_dict["particles"] = [p.pdg_code for p in vertex_dict["particles"]]
+    vertex_dict["lorentz"] = [l.name for l in vertex_dict["lorentz"]]
+    vertex_dict["color"] = [
+        parse_math(c, mode="color", location="the color structure of vertex {}".format(vertex.name))
+        for c in vertex_dict["color"]
+    ]
+    vertex_dict["couplings"] = [
+        {"color": pieces[0], "lorentz": pieces[1], "coupling": v.name}
+        for (pieces, v) in vertex_dict["couplings"].iteritems()
+    ]
+    return vertex_dict
 
-def convert_coupling(coupling):
-    d = coupling.__dict__
-    value = d["value"]
-    if type(value) is dict:
-        value = {"type": "orders", "value": {o: parse_math(c, location="the coupling {}".format(coupling.name)) for (o,c) in value.iteritems()}}
+def _convert_coupling(coupling):
+    """Convert a ufo Coupling object to a dictionary"""
+    vertex_dict = coupling.__dict__
+    value = vertex_dict["value"]
+    location = "the coupling {}".format(coupling.name)
+    if isinstance(value, dict):
+        # The coupling value is expanded in epsilon for counterterms, etc
+        # In this case the coupling is not just a single expression but a dictionary
+        # mapping orders to expressions
+        value = {
+            "type": "orders",
+            "value": {
+                o: parse_math(c, location=location)
+                for (o, c) in value.iteritems()
+            }
+        }
     else:
-        value = {"type": "simple", "value": parse_math(d["value"], location="the coupling {}".format(coupling.name))}
-    d["value"] = value
-    return d
+        value = {
+            "type": "simple",
+            "value": parse_math(vertex_dict["value"], location=location)
+        }
+    vertex_dict["value"] = value
+    return vertex_dict
 
-def convert_lorentz(lorentz):
-    d = lorentz.__dict__
-    d["structure"] = parse_math(d["structure"], mode="lorentz", location="the lorentz structure {}".format(lorentz.name))
-    return d
+def _convert_lorentz(lorentz):
+    """Convert a ufo Lorentz object to a dictionary"""
+    lorentz_dict = lorentz.__dict__
+    lorentz_dict["structure"] = parse_math(
+        lorentz_dict["structure"],
+        mode="lorentz",
+        location="the lorentz structure {}".format(lorentz.name)
+    )
+    return lorentz_dict
 
-def convert_parameter(parameter):
-    d = parameter.__dict__
-    if type(d["value"]) == str:
-        d["value"] = parse_math(d["value"], location="the value of parameter {}".format(parameter.name))
-    return d
+def _convert_parameter(parameter):
+    """Convert a ufo Parameter object to a dictionary"""
+    parameter_dict = parameter.__dict__
+    if isinstance(parameter_dict["value"], str):
+        parameter_dict["value"] = parse_math(
+            parameter_dict["value"],
+            location="the value of parameter {}".format(parameter.name)
+        )
+    return parameter_dict
 
-def convert_decay(decay):
-    d = decay.__dict__
-    d["particle"] = d["particle"].pdg_code
-    d["partial_widths"] = map(lambda (prods, width): {"decay_products": map(lambda p: p.name, prods), "width": parse_math(width, location="the width of particle {}".format(decay.particle))}, d["partial_widths"].iteritems())
-    return d
+def _convert_decay(decay):
+    """Convert a ufo Decay object to a dictionary"""
+    decay_dict = decay.__dict__
+    decay_dict["particle"] = decay_dict["particle"].pdg_code
+    decay_dict["partial_widths"] = [
+        {
+            "decay_products": [p.name for p in prods],
+            "width": parse_math(width, location="the width of particle {}".format(decay.particle))
+        }
+        for (prods, width) in decay_dict["partial_widths"].iteritems()
+    ]
+    return decay_dict
 
-def convert_propagator(propagator):
-    d = propagator.__dict__
-    d["numerator"] = parse_math(d["numerator"], location="the numerator of propagator {}".format(propagator.name))
-    d["denominator"] = parse_math(d["denominator"], location="the denominator of propagator {}".format(propagator.name))
-    return d
-
-def convert_function(function):
-    d = function.__dict__
-    d["expr"] = parse_math(d["expr"], location="the definition of the function {}".format(function.name))
-    if not isinstance(d["arguments"], tuple) and not isinstance(d["arguments"], list):
-        d["arguments"] = (d["arguments"],)
-    return d
+def _convert_function(function):
+    """Convert a ufo Function object to a dictionary"""
+    function_dict = function.__dict__
+    function_dict["expr"] = parse_math(
+        function_dict["expr"],
+        location="the definition of the function {}".format(function.name)
+    )
+    args = function_dict["arguments"]
+    if not isinstance(args, tuple) and not isinstance(args, list):
+        function_dict["arguments"] = (args,)
+    return function_dict
 
 def convert(model_path, model_name, output_path):
-    sys.path.append(model_path)
+    """
+    Convert a ufo model to json
+
+    The model that is located at 'model_path/model_name' will be converted
+    and the json files will be placed in 'output_path/model_name'
+    """
     out_dir = os.path.join(output_path, model_name)
-    try:
-        os.makedirs(out_dir)
-    except OSError as err:
-        if err.errno == errno.EEXIST:
-            pass
-        else:
-            raise err
+    util.makedirs(out_dir)
+    sys.path.append(model_path)
     model = importlib.import_module(model_name)
-    orders = convert_orders(model.all_orders)
-    particles = map(convert_particle, model.all_particles)
-    vertices = map(lambda v: convert_vertex(v), model.all_vertices)
-    couplings = map(convert_coupling, model.all_couplings)
-    lorentz = map(convert_lorentz, model.all_lorentz)
-    parameters = map(convert_parameter, model.all_parameters)
     try:
-        decays = map(convert_decay, model.all_decays)
+        # all_decays is not always present, only convert it if it is
+        decays = map(_convert_decay, model.all_decays)
         with open(os.path.join(out_dir, "decays.json"), "w") as jfile:
             json.dump(decays, jfile, indent=2)
-    except:
+    except AttributeError:
         pass
+    orders = _convert_orders(model.all_orders)
     with open(os.path.join(out_dir, "coupling_orders.json"), "w") as jfile:
         json.dump(orders, jfile, indent=2)
+    particles = map(_convert_particle, model.all_particles)
     with open(os.path.join(out_dir, "particles.json"), "w") as jfile:
         json.dump(particles, jfile, indent=2)
+    vertices = map(_convert_vertex, model.all_vertices)
     with open(os.path.join(out_dir, "vertices.json"), "w") as jfile:
         json.dump(vertices, jfile, indent=2)
+    couplings = map(_convert_coupling, model.all_couplings)
     with open(os.path.join(out_dir, "couplings.json"), "w") as jfile:
         json.dump(couplings, jfile, indent=2)
+    lorentz = map(_convert_lorentz, model.all_lorentz)
     with open(os.path.join(out_dir, "lorentz.json"), "w") as jfile:
         json.dump(lorentz, jfile, indent=2)
+    parameters = map(_convert_parameter, model.all_parameters)
     with open(os.path.join(out_dir, "parameters.json"), "w") as jfile:
         json.dump(parameters, jfile, indent=2)
+    functions = map(_convert_function, model.all_functions)
     with open(os.path.join(out_dir, "function_library.json"), "w") as jfile:
-        functions = map(convert_function, model.all_functions)
         json.dump(functions, jfile, indent=2)
 
 def convert_relations(outfile):
-    g5 = {
-        "expr": parse_math("complex(0,1)*Gamma(1,11,-22)*Gamma(2,-22,-33)*Gamma(3,-33,-44)*Gamma(4,-44,55)", mode="lorentz"),
-        "lorentz": [1,2,3,4],
-        "spinor": [11,55],
+    gamma5 = {
+        "expr": parse_math(
+            "complex(0,1)*Gamma(1,11,-22)*Gamma(2,-22,-33)*Gamma(3,-33,-44)*Gamma(4,-44,55)",
+            mode="lorentz"
+        ),
+        "lorentz": [1, 2, 3, 4],
+        "spinor": [11, 55],
     }
-    pp = {
+    proj_p = {
         "expr": parse_math("(Identity(1,2)+Gamma5(1,2))/2", mode="lorentz"),
-        "spinor": [1,2],
+        "spinor": [1, 2],
     }
-    pm = {
+    proj_m = {
         "expr": parse_math("(Identity(1,2)-Gamma5(1,2))/2", mode="lorentz"),
-        "spinor": [1,2],
+        "spinor": [1, 2],
     }
     sigma = {
-        "expr": parse_math("complex(0,1)/2*(Gamma(1,11,-22)*Gamma(2,-22,33) - Gamma(2,11,-22)*Gamma(1,-22,11))", mode="lorentz"),
-        "lorentz": [1,2],
-        "spinor": [11,33],
+        "expr": parse_math(
+            "complex(0,1)/2*(Gamma(1,11,-22)*Gamma(2,-22,33) - Gamma(2,11,-22)*Gamma(1,-22,11))",
+            mode="lorentz"
+        ),
+        "lorentz": [1, 2],
+        "spinor": [11, 33],
     }
     relations = {
-        "gamma5": g5,
-        "proj_p": pp,
-        "proj_m": pm,
+        "gamma5": gamma5,
+        "proj_p": proj_p,
+        "proj_m": proj_m,
         "sigma": sigma
     }
     with open(outfile, "w") as jfile:

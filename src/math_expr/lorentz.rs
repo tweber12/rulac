@@ -164,7 +164,7 @@ impl SpinTensorComponents {
     fn compute_metric(diagonal: &[f64]) -> TensorComponents2 {
         let mut metric = TensorComponents2::new();
         for (i, d) in LorentzIndex::range().zip(diagonal.iter()) {
-            metric.insert(i, i, Complex64::new(*d, 0f64));
+            metric.insert(i, i, *d);
         }
         metric
     }
@@ -515,7 +515,7 @@ struct SpinTensorRelation {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TensorComponents2 {
-    components: HashMap<(u8, u8), Complex64>,
+    components: HashMap<(u8, u8), Number>,
 }
 impl TensorComponents2 {
     fn new() -> TensorComponents2 {
@@ -524,21 +524,16 @@ impl TensorComponents2 {
         }
     }
     pub fn get(&self, i1: u8, i2: u8) -> Number {
-        Number::Complex(
-            *self
-                .components
-                .get(&(i1, i2))
-                .unwrap_or(&Complex64::new(0f64, 0f64)),
-        )
+        *self.components.get(&(i1, i2)).unwrap_or(&Number::zero())
     }
     fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, value: T) {
-        self.components.insert((i1, i2), value.into().as_complex());
+        self.components.insert((i1, i2), value.into());
     }
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TensorComponents3 {
-    components: HashMap<(u8, u8, u8), Complex64>,
+    components: HashMap<(u8, u8, u8), Number>,
 }
 impl TensorComponents3 {
     fn new() -> TensorComponents3 {
@@ -547,22 +542,19 @@ impl TensorComponents3 {
         }
     }
     pub fn get(&self, i1: u8, i2: u8, i3: u8) -> Number {
-        Number::Complex(
-            *self
-                .components
-                .get(&(i1, i2, i3))
-                .unwrap_or(&Complex64::new(0f64, 0f64)),
-        )
+        *self
+            .components
+            .get(&(i1, i2, i3))
+            .unwrap_or(&Number::zero())
     }
     fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, i3: u8, value: T) {
-        self.components
-            .insert((i1, i2, i3), value.into().as_complex());
+        self.components.insert((i1, i2, i3), value.into());
     }
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TensorComponents4 {
-    components: HashMap<(u8, u8, u8, u8), Complex64>,
+    components: HashMap<(u8, u8, u8, u8), Number>,
 }
 impl TensorComponents4 {
     fn new() -> TensorComponents4 {
@@ -571,16 +563,13 @@ impl TensorComponents4 {
         }
     }
     pub fn get(&self, i1: u8, i2: u8, i3: u8, i4: u8) -> Number {
-        Number::Complex(
-            *self
-                .components
-                .get(&(i1, i2, i3, i4))
-                .unwrap_or(&Complex64::new(0f64, 0f64)),
-        )
+        *self
+            .components
+            .get(&(i1, i2, i3, i4))
+            .unwrap_or(&Number::zero())
     }
     fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, i3: u8, i4: u8, value: T) {
-        self.components
-            .insert((i1, i2, i3, i4), value.into().as_complex());
+        self.components.insert((i1, i2, i3, i4), value.into());
     }
 }
 

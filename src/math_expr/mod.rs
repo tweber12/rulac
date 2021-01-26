@@ -216,6 +216,7 @@ pub enum Constant {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
 pub enum Number {
     Integer(i64),
     Real(f64),

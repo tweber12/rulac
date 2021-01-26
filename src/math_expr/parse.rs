@@ -1,14 +1,17 @@
+use crate::math_expr::lorentz::LorentzTensor;
+use crate::math_expr::{
+    BinaryOperator, ColorTensor, ComparisonOperator, Constant, Function, MathExpr, SummationIndex,
+    UnaryOperator,
+};
+use num_complex::Complex64;
+use num_traits::ToPrimitive;
+use rustpython_parser::ast;
+use rustpython_parser::ast::ExpressionType;
+use rustpython_parser::error;
+use rustpython_parser::parser;
+use serde::Deserialize;
 use std::collections::HashSet;
 use std::fmt;
-use crate::math_expr::{MathExpr, BinaryOperator, ComparisonOperator, UnaryOperator, Constant, ColorTensor, SummationIndex, Function};
-use crate::math_expr::lorentz::LorentzTensor;
-use num_traits::ToPrimitive;
-use num_complex::Complex64;
-use rustpython_parser::parser;
-use rustpython_parser::ast;
-use rustpython_parser::ast::{ExpressionType};
-use rustpython_parser::error;
-use serde::Deserialize;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ParseMode {
@@ -17,19 +20,17 @@ pub enum ParseMode {
     Color,
 }
 
-pub fn parse_math(expr: &str, mode: ParseMode) -> Result<MathExpr,ParseError> {
+pub fn parse_math(expr: &str, mode: ParseMode) -> Result<MathExpr, ParseError> {
     let ast = parser::parse_expression(&expr)?;
     let mut indices = Indices::new();
-    convert_math(ast, mode, &mut indices).map_err(|err| ParseError::Conversion(expr.to_string(), err))
+    convert_math(ast, mode, &mut indices)
+        .map_err(|err| ParseError::Conversion(expr.to_string(), err))
 }
 
 #[derive(Debug)]
 pub enum ParseError {
     Parse(error::ParseError),
-    Conversion(
-        String,
-        ConversionError
-    ),
+    Conversion(String, ConversionError),
 }
 impl From<error::ParseError> for ParseError {
     fn from(err: error::ParseError) -> ParseError {
@@ -41,9 +42,13 @@ impl fmt::Display for ParseError {
         match self {
             ParseError::Parse(err) => writeln!(f, "Failed to parse math expression:\n{}", err),
             ParseError::Conversion(expr, err) => {
-                writeln!(f, "Failed to convert math expression: {}\n{}", err.kind, expr)?;
+                writeln!(
+                    f,
+                    "Failed to convert math expression: {}\n{}",
+                    err.kind, expr
+                )?;
                 if let Some(location) = err.location {
-                    writeln!(f, "{}{}", " ".repeat(location.column()-1), "^")?;
+                    writeln!(f, "{}^", " ".repeat(location.column() - 1))?;
                 }
                 Ok(())
             }
@@ -86,12 +91,20 @@ impl fmt::Display for ConversionErrorKind {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             ConversionErrorKind::UnsupportedExpression => write!(f, "Unsupported expression"),
-            ConversionErrorKind::UnsupportedBinaryOperator => write!(f, "Unsupported binary operator"),
-            ConversionErrorKind::UnsupportedUnaryOperator => write!(f, "Unsupported unary operator"),
-            ConversionErrorKind::UnsupportedComparisonOperator => write!(f, "Unsupported comparison operator"),
+            ConversionErrorKind::UnsupportedBinaryOperator => {
+                write!(f, "Unsupported binary operator")
+            }
+            ConversionErrorKind::UnsupportedUnaryOperator => {
+                write!(f, "Unsupported unary operator")
+            }
+            ConversionErrorKind::UnsupportedComparisonOperator => {
+                write!(f, "Unsupported comparison operator")
+            }
             ConversionErrorKind::UnsupportedFunctionType => write!(f, "Unsupported function call"),
             ConversionErrorKind::UnsupportedFunction => write!(f, "Unsupported function"),
-            ConversionErrorKind::UnsupportedAttributeType => write!(f, "Unsupported type of attribute"),
+            ConversionErrorKind::UnsupportedAttributeType => {
+                write!(f, "Unsupported type of attribute")
+            }
             ConversionErrorKind::UnsupportedAttribute => write!(f, "Unsupported attribute"),
             ConversionErrorKind::UnsupportedConstant => write!(f, "Unsupported constant"),
             ConversionErrorKind::IntegerOutOfRange => write!(f, "Integer out of range"),
@@ -103,13 +116,16 @@ impl fmt::Display for ConversionErrorKind {
 trait ResultExt {
     fn localize_err(self, location: ast::Location) -> Self;
 }
-impl<T> ResultExt for Result<T,ConversionError> {
+impl<T> ResultExt for Result<T, ConversionError> {
     fn localize_err(self, location: ast::Location) -> Result<T, ConversionError> {
         self.map_err(|e| e.localize(location))
     }
 }
 
-pub fn deserialize_lorentz_expr<'de, D>(deserializer: D) -> Result<MathExpr, D::Error> where D: serde::de::Deserializer<'de> {
+pub fn deserialize_lorentz_expr<'de, D>(deserializer: D) -> Result<MathExpr, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
     let expr = String::deserialize(deserializer)?;
     let math = parse_math(&expr, ParseMode::Lorentz).unwrap();
     Ok(math)
@@ -137,30 +153,47 @@ impl Indices {
         }
     }
     fn extend(&mut self, other: &Indices) {
-         self.indices.extend(&other.indices)
+        self.indices.extend(&other.indices)
     }
-    fn intersection<'a>(&'a self, other: &'a Indices) -> impl Iterator<Item=&'a SummationIndex> {
+    fn intersection<'a>(&'a self, other: &'a Indices) -> impl Iterator<Item = &'a SummationIndex> {
         self.indices.intersection(&other.indices)
     }
     fn is_empty(&self) -> bool {
         self.indices.is_empty()
     }
     fn single(&self) -> SummationIndex {
-        *self.indices.iter().next().expect("BUG: Single called on empty index collection")
+        *self
+            .indices
+            .iter()
+            .next()
+            .expect("BUG: Single called on empty index collection")
     }
 }
 
-fn convert_math(expr: ast::Expression, mode: ParseMode, indices: &mut Indices) -> Result<MathExpr,ConversionError> {
+fn convert_math(
+    expr: ast::Expression,
+    mode: ParseMode,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     let result = match expr.node {
         ExpressionType::Number { value } => convert_number(value),
         ExpressionType::Binop { op, a, b } => convert_binop(op, *a, *b, mode, indices),
         ExpressionType::Unop { op, a } => convert_unop(op, *a, mode, indices),
         ExpressionType::Identifier { name } => Ok(MathExpr::Variable { name }),
-        ExpressionType::Call { function, args, keywords } => convert_call(*function, args, keywords, mode, indices),
+        ExpressionType::Call {
+            function,
+            args,
+            keywords,
+        } => convert_call(*function, args, keywords, mode, indices),
         ExpressionType::Attribute { value, name } => convert_attribute(name, *value),
-        ExpressionType::IfExpression { test, body, orelse } => convert_if_expression(*test, *body, *orelse, mode, indices),
+        ExpressionType::IfExpression { test, body, orelse } => {
+            convert_if_expression(*test, *body, *orelse, mode, indices)
+        }
         ExpressionType::Compare { vals, ops } => convert_comparison(vals, ops),
-        _ => Err(ConversionError { location: Some(expr.location), kind: ConversionErrorKind::UnsupportedExpression }),
+        _ => Err(ConversionError {
+            location: Some(expr.location),
+            kind: ConversionErrorKind::UnsupportedExpression,
+        }),
     };
     result.localize_err(expr.location)
 }
@@ -168,16 +201,26 @@ fn convert_math(expr: ast::Expression, mode: ParseMode, indices: &mut Indices) -
 fn convert_number(value: ast::Number) -> Result<MathExpr, ConversionError> {
     let num = match value {
         ast::Number::Integer { value } => {
-            let num = value.to_f64().ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerOutOfRange))?;
+            let num = value
+                .to_f64()
+                .ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerOutOfRange))?;
             MathExpr::Number { value: num }
         }
         ast::Number::Float { value } => MathExpr::Number { value: value },
-        ast::Number::Complex { real, imag } => MathExpr::Complex { value: Complex64::new(real, imag) },
+        ast::Number::Complex { real, imag } => MathExpr::Complex {
+            value: Complex64::new(real, imag),
+        },
     };
     Ok(num)
 }
 
-fn convert_binop(operator: ast::Operator, left_ast: ast::Expression, right_ast: ast::Expression, mode: ParseMode, indices: &mut Indices) -> Result<MathExpr, ConversionError> {
+fn convert_binop(
+    operator: ast::Operator,
+    left_ast: ast::Expression,
+    right_ast: ast::Expression,
+    mode: ParseMode,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     let mut indices_left = Indices::new();
     let mut indices_right = Indices::new();
     let left = Box::new(convert_math(left_ast, mode, &mut indices_left)?);
@@ -186,15 +229,27 @@ fn convert_binop(operator: ast::Operator, left_ast: ast::Expression, right_ast: 
         ast::Operator::Add => {
             assert_eq!(indices_left, indices_right);
             indices.extend(&indices_left);
-            MathExpr::BinaryOp { operator: BinaryOperator::Add, left, right }
+            MathExpr::BinaryOp {
+                operator: BinaryOperator::Add,
+                left,
+                right,
+            }
         }
         ast::Operator::Sub => {
             assert_eq!(indices_left, indices_right);
             indices.extend(&indices_left);
-            MathExpr::BinaryOp { operator: BinaryOperator::Sub, left, right }
+            MathExpr::BinaryOp {
+                operator: BinaryOperator::Sub,
+                left,
+                right,
+            }
         }
         ast::Operator::Mult => {
-            let mut expr = MathExpr::BinaryOp { operator: BinaryOperator::Mul, left, right };
+            let mut expr = MathExpr::BinaryOp {
+                operator: BinaryOperator::Mul,
+                left,
+                right,
+            };
             for i in indices_left.intersection(&indices_right) {
                 expr = MathExpr::Sum {
                     expr: Box::new(expr),
@@ -207,31 +262,66 @@ fn convert_binop(operator: ast::Operator, left_ast: ast::Expression, right_ast: 
         ast::Operator::Div => {
             assert!(indices_right.is_empty());
             indices.extend(&indices_left);
-            MathExpr::BinaryOp { operator: BinaryOperator::Div, left, right }
+            MathExpr::BinaryOp {
+                operator: BinaryOperator::Div,
+                left,
+                right,
+            }
         }
         ast::Operator::Pow => {
-            if indices_left.len() == 1 && extract_numeric_literal(&right).map(|f| f==2f64).unwrap_or(false) {
+            if indices_left.len() == 1
+                && extract_numeric_literal(&right)
+                    .map(|f| f == 2f64)
+                    .unwrap_or(false)
+            {
                 MathExpr::Sum {
-                    expr: Box::new(MathExpr::BinaryOp { operator: BinaryOperator::Mul, left: left.clone(), right: left }),
+                    expr: Box::new(MathExpr::BinaryOp {
+                        operator: BinaryOperator::Mul,
+                        left: left.clone(),
+                        right: left,
+                    }),
                     index: indices_left.single(),
                 }
             } else {
                 assert!(indices_left.is_empty());
                 assert!(indices_right.is_empty());
-                MathExpr::BinaryOp { operator: BinaryOperator::Pow, left, right }
+                MathExpr::BinaryOp {
+                    operator: BinaryOperator::Pow,
+                    left,
+                    right,
+                }
             }
         }
-        _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedBinaryOperator))
+        _ => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedBinaryOperator,
+            ))
+        }
     };
     Ok(expr)
 }
 
-fn convert_unop(operator: ast::UnaryOperator, operand_ast: ast::Expression, mode: ParseMode, indices: &mut Indices) -> Result<MathExpr, ConversionError> {
+fn convert_unop(
+    operator: ast::UnaryOperator,
+    operand_ast: ast::Expression,
+    mode: ParseMode,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     let operand = Box::new(convert_math(operand_ast, mode, indices)?);
     let op = match operator {
-        ast::UnaryOperator::Pos => MathExpr::UnaryOp { operator: UnaryOperator::Plus, operand },
-        ast::UnaryOperator::Neg => MathExpr::UnaryOp { operator: UnaryOperator::Minus, operand },
-        _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedUnaryOperator))
+        ast::UnaryOperator::Pos => MathExpr::UnaryOp {
+            operator: UnaryOperator::Plus,
+            operand,
+        },
+        ast::UnaryOperator::Neg => MathExpr::UnaryOp {
+            operator: UnaryOperator::Minus,
+            operand,
+        },
+        _ => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedUnaryOperator,
+            ))
+        }
     };
     Ok(op)
 }
@@ -239,32 +329,59 @@ fn convert_unop(operator: ast::UnaryOperator, operand_ast: ast::Expression, mode
 fn convert_attribute(name: String, value: ast::Expression) -> Result<MathExpr, ConversionError> {
     let prefix = match value.node {
         ExpressionType::Identifier { name } => name,
-        _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedAttributeType)),
+        _ => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedAttributeType,
+            ))
+        }
     };
     let attr = match (&*prefix, &*name) {
         ("cmath", "pi") => MathExpr::Constant { name: Constant::Pi },
-        ("cmath", _) => return Err(ConversionError::new(ConversionErrorKind::UnsupportedConstant)),
-        (_, "real") => MathExpr::Call { function: Function::RealPart, args: vec![MathExpr::Variable { name: prefix }] },
-        (_, "imag") => MathExpr::Call { function: Function::ImaginaryPart, args: vec![MathExpr::Variable { name: prefix }] },
-        (_,_) => return Err(ConversionError::new(ConversionErrorKind::UnsupportedAttribute)),
+        ("cmath", _) => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedConstant,
+            ))
+        }
+        (_, "real") => MathExpr::Call {
+            function: Function::RealPart,
+            args: vec![MathExpr::Variable { name: prefix }],
+        },
+        (_, "imag") => MathExpr::Call {
+            function: Function::ImaginaryPart,
+            args: vec![MathExpr::Variable { name: prefix }],
+        },
+        (_, _) => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedAttribute,
+            ))
+        }
     };
     Ok(attr)
 }
 
-fn convert_call(function: ast::Expression, args_ast: Vec<ast::Expression>, keywords: Vec<ast::Keyword>, mode: ParseMode, indices: &mut Indices) -> Result<MathExpr, ConversionError> {
+fn convert_call(
+    function: ast::Expression,
+    args_ast: Vec<ast::Expression>,
+    keywords: Vec<ast::Keyword>,
+    mode: ParseMode,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     assert!(keywords.is_empty());
-    let args: Result<Vec<_>,_> = args_ast.into_iter().map(|arg| convert_math(arg, mode, indices)).collect();
+    let args: Result<Vec<_>, _> = args_ast
+        .into_iter()
+        .map(|arg| convert_math(arg, mode, indices))
+        .collect();
     let args = args?;
     match function.node {
-        ExpressionType::Identifier { name } => {
-            match mode {
-                ParseMode::Lorentz => convert_call_lorentz(name, args, indices),
-                ParseMode::Color => convert_call_color(name, args, indices),
-                ParseMode::Normal => convert_call_simple(name, args),
-            }
-        }
+        ExpressionType::Identifier { name } => match mode {
+            ParseMode::Lorentz => convert_call_lorentz(name, args, indices),
+            ParseMode::Color => convert_call_color(name, args, indices),
+            ParseMode::Normal => convert_call_simple(name, args),
+        },
         ExpressionType::Attribute { value, name } => convert_call_attr(name, *value, args),
-        _ => Err(ConversionError::new(ConversionErrorKind::UnsupportedFunctionType))
+        _ => Err(ConversionError::new(
+            ConversionErrorKind::UnsupportedFunctionType,
+        )),
     }
 }
 
@@ -274,48 +391,106 @@ fn convert_call_simple(function: String, args: Vec<MathExpr>) -> Result<MathExpr
             let re = args.get(0).and_then(extract_numeric_literal);
             let im = args.get(1).and_then(extract_numeric_literal);
             match (re, im) {
-                (Some(re), Some(im)) => MathExpr::Complex { value: Complex64::new(re, im)},
-                _ => MathExpr::Call { function: Function::Complex, args }
+                (Some(re), Some(im)) => MathExpr::Complex {
+                    value: Complex64::new(re, im),
+                },
+                _ => MathExpr::Call {
+                    function: Function::Complex,
+                    args,
+                },
             }
+        }
+        "complexconjugate" => MathExpr::Call {
+            function: Function::ComplexConjugate,
+            args,
         },
-        "complexconjugate" => MathExpr::Call { function: Function::ComplexConjugate, args },
-        _ => MathExpr::Call { function: Function::Other(function), args }
+        _ => MathExpr::Call {
+            function: Function::Other(function),
+            args,
+        },
     };
     Ok(fun)
 }
 
-fn convert_call_attr(name: String, value: ast::Expression, args: Vec<MathExpr>) -> Result<MathExpr, ConversionError> {
+fn convert_call_attr(
+    name: String,
+    value: ast::Expression,
+    args: Vec<MathExpr>,
+) -> Result<MathExpr, ConversionError> {
     let attr = match value.node {
         ExpressionType::Identifier { name } => name,
-        _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedFunctionType)),
+        _ => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedFunctionType,
+            ))
+        }
     };
     match &*attr {
         "cmath" => return convert_call_cmath(name, args),
         _ => (),
     };
     let fun = match &*name {
-        "conjugate" => MathExpr::Call{ function: Function::ComplexConjugate, args: vec![MathExpr::Variable { name: attr }]},
-        _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedFunction)),
+        "conjugate" => MathExpr::Call {
+            function: Function::ComplexConjugate,
+            args: vec![MathExpr::Variable { name: attr }],
+        },
+        _ => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedFunction,
+            ))
+        }
     };
     Ok(fun)
 }
 
 fn convert_call_cmath(function: String, args: Vec<MathExpr>) -> Result<MathExpr, ConversionError> {
     let fun = match &*function {
-        "abs" => MathExpr::Call { function: Function::Abs, args },
-        "cos" => MathExpr::Call { function: Function::Cos, args },
-        "sin" => MathExpr::Call { function: Function::Sin, args },
-        "tan" => MathExpr::Call { function: Function::Tan, args },
-        "asin" => MathExpr::Call { function: Function::ASin, args },
-        "acos" => MathExpr::Call { function: Function::ACos, args },
-        "sqrt" => MathExpr::Call { function: super::Function::Sqrt, args },
-        "log" => MathExpr::Call { function: super::Function::Log, args },
-        _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedFunction)),
+        "abs" => MathExpr::Call {
+            function: Function::Abs,
+            args,
+        },
+        "cos" => MathExpr::Call {
+            function: Function::Cos,
+            args,
+        },
+        "sin" => MathExpr::Call {
+            function: Function::Sin,
+            args,
+        },
+        "tan" => MathExpr::Call {
+            function: Function::Tan,
+            args,
+        },
+        "asin" => MathExpr::Call {
+            function: Function::ASin,
+            args,
+        },
+        "acos" => MathExpr::Call {
+            function: Function::ACos,
+            args,
+        },
+        "sqrt" => MathExpr::Call {
+            function: super::Function::Sqrt,
+            args,
+        },
+        "log" => MathExpr::Call {
+            function: super::Function::Log,
+            args,
+        },
+        _ => {
+            return Err(ConversionError::new(
+                ConversionErrorKind::UnsupportedFunction,
+            ))
+        }
     };
     Ok(fun)
 }
 
-fn convert_call_lorentz(name: String, args: Vec<MathExpr>, indices: &mut Indices) -> Result<MathExpr, ConversionError> {
+fn convert_call_lorentz(
+    name: String,
+    args: Vec<MathExpr>,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     let lorentz = match &*name {
         "ProjP" => LorentzTensor::ProjP {
             i1: extract_index(&args[0], indices)?,
@@ -358,12 +533,16 @@ fn convert_call_lorentz(name: String, args: Vec<MathExpr>, indices: &mut Indices
             i3: extract_index(&args[2], indices)?,
             i4: extract_index(&args[3], indices)?,
         },
-        _ => return convert_call_simple(name, args)
+        _ => return convert_call_simple(name, args),
     };
     Ok(MathExpr::LorentzTensor { lorentz })
 }
 
-fn convert_call_color(name: String, args: Vec<MathExpr>, indices: &mut Indices) -> Result<MathExpr, ConversionError> {
+fn convert_call_color(
+    name: String,
+    args: Vec<MathExpr>,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     let color = match &*name {
         "f" => ColorTensor::StructureConstant {
             a1: extract_index(&args[0], indices)?,
@@ -409,13 +588,14 @@ fn convert_call_color(name: String, args: Vec<MathExpr>, indices: &mut Indices) 
             i1: extract_index(&args[0], indices)?,
             jb2: extract_index(&args[1], indices)?,
         },
-        _ => return convert_call_simple(name, args)
+        _ => return convert_call_simple(name, args),
     };
     Ok(MathExpr::ColorTensor { color })
 }
 
 fn extract_index<T>(expr: &MathExpr, indices: &mut Indices) -> Result<T, ConversionError>
-where T: Clone + From<i64> + Into<SummationIndex>
+where
+    T: Clone + From<i64> + Into<SummationIndex>,
 {
     let number = extract_integer_literal(expr)?;
     let index = T::from(number);
@@ -426,23 +606,29 @@ where T: Clone + From<i64> + Into<SummationIndex>
 }
 
 fn extract_integer_literal(expr: &MathExpr) -> Result<i64, ConversionError> {
-    extract_numeric_literal(expr).and_then(|f| f.to_i64()).ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerExpected))
+    extract_numeric_literal(expr)
+        .and_then(|f| f.to_i64())
+        .ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerExpected))
 }
 
 fn extract_numeric_literal(expr: &MathExpr) -> Option<f64> {
     match expr {
         MathExpr::Number { value } => Some(*value),
-        MathExpr::UnaryOp { operator, operand } => {
-            match operator {
-                UnaryOperator::Plus => extract_numeric_literal(&operand),
-                UnaryOperator::Minus => extract_numeric_literal(&operand).map(|x| -x),
-            }
-        }
+        MathExpr::UnaryOp { operator, operand } => match operator {
+            UnaryOperator::Plus => extract_numeric_literal(&operand),
+            UnaryOperator::Minus => extract_numeric_literal(&operand).map(|x| -x),
+        },
         _ => None,
     }
 }
 
-fn convert_if_expression(test: ast::Expression, body: ast::Expression, orelse: ast::Expression, mode: ParseMode, indices: &mut Indices) -> Result<MathExpr, ConversionError> {
+fn convert_if_expression(
+    test: ast::Expression,
+    body: ast::Expression,
+    orelse: ast::Expression,
+    mode: ParseMode,
+    indices: &mut Indices,
+) -> Result<MathExpr, ConversionError> {
     let condition = Box::new(convert_condition(test)?);
     let mut indices_left = Indices::new();
     let mut indices_right = Indices::new();
@@ -460,15 +646,28 @@ fn convert_condition(expr: ast::Expression) -> Result<MathExpr, ConversionError>
     convert_math(expr, ParseMode::Normal, &mut Indices::new())
 }
 
-fn convert_comparison(values: Vec<ast::Expression>, operators: Vec<ast::Comparison>) -> Result<MathExpr, ConversionError> {
-    let operators: Result<_,_> =  operators.into_iter().map(|op| {
+fn convert_comparison(
+    values: Vec<ast::Expression>,
+    operators: Vec<ast::Comparison>,
+) -> Result<MathExpr, ConversionError> {
+    let operators: Result<_, _> = operators
+        .into_iter()
+        .map(|op| {
             let op = match op {
                 ast::Comparison::Equal => ComparisonOperator::Equals,
-                _ => return Err(ConversionError::new(ConversionErrorKind::UnsupportedComparisonOperator)),
+                _ => {
+                    return Err(ConversionError::new(
+                        ConversionErrorKind::UnsupportedComparisonOperator,
+                    ))
+                }
             };
             Ok(op)
-        }).collect();
-    let values: Result<_,_> = values.into_iter().map(|expr| convert_math(expr, ParseMode::Normal, &mut Indices::new())).collect();
+        })
+        .collect();
+    let values: Result<_, _> = values
+        .into_iter()
+        .map(|expr| convert_math(expr, ParseMode::Normal, &mut Indices::new()))
+        .collect();
     Ok(MathExpr::Comparison {
         values: values?,
         operators: operators?,
@@ -477,10 +676,10 @@ fn convert_comparison(values: Vec<ast::Expression>, operators: Vec<ast::Comparis
 
 #[cfg(test)]
 mod test {
+    use super::ParseMode;
     use crate::math_expr::MathExpr;
     use crate::ufo;
     use crate::ufo::UfoModel;
-    use super::ParseMode;
 
     #[test]
     fn expr1() {
@@ -529,7 +728,8 @@ mod test {
 
     #[test]
     fn mw() {
-        let value = "cmath.sqrt(MZ**2/2. + cmath.sqrt(MZ**4/4. - (aEW*cmath.pi*MZ**2)/(Gf*cmath.sqrt(2))))";
+        let value =
+            "cmath.sqrt(MZ**2/2. + cmath.sqrt(MZ**4/4. - (aEW*cmath.pi*MZ**2)/(Gf*cmath.sqrt(2))))";
         let result = super::parse_math(value, ParseMode::Normal);
         if result.is_err() {
             println!("{}", result.err().unwrap());
@@ -539,7 +739,7 @@ mod test {
 
     #[test]
     fn uvgc_123_24() {
-        let value =  "( 0 if MB else (complex(0,1)*G**3)/(48.*cmath.pi**2) )";
+        let value = "( 0 if MB else (complex(0,1)*G**3)/(48.*cmath.pi**2) )";
         super::parse_math(value, ParseMode::Normal).unwrap();
     }
     #[test]
@@ -593,14 +793,13 @@ mod test {
                     for o in orders.values() {
                         let ufo::UfoMath(ref expr) = o;
                         super::parse_math(&expr, ParseMode::Color).unwrap();
-
                     }
                 }
             }
         }
         for function in model.function_library.values() {
             let ufo::UfoMath(ref expr) = function.expr;
-                super::parse_math(&expr, ParseMode::Normal).unwrap();
+            super::parse_math(&expr, ParseMode::Normal).unwrap();
         }
     }
 

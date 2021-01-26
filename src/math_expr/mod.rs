@@ -2,8 +2,8 @@ pub mod lorentz;
 pub mod parse;
 
 use num_complex::Complex64;
-use serde::{Deserialize, Serialize};
 use num_traits::identities::Zero;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub enum Function {
@@ -80,24 +80,59 @@ impl IndexRange for SextetIndex {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(tag="tensor")]
+#[serde(tag = "tensor")]
 pub enum ColorTensor {
     #[serde(rename = "Identity")]
-    KroneckerDelta { i1: FundamentalIndex, jb2: FundamentalIndex },
+    KroneckerDelta {
+        i1: FundamentalIndex,
+        jb2: FundamentalIndex,
+    },
     #[serde(rename = "T")]
-    FundamentalRep { a1: AdjointIndex, i2: FundamentalIndex, jb3: FundamentalIndex },
+    FundamentalRep {
+        a1: AdjointIndex,
+        i2: FundamentalIndex,
+        jb3: FundamentalIndex,
+    },
     #[serde(rename = "f")]
-    StructureConstant { a1: AdjointIndex, a2: AdjointIndex, a3: AdjointIndex },
+    StructureConstant {
+        a1: AdjointIndex,
+        a2: AdjointIndex,
+        a3: AdjointIndex,
+    },
     #[serde(rename = "d")]
-    SymmetricTensor { a1: AdjointIndex, a2: AdjointIndex, a3: AdjointIndex },
-    Epsilon {i1: FundamentalIndex, i2: FundamentalIndex, i3: FundamentalIndex},
-    EpsilonBar {ib1: FundamentalIndex, ib2: FundamentalIndex, ib3: FundamentalIndex},
+    SymmetricTensor {
+        a1: AdjointIndex,
+        a2: AdjointIndex,
+        a3: AdjointIndex,
+    },
+    Epsilon {
+        i1: FundamentalIndex,
+        i2: FundamentalIndex,
+        i3: FundamentalIndex,
+    },
+    EpsilonBar {
+        ib1: FundamentalIndex,
+        ib2: FundamentalIndex,
+        ib3: FundamentalIndex,
+    },
     #[serde(rename = "T6")]
-    SextetRep {a1: AdjointIndex, alpha2: SextetIndex, betab3: SextetIndex},
+    SextetRep {
+        a1: AdjointIndex,
+        alpha2: SextetIndex,
+        betab3: SextetIndex,
+    },
     #[serde(rename = "K6")]
-    SextetClebschGordan{alpha1: SextetIndex, ib2: FundamentalIndex, jb3: FundamentalIndex},
+    SextetClebschGordan {
+        alpha1: SextetIndex,
+        ib2: FundamentalIndex,
+        jb3: FundamentalIndex,
+    },
     #[serde(rename = "K6Bar")]
-    AntiSextetClebschGordan{alphab1: SextetIndex, i2: FundamentalIndex, j3: FundamentalIndex},
+    AntiSextetClebschGordan {
+        alphab1: SextetIndex,
+        i2: FundamentalIndex,
+        j3: FundamentalIndex,
+    },
 }
 
 pub trait IndexRange {
@@ -107,11 +142,11 @@ pub trait IndexRange {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum SummationIndex {
-    Fundamental {index: FundamentalIndex},
-    Adjoint {index: AdjointIndex},
-    Sextet {index: SextetIndex},
-    Lorentz {index: lorentz::LorentzIndex},
-    Spinor {index: lorentz::SpinorIndex},
+    Fundamental { index: FundamentalIndex },
+    Adjoint { index: AdjointIndex },
+    Sextet { index: SextetIndex },
+    Lorentz { index: lorentz::LorentzIndex },
+    Spinor { index: lorentz::SpinorIndex },
 }
 impl SummationIndex {
     fn range(&self) -> std::ops::Range<u8> {
@@ -218,11 +253,11 @@ pub enum MathExpr {
     },
     LorentzTensor {
         #[serde(flatten)]
-        lorentz: lorentz::LorentzTensor
+        lorentz: lorentz::LorentzTensor,
     },
     ColorTensor {
         #[serde(flatten)]
-        color: ColorTensor
+        color: ColorTensor,
     },
     Comparison {
         values: Vec<MathExpr>,
@@ -231,7 +266,7 @@ pub enum MathExpr {
     Sum {
         expr: Box<MathExpr>,
         index: SummationIndex,
-    }
+    },
 }
 impl MathExpr {
     fn constant_propagation(self) -> MathExpr {
@@ -245,10 +280,21 @@ impl MathExpr {
                         MathExpr::with_value(value)
                     }
                 } else {
-                    MathExpr::UnaryOp { operator, operand: Box::new(op)}
+                    MathExpr::UnaryOp {
+                        operator,
+                        operand: Box::new(op),
+                    }
                 }
             }
-            MathExpr::BinaryOp { operator, left, right } => constant_propagation_binary(operator, left.constant_propagation(), right.constant_propagation()),
+            MathExpr::BinaryOp {
+                operator,
+                left,
+                right,
+            } => constant_propagation_binary(
+                operator,
+                left.constant_propagation(),
+                right.constant_propagation(),
+            ),
             _ => self,
         }
     }
@@ -261,48 +307,49 @@ impl MathExpr {
     }
     fn get_value(&self) -> Option<Complex64> {
         match self {
-            MathExpr::Number { value } => Some(Complex64::new(*value,0f64)),
+            MathExpr::Number { value } => Some(Complex64::new(*value, 0f64)),
             MathExpr::Complex { value } => Some(*value),
             _ => None,
         }
     }
 }
 
-fn constant_propagation_binary(operator: BinaryOperator, left: MathExpr, right: MathExpr) -> MathExpr {
+fn constant_propagation_binary(
+    operator: BinaryOperator,
+    left: MathExpr,
+    right: MathExpr,
+) -> MathExpr {
     let vl = left.get_value();
     let vr = right.get_value();
     match operator {
-        BinaryOperator::Mul => {
-            match (vl,vr) {
-                (Some(l), Some(r)) => return MathExpr::with_value(l*r),
-                (Some(l), _) if l.is_zero() => return MathExpr::Number { value: 0f64 },
-                (_, Some(r)) if r.is_zero() => return MathExpr::Number { value: 0f64 },
-                _ => (),
+        BinaryOperator::Mul => match (vl, vr) {
+            (Some(l), Some(r)) => return MathExpr::with_value(l * r),
+            (Some(l), _) if l.is_zero() => return MathExpr::Number { value: 0f64 },
+            (_, Some(r)) if r.is_zero() => return MathExpr::Number { value: 0f64 },
+            _ => (),
+        },
+        BinaryOperator::Add => match (vl, vr) {
+            (Some(l), Some(r)) => return MathExpr::with_value(l + r),
+            (Some(l), _) if l.is_zero() => return right,
+            (_, Some(r)) if r.is_zero() => return left,
+            _ => (),
+        },
+        BinaryOperator::Sub => match (vl, vr) {
+            (Some(l), Some(r)) => return MathExpr::with_value(l - r),
+            (Some(l), _) if l.is_zero() => {
+                return MathExpr::UnaryOp {
+                    operator: UnaryOperator::Minus,
+                    operand: Box::new(right),
+                }
             }
-        }
-        BinaryOperator::Add => {
-            match (vl, vr) {
-                (Some(l), Some(r)) => return MathExpr::with_value(l+r),
-                (Some(l), _) if l.is_zero() => return right,
-                (_, Some(r)) if r.is_zero() => return left,
-                _ => (),
-            }
-        }
-        BinaryOperator::Sub => {
-            match (vl, vr) {
-                (Some(l), Some(r)) => return MathExpr::with_value(l-r),
-                (Some(l), _) if l.is_zero() => return MathExpr::UnaryOp { operator: UnaryOperator::Minus, operand: Box::new(right) },
-                (_, Some(r)) if r.is_zero() => return left,
-                _ => (),
-            }
-        }
-        BinaryOperator::Div => {
-            match (vl, vr) {
-                (Some(l), Some(r)) if !r.is_zero() => return MathExpr::with_value(l/r),
-                (Some(l), None) if l.is_zero() => return MathExpr::Number { value: 0f64 },
-                _ => (),
-            }
-        }
+            (_, Some(r)) if r.is_zero() => return left,
+            _ => (),
+        },
+        BinaryOperator::Div => match (vl, vr) {
+            (Some(l), Some(r)) if !r.is_zero() => return MathExpr::with_value(l / r),
+            (Some(l), None) if l.is_zero() => return MathExpr::Number { value: 0f64 },
+            _ => (),
+        },
         _ => (),
     };
     MathExpr::BinaryOp {

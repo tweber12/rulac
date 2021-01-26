@@ -1,4 +1,4 @@
-use super::{BinaryOperator, IndexRange, MathExpr, SummationIndex};
+use super::{BinaryOperator, IndexRange, MathExpr, Number, SummationIndex};
 use num_complex::Complex64;
 use num_traits::identities::Zero;
 use permutohedron;
@@ -88,7 +88,7 @@ pub enum LorentzTensor {
     },
 }
 impl LorentzTensor {
-    fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> Complex64 {
+    fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> Number {
         match self {
             &LorentzTensor::ChargeConjugation { i1, i2 } => {
                 components.charge_conjugation.get(indices[i1], indices[i2])
@@ -223,7 +223,7 @@ impl SpinTensorComponents {
                 );
                 let expr =
                     expand_sums(&relation.expr, components, &mut indices).constant_propagation();
-                match expr.get_value() {
+                match expr.extract_number() {
                     None => panic!(
                         "BUG: Failed to compute ({},{}) component of gamma5: {:?}",
                         i, j, expr
@@ -257,7 +257,7 @@ impl SpinTensorComponents {
                 );
                 let expr =
                     expand_sums(&relation.expr, components, &mut indices).constant_propagation();
-                match expr.get_value() {
+                match expr.extract_number() {
                     None => panic!(
                         "BUG: Failed to compute ({},{}) component of ProjM: {:?}",
                         i, j, expr
@@ -291,7 +291,7 @@ impl SpinTensorComponents {
                 );
                 let expr =
                     expand_sums(&relation.expr, components, &mut indices).constant_propagation();
-                match expr.get_value() {
+                match expr.extract_number() {
                     None => panic!(
                         "BUG: Failed to compute ({},{}) component of ProjP: {:?}",
                         i, j, expr
@@ -339,7 +339,7 @@ impl SpinTensorComponents {
                         );
                         let expr = expand_sums(&relation.expr, components, &mut indices)
                             .constant_propagation();
-                        match expr.get_value() {
+                        match expr.extract_number() {
                             None => panic!(
                                 "BUG: Failed to compute ({},{},{},{}) component of sigma: {:?}",
                                 mu, nu, i, j, expr
@@ -362,13 +362,12 @@ impl SpinTensorComponents {
         permutohedron::heap_recursive(&mut start, |permutation| {
             let even = is_permutation_even(permutation);
             let re = if even { sign } else { -sign };
-            let value = Complex64::new(re, 0f64);
             components.insert(
                 permutation[0],
                 permutation[1],
                 permutation[2],
                 permutation[3],
-                value,
+                re,
             );
         });
         components
@@ -431,11 +430,7 @@ fn expand_sums(
         }
         MathExpr::LorentzTensor { lorentz } => {
             let value = lorentz.get_component(components, indices);
-            if value.im == 0f64 {
-                MathExpr::Number { value: value.re }
-            } else {
-                MathExpr::Complex { value }
-            }
+            MathExpr::Number { value }
         }
         MathExpr::BinaryOp {
             operator,
@@ -528,14 +523,16 @@ impl TensorComponents2 {
             components: HashMap::new(),
         }
     }
-    pub fn get(&self, i1: u8, i2: u8) -> Complex64 {
-        *self
-            .components
-            .get(&(i1, i2))
-            .unwrap_or(&Complex64::new(0f64, 0f64))
+    pub fn get(&self, i1: u8, i2: u8) -> Number {
+        Number::Complex(
+            *self
+                .components
+                .get(&(i1, i2))
+                .unwrap_or(&Complex64::new(0f64, 0f64)),
+        )
     }
-    fn insert(&mut self, i1: u8, i2: u8, value: Complex64) {
-        self.components.insert((i1, i2), value);
+    fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, value: T) {
+        self.components.insert((i1, i2), value.into().as_complex());
     }
 }
 
@@ -549,14 +546,17 @@ impl TensorComponents3 {
             components: HashMap::new(),
         }
     }
-    pub fn get(&self, i1: u8, i2: u8, i3: u8) -> Complex64 {
-        *self
-            .components
-            .get(&(i1, i2, i3))
-            .unwrap_or(&Complex64::new(0f64, 0f64))
+    pub fn get(&self, i1: u8, i2: u8, i3: u8) -> Number {
+        Number::Complex(
+            *self
+                .components
+                .get(&(i1, i2, i3))
+                .unwrap_or(&Complex64::new(0f64, 0f64)),
+        )
     }
-    fn insert(&mut self, i1: u8, i2: u8, i3: u8, value: Complex64) {
-        self.components.insert((i1, i2, i3), value);
+    fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, i3: u8, value: T) {
+        self.components
+            .insert((i1, i2, i3), value.into().as_complex());
     }
 }
 
@@ -570,14 +570,17 @@ impl TensorComponents4 {
             components: HashMap::new(),
         }
     }
-    pub fn get(&self, i1: u8, i2: u8, i3: u8, i4: u8) -> Complex64 {
-        *self
-            .components
-            .get(&(i1, i2, i3, i4))
-            .unwrap_or(&Complex64::new(0f64, 0f64))
+    pub fn get(&self, i1: u8, i2: u8, i3: u8, i4: u8) -> Number {
+        Number::Complex(
+            *self
+                .components
+                .get(&(i1, i2, i3, i4))
+                .unwrap_or(&Complex64::new(0f64, 0f64)),
+        )
     }
-    fn insert(&mut self, i1: u8, i2: u8, i3: u8, i4: u8, value: Complex64) {
-        self.components.insert((i1, i2, i3, i4), value);
+    fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, i3: u8, i4: u8, value: T) {
+        self.components
+            .insert((i1, i2, i3, i4), value.into().as_complex());
     }
 }
 
@@ -639,14 +642,23 @@ mod test {
     #[test]
     fn epsilon() {
         let eps = super::SpinTensorComponents::compute_epsilon(1f64);
-        assert_eq!(eps.get(0, 1, 2, 3), Complex64::new(1f64, 0f64));
-        assert_eq!(eps.get(2, 1, 3, 0), Complex64::new(1f64, 0f64));
-        assert_eq!(eps.get(3, 2, 1, 0), Complex64::new(1f64, 0f64));
-        assert_eq!(eps.get(1, 2, 3, 0), Complex64::new(-1f64, 0f64));
-        assert_eq!(eps.get(3, 0, 1, 2), Complex64::new(-1f64, 0f64));
-        assert_eq!(eps.get(1, 3, 0, 2), Complex64::new(-1f64, 0f64));
-        assert_eq!(eps.get(1, 2, 1, 0), Complex64::new(0f64, 0f64));
-        assert_eq!(eps.get(1, 0, 3, 0), Complex64::new(0f64, 0f64));
+        assert_eq!(eps.get(0, 1, 2, 3).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(eps.get(2, 1, 3, 0).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(eps.get(3, 2, 1, 0).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(
+            eps.get(1, 2, 3, 0).as_complex(),
+            Complex64::new(-1f64, 0f64)
+        );
+        assert_eq!(
+            eps.get(3, 0, 1, 2).as_complex(),
+            Complex64::new(-1f64, 0f64)
+        );
+        assert_eq!(
+            eps.get(1, 3, 0, 2).as_complex(),
+            Complex64::new(-1f64, 0f64)
+        );
+        assert_eq!(eps.get(1, 2, 1, 0).as_complex(), Complex64::new(0f64, 0f64));
+        assert_eq!(eps.get(1, 0, 3, 0).as_complex(), Complex64::new(0f64, 0f64));
     }
 
     #[test]
@@ -654,10 +666,10 @@ mod test {
         let components =
             super::SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let gamma5 = components.gamma5;
-        assert_eq!(gamma5.get(1, 1), Complex64::new(1f64, 0f64));
-        assert_eq!(gamma5.get(2, 2), Complex64::new(1f64, 0f64));
-        assert_eq!(gamma5.get(3, 3), Complex64::new(-1f64, 0f64));
-        assert_eq!(gamma5.get(4, 4), Complex64::new(-1f64, 0f64));
+        assert_eq!(gamma5.get(1, 1).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(gamma5.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(gamma5.get(3, 3).as_complex(), Complex64::new(-1f64, 0f64));
+        assert_eq!(gamma5.get(4, 4).as_complex(), Complex64::new(-1f64, 0f64));
         assert_eq!(gamma5.components.len(), 4);
     }
 
@@ -666,8 +678,8 @@ mod test {
         let components =
             super::SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let projm = components.proj_m;
-        assert_eq!(projm.get(3, 3), Complex64::new(1f64, 0f64));
-        assert_eq!(projm.get(4, 4), Complex64::new(1f64, 0f64));
+        assert_eq!(projm.get(3, 3).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(projm.get(4, 4).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projm.components.len(), 2);
     }
 
@@ -676,8 +688,8 @@ mod test {
         let components =
             super::SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let projp = components.proj_p;
-        assert_eq!(projp.get(1, 1), Complex64::new(1f64, 0f64));
-        assert_eq!(projp.get(2, 2), Complex64::new(1f64, 0f64));
+        assert_eq!(projp.get(1, 1).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(projp.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projp.components.len(), 2);
     }
 }

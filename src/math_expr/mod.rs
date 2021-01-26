@@ -4,6 +4,7 @@ pub mod parse;
 use num_complex::Complex64;
 use num_traits::identities::Zero;
 use serde::{Deserialize, Serialize};
+use std::ops;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub enum Function {
@@ -214,14 +215,99 @@ pub enum Constant {
     Pi,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
+pub enum Number {
+    Integer(i64),
+    Real(f64),
+    Complex(Complex64),
+}
+impl Number {
+    fn as_complex(self) -> Complex64 {
+        match self {
+            Number::Integer(i) => Complex64::new(i as f64, 0f64),
+            Number::Real(f) => Complex64::new(f, 0f64),
+            Number::Complex(c) => c,
+        }
+    }
+}
+macro_rules! impl_op {
+    ($trait:ident, $op:ident) => {
+        impl ops::$trait<Number> for Number {
+            type Output = Number;
+            fn $op(self, other: Number) -> Number {
+                match (self, other) {
+                    (Number::Integer(i), Number::Integer(j)) => Number::Integer(i.$op(j)),
+                    (Number::Integer(i), Number::Real(f)) => Number::Real((i as f64).$op(f)),
+                    (Number::Integer(i), Number::Complex(c)) => {
+                        Number::Complex(Complex64::new(i as f64, 0f64).$op(c))
+                    }
+                    (Number::Real(f), Number::Integer(j)) => Number::Real(f.$op(j as f64)),
+                    (Number::Real(f), Number::Real(g)) => Number::Real(f.$op(g)),
+                    (Number::Real(f), Number::Complex(c)) => {
+                        Number::Complex(Complex64::new(f, 0f64).$op(c))
+                    }
+                    (Number::Complex(c), Number::Integer(j)) => {
+                        Number::Complex(c.$op(Complex64::new(j as f64, 0f64)))
+                    }
+                    (Number::Complex(c), Number::Real(f)) => {
+                        Number::Complex(c.$op(Complex64::new(f, 0f64)))
+                    }
+                    (Number::Complex(c), Number::Complex(d)) => Number::Complex(c.$op(d)),
+                }
+            }
+        }
+    };
+}
+impl_op!(Add, add);
+impl_op!(Mul, mul);
+impl_op!(Sub, sub);
+impl_op!(Div, div);
+
+impl ops::Neg for Number {
+    type Output = Number;
+    fn neg(self) -> Number {
+        match self {
+            Number::Integer(i) => Number::Integer(i.neg()),
+            Number::Real(f) => Number::Real(f.neg()),
+            Number::Complex(c) => Number::Complex(c.neg()),
+        }
+    }
+}
+
+impl Zero for Number {
+    fn zero() -> Number {
+        Number::Integer(0)
+    }
+    fn is_zero(&self) -> bool {
+        match self {
+            Number::Integer(i) => i.is_zero(),
+            Number::Real(f) => f.is_zero(),
+            Number::Complex(c) => c.is_zero(),
+        }
+    }
+}
+
+impl From<i64> for Number {
+    fn from(other: i64) -> Number {
+        Number::Integer(other)
+    }
+}
+impl From<f64> for Number {
+    fn from(other: f64) -> Number {
+        Number::Real(other)
+    }
+}
+impl From<Complex64> for Number {
+    fn from(other: Complex64) -> Number {
+        Number::Complex(other)
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum MathExpr {
     Number {
-        value: f64,
-    },
-    Complex {
-        value: Complex64,
+        value: Number,
     },
     Call {
         #[serde(deserialize_with = "deserialize_function")]
@@ -273,11 +359,11 @@ impl MathExpr {
         match self {
             MathExpr::UnaryOp { operator, operand } => {
                 let op = operand.constant_propagation();
-                if let Some(value) = op.get_value() {
+                if let Some(value) = op.extract_number() {
                     if operator == UnaryOperator::Minus {
-                        MathExpr::with_value(-value)
+                        MathExpr::Number { value: -value }
                     } else {
-                        MathExpr::with_value(value)
+                        MathExpr::Number { value }
                     }
                 } else {
                     MathExpr::UnaryOp {
@@ -298,17 +384,9 @@ impl MathExpr {
             _ => self,
         }
     }
-    fn with_value(value: Complex64) -> MathExpr {
-        if value.im == 0f64 {
-            MathExpr::Number { value: value.re }
-        } else {
-            MathExpr::Complex { value }
-        }
-    }
-    fn get_value(&self) -> Option<Complex64> {
+    fn extract_number(&self) -> Option<Number> {
         match self {
-            MathExpr::Number { value } => Some(Complex64::new(*value, 0f64)),
-            MathExpr::Complex { value } => Some(*value),
+            MathExpr::Number { value } => Some(*value),
             _ => None,
         }
     }
@@ -319,23 +397,31 @@ fn constant_propagation_binary(
     left: MathExpr,
     right: MathExpr,
 ) -> MathExpr {
-    let vl = left.get_value();
-    let vr = right.get_value();
+    let vl = left.extract_number();
+    let vr = right.extract_number();
     match operator {
         BinaryOperator::Mul => match (vl, vr) {
-            (Some(l), Some(r)) => return MathExpr::with_value(l * r),
-            (Some(l), _) if l.is_zero() => return MathExpr::Number { value: 0f64 },
-            (_, Some(r)) if r.is_zero() => return MathExpr::Number { value: 0f64 },
+            (Some(l), Some(r)) => return MathExpr::Number { value: l * r },
+            (Some(l), _) if l.is_zero() => {
+                return MathExpr::Number {
+                    value: Number::zero(),
+                }
+            }
+            (_, Some(r)) if r.is_zero() => {
+                return MathExpr::Number {
+                    value: Number::zero(),
+                }
+            }
             _ => (),
         },
         BinaryOperator::Add => match (vl, vr) {
-            (Some(l), Some(r)) => return MathExpr::with_value(l + r),
+            (Some(l), Some(r)) => return MathExpr::Number { value: l + r },
             (Some(l), _) if l.is_zero() => return right,
             (_, Some(r)) if r.is_zero() => return left,
             _ => (),
         },
         BinaryOperator::Sub => match (vl, vr) {
-            (Some(l), Some(r)) => return MathExpr::with_value(l - r),
+            (Some(l), Some(r)) => return MathExpr::Number { value: l - r },
             (Some(l), _) if l.is_zero() => {
                 return MathExpr::UnaryOp {
                     operator: UnaryOperator::Minus,
@@ -346,8 +432,12 @@ fn constant_propagation_binary(
             _ => (),
         },
         BinaryOperator::Div => match (vl, vr) {
-            (Some(l), Some(r)) if !r.is_zero() => return MathExpr::with_value(l / r),
-            (Some(l), None) if l.is_zero() => return MathExpr::Number { value: 0f64 },
+            (Some(l), Some(r)) if !r.is_zero() => return MathExpr::Number { value: l / r },
+            (Some(l), None) if l.is_zero() => {
+                return MathExpr::Number {
+                    value: Number::zero(),
+                }
+            }
             _ => (),
         },
         _ => (),

@@ -1,7 +1,7 @@
 use crate::math_expr::lorentz::LorentzTensor;
 use crate::math_expr::{
-    BinaryOperator, ColorTensor, ComparisonOperator, Constant, Function, MathExpr, SummationIndex,
-    UnaryOperator,
+    BinaryOperator, ColorTensor, ComparisonOperator, Constant, Function, MathExpr, Number,
+    SummationIndex, UnaryOperator,
 };
 use num_complex::Complex64;
 use num_traits::ToPrimitive;
@@ -202,13 +202,17 @@ fn convert_number(value: ast::Number) -> Result<MathExpr, ConversionError> {
     let num = match value {
         ast::Number::Integer { value } => {
             let num = value
-                .to_f64()
+                .to_i64()
                 .ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerOutOfRange))?;
-            MathExpr::Number { value: num }
+            MathExpr::Number {
+                value: Number::Integer(num),
+            }
         }
-        ast::Number::Float { value } => MathExpr::Number { value: value },
-        ast::Number::Complex { real, imag } => MathExpr::Complex {
-            value: Complex64::new(real, imag),
+        ast::Number::Float { value } => MathExpr::Number {
+            value: Number::Real(value),
+        },
+        ast::Number::Complex { real, imag } => MathExpr::Number {
+            value: Number::Complex(Complex64::new(real, imag)),
         },
     };
     Ok(num)
@@ -271,7 +275,7 @@ fn convert_binop(
         ast::Operator::Pow => {
             if indices_left.len() == 1
                 && extract_numeric_literal(&right)
-                    .map(|f| f == 2f64)
+                    .map(|i| i == Number::Integer(2))
                     .unwrap_or(false)
             {
                 MathExpr::Sum {
@@ -388,11 +392,11 @@ fn convert_call(
 fn convert_call_simple(function: String, args: Vec<MathExpr>) -> Result<MathExpr, ConversionError> {
     let fun = match &*function {
         "complex" => {
-            let re = args.get(0).and_then(extract_numeric_literal);
-            let im = args.get(1).and_then(extract_numeric_literal);
+            let re = args.get(0).and_then(extract_float_literal);
+            let im = args.get(1).and_then(extract_float_literal);
             match (re, im) {
-                (Some(re), Some(im)) => MathExpr::Complex {
-                    value: Complex64::new(re, im),
+                (Some(re), Some(im)) => MathExpr::Number {
+                    value: Number::Complex(Complex64::new(re, im)),
                 },
                 _ => MathExpr::Call {
                     function: Function::Complex,
@@ -606,12 +610,21 @@ where
 }
 
 fn extract_integer_literal(expr: &MathExpr) -> Result<i64, ConversionError> {
-    extract_numeric_literal(expr)
-        .and_then(|f| f.to_i64())
-        .ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerExpected))
+    match extract_numeric_literal(expr) {
+        Some(Number::Integer(i)) => Ok(i),
+        _ => Err(ConversionError::new(ConversionErrorKind::IntegerExpected)),
+    }
 }
 
-fn extract_numeric_literal(expr: &MathExpr) -> Option<f64> {
+fn extract_float_literal(expr: &MathExpr) -> Option<f64> {
+    match extract_numeric_literal(expr) {
+        Some(Number::Integer(i)) => Some(i as f64),
+        Some(Number::Real(f)) => Some(f),
+        _ => None,
+    }
+}
+
+fn extract_numeric_literal(expr: &MathExpr) -> Option<Number> {
     match expr {
         MathExpr::Number { value } => Some(*value),
         MathExpr::UnaryOp { operator, operand } => match operator {

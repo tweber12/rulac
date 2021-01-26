@@ -61,7 +61,7 @@ impl<'a> SkeletonBuilder<'a> {
         };
         let last = Id {
             pdg_code: self.model.anti_pdg_code(self.left_out),
-            internal: InternalId((2 << max_level - 1) - 1, max_level),
+            internal: InternalId((2 << (max_level - 1)) - 1, max_level),
         };
         self.levels[0].particles.insert(left_out, Bone::External);
         let last_level = self.levels[max_level - 1]
@@ -160,8 +160,8 @@ impl LevelBuilder {
         let internal = left_id.internal + right_id.internal;
         let mut constituents = vec![left_id, right_id];
         for v in vs.iter() {
-            match v {
-                &VertexLeaf::Complete(ref c) => {
+            match *v {
+                VertexLeaf::Complete(ref c) => {
                     let bone = Bone::Combination {
                         vertex: c.vertex.name.clone(),
                         constituents: constituents.clone(),
@@ -172,7 +172,7 @@ impl LevelBuilder {
                     };
                     self.particles.insert(id, bone);
                 }
-                &VertexLeaf::Incomplete(ref c) => {
+                VertexLeaf::Incomplete(ref c) => {
                     constituents.sort();
                     let incomplete = Incomplete {
                         internal,

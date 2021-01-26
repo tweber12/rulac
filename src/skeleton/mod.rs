@@ -86,7 +86,7 @@ impl Level {
             for b in bs.iter() {
                 println!("\t {}", b);
             }
-            println!("");
+            println!();
         }
     }
 }
@@ -101,9 +101,9 @@ pub enum Bone {
 }
 impl Bone {
     fn count_graphs(&self, skeleton: &UncoloredSkeleton) -> usize {
-        match self {
-            &Bone::External => 1,
-            &Bone::Combination {
+        match *self {
+            Bone::External => 1,
+            Bone::Combination {
                 ref constituents, ..
             } => constituents
                 .iter()

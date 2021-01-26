@@ -31,7 +31,7 @@ impl<'a> VertexList<'a> {
         while ok {
             self.contents
                 .entry(particles[0])
-                .or_insert_with(|| VertexListParticle::new())
+                .or_insert_with(VertexListParticle::new)
                 .insert(&particles, vertex);
             ok = particles.next_permutation();
         }

@@ -429,10 +429,9 @@ fn convert_call_attr(
             ))
         }
     };
-    match &*attr {
-        "cmath" => return convert_call_cmath(name, args),
-        _ => (),
-    };
+    if attr == "cmath" {
+        return convert_call_cmath(name, args);
+    }
     let fun = match &*name {
         "conjugate" => MathExpr::Call {
             function: Function::ComplexConjugate,

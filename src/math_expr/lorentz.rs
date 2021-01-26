@@ -1,7 +1,6 @@
 use super::{BinaryOperator, IndexRange, MathExpr, Number, SummationIndex};
 use num_complex::Complex64;
 use num_traits::identities::Zero;
-use permutohedron;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt;
@@ -89,33 +88,31 @@ pub enum LorentzTensor {
 }
 impl LorentzTensor {
     fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> Number {
-        match self {
-            &LorentzTensor::ChargeConjugation { i1, i2 } => {
+        match *self {
+            LorentzTensor::ChargeConjugation { i1, i2 } => {
                 components.charge_conjugation.get(indices[i1], indices[i2])
             }
-            &LorentzTensor::Epsilon { mu1, mu2, mu3, mu4 } => {
+            LorentzTensor::Epsilon { mu1, mu2, mu3, mu4 } => {
                 components
                     .epsilon
                     .get(indices[mu1], indices[mu2], indices[mu3], indices[mu4])
             }
-            &LorentzTensor::Gamma { mu1, i2, i3 } => {
+            LorentzTensor::Gamma { mu1, i2, i3 } => {
                 components.gamma.get(indices[mu1], indices[i2], indices[i3])
             }
-            &LorentzTensor::Gamma5 { i1, i2 } => components.gamma5.get(indices[i1], indices[i2]),
-            &LorentzTensor::KroneckerDelta { i1, i2 } => {
+            LorentzTensor::Gamma5 { i1, i2 } => components.gamma5.get(indices[i1], indices[i2]),
+            LorentzTensor::KroneckerDelta { i1, i2 } => {
                 components.identity.get(indices[i1], indices[i2])
             }
-            &LorentzTensor::Metric { mu1, mu2 } => {
-                components.metric.get(indices[mu1], indices[mu2])
-            }
-            &LorentzTensor::ProjM { i1, i2 } => components.proj_m.get(indices[i1], indices[i2]),
-            &LorentzTensor::ProjP { i1, i2 } => components.proj_p.get(indices[i1], indices[i2]),
-            &LorentzTensor::Sigma { mu1, mu2, i3, i4 } => {
+            LorentzTensor::Metric { mu1, mu2 } => components.metric.get(indices[mu1], indices[mu2]),
+            LorentzTensor::ProjM { i1, i2 } => components.proj_m.get(indices[i1], indices[i2]),
+            LorentzTensor::ProjP { i1, i2 } => components.proj_p.get(indices[i1], indices[i2]),
+            LorentzTensor::Sigma { mu1, mu2, i3, i4 } => {
                 components
-                    .epsilon
+                    .sigma
                     .get(indices[mu1], indices[mu2], indices[i3], indices[i4])
             }
-            &LorentzTensor::Momentum { .. } => unimplemented! {},
+            LorentzTensor::Momentum { .. } => unimplemented! {},
         }
     }
 }
@@ -137,7 +134,7 @@ impl SpinTensorComponents {
     ) -> Result<SpinTensorComponents, SpinComponentsError> {
         let mut contents = Vec::new();
         fs::File::open(path)?.read_to_end(&mut contents)?;
-        let internal: SpinTensorComponentsInternal = toml::from_slice(&mut contents)?;
+        let internal: SpinTensorComponentsInternal = toml::from_slice(&contents)?;
         let identity = SpinTensorComponents::compute_identity();
         let epsilon = SpinTensorComponents::compute_epsilon(internal.epsilon_sign);
         let mut components = SpinTensorComponents {
@@ -161,35 +158,31 @@ impl SpinTensorComponents {
     }
 
     // Internal functions to derive the remaining lorentz structures
-    fn compute_metric(diagonal: &[f64]) -> TensorComponents2 {
+    fn compute_metric(diagonal: &[Number]) -> TensorComponents2 {
         let mut metric = TensorComponents2::new();
         for (i, d) in LorentzIndex::range().zip(diagonal.iter()) {
             metric.insert(i, i, *d);
         }
         metric
     }
-    fn compute_gamma(matrix: &[[[Complex64; 4]; 4]]) -> TensorComponents3 {
+    fn compute_gamma(matrix: &[[[Number; 4]; 4]]) -> TensorComponents3 {
         let mut gamma = TensorComponents3::new();
         for mu in LorentzIndex::range() {
             for i in SpinorIndex::range() {
                 for j in SpinorIndex::range() {
                     let value = matrix[mu as usize][(i - 1) as usize][(j - 1) as usize];
-                    if !value.is_zero() {
-                        gamma.insert(mu, i, j, value);
-                    }
+                    gamma.insert(mu, i, j, value);
                 }
             }
         }
         gamma
     }
-    fn compute_charge_conjugation(matrix: &[[Complex64; 4]]) -> TensorComponents2 {
+    fn compute_charge_conjugation(matrix: &[[Number; 4]]) -> TensorComponents2 {
         let mut charge_conjugation = TensorComponents2::new();
         for i in SpinorIndex::range() {
             for j in SpinorIndex::range() {
                 let value = matrix[(i - 1) as usize][(j - 1) as usize];
-                if !value.is_zero() {
-                    charge_conjugation.insert(i, j, value);
-                }
+                charge_conjugation.insert(i, j, value);
             }
         }
         charge_conjugation
@@ -205,22 +198,12 @@ impl SpinTensorComponents {
         let mut gamma5 = TensorComponents2::new();
         let mut indices = Indices::new();
         for (i, &index) in relation.lorentz.iter().enumerate() {
-            indices.set_index(SummationIndex::Lorentz { index }, i as u8);
+            indices.set_index(index, i as u8);
         }
         for i in SpinorIndex::range() {
-            indices.set_index(
-                SummationIndex::Spinor {
-                    index: relation.spinor[0],
-                },
-                i,
-            );
+            indices.set_index(relation.spinor[0], i);
             for j in SpinorIndex::range() {
-                indices.set_index(
-                    SummationIndex::Spinor {
-                        index: relation.spinor[1],
-                    },
-                    j,
-                );
+                indices.set_index(relation.spinor[1], j);
                 let expr =
                     expand_sums(&relation.expr, components, &mut indices).constant_propagation();
                 match expr.extract_number() {
@@ -228,11 +211,7 @@ impl SpinTensorComponents {
                         "BUG: Failed to compute ({},{}) component of gamma5: {:?}",
                         i, j, expr
                     ),
-                    Some(e) => {
-                        if !e.is_zero() {
-                            gamma5.insert(i, j, e);
-                        }
-                    }
+                    Some(e) => gamma5.insert(i, j, e),
                 }
             }
         }
@@ -242,19 +221,9 @@ impl SpinTensorComponents {
         let mut projm = TensorComponents2::new();
         let mut indices = Indices::new();
         for i in SpinorIndex::range() {
-            indices.set_index(
-                SummationIndex::Spinor {
-                    index: relation.spinor[0],
-                },
-                i,
-            );
+            indices.set_index(relation.spinor[0], i);
             for j in SpinorIndex::range() {
-                indices.set_index(
-                    SummationIndex::Spinor {
-                        index: relation.spinor[1],
-                    },
-                    j,
-                );
+                indices.set_index(relation.spinor[1], j);
                 let expr =
                     expand_sums(&relation.expr, components, &mut indices).constant_propagation();
                 match expr.extract_number() {
@@ -262,11 +231,7 @@ impl SpinTensorComponents {
                         "BUG: Failed to compute ({},{}) component of ProjM: {:?}",
                         i, j, expr
                     ),
-                    Some(e) => {
-                        if !e.is_zero() {
-                            projm.insert(i, j, e);
-                        }
-                    }
+                    Some(e) => projm.insert(i, j, e),
                 }
             }
         }
@@ -276,19 +241,9 @@ impl SpinTensorComponents {
         let mut projp = TensorComponents2::new();
         let mut indices = Indices::new();
         for i in SpinorIndex::range() {
-            indices.set_index(
-                SummationIndex::Spinor {
-                    index: relation.spinor[0],
-                },
-                i,
-            );
+            indices.set_index(relation.spinor[0], i);
             for j in SpinorIndex::range() {
-                indices.set_index(
-                    SummationIndex::Spinor {
-                        index: relation.spinor[1],
-                    },
-                    j,
-                );
+                indices.set_index(relation.spinor[1], j);
                 let expr =
                     expand_sums(&relation.expr, components, &mut indices).constant_propagation();
                 match expr.extract_number() {
@@ -296,11 +251,7 @@ impl SpinTensorComponents {
                         "BUG: Failed to compute ({},{}) component of ProjP: {:?}",
                         i, j, expr
                     ),
-                    Some(e) => {
-                        if !e.is_zero() {
-                            projp.insert(i, j, e);
-                        }
-                    }
+                    Some(e) => projp.insert(i, j, e),
                 }
             }
         }
@@ -310,33 +261,13 @@ impl SpinTensorComponents {
         let mut sigma = TensorComponents4::new();
         let mut indices = Indices::new();
         for mu in LorentzIndex::range() {
-            indices.set_index(
-                SummationIndex::Lorentz {
-                    index: relation.lorentz[0],
-                },
-                mu,
-            );
+            indices.set_index(relation.lorentz[0], mu);
             for nu in LorentzIndex::range() {
-                indices.set_index(
-                    SummationIndex::Lorentz {
-                        index: relation.lorentz[1],
-                    },
-                    nu,
-                );
+                indices.set_index(relation.lorentz[1], nu);
                 for i in SpinorIndex::range() {
-                    indices.set_index(
-                        SummationIndex::Spinor {
-                            index: relation.spinor[0],
-                        },
-                        i,
-                    );
+                    indices.set_index(relation.spinor[0], i);
                     for j in SpinorIndex::range() {
-                        indices.set_index(
-                            SummationIndex::Spinor {
-                                index: relation.spinor[1],
-                            },
-                            j,
-                        );
+                        indices.set_index(relation.spinor[1], j);
                         let expr = expand_sums(&relation.expr, components, &mut indices)
                             .constant_propagation();
                         match expr.extract_number() {
@@ -344,11 +275,7 @@ impl SpinTensorComponents {
                                 "BUG: Failed to compute ({},{},{},{}) component of sigma: {:?}",
                                 mu, nu, i, j, expr
                             ),
-                            Some(e) => {
-                                if !e.is_zero() {
-                                    sigma.insert(mu, nu, i, j, e);
-                                }
-                            }
+                            Some(e) => sigma.insert(mu, nu, i, j, e),
                         }
                     }
                 }
@@ -356,7 +283,7 @@ impl SpinTensorComponents {
         }
         components.sigma = sigma;
     }
-    fn compute_epsilon(sign: f64) -> TensorComponents4 {
+    fn compute_epsilon(sign: Number) -> TensorComponents4 {
         let mut components = TensorComponents4::new();
         let mut start: Vec<u8> = LorentzIndex::range().collect();
         permutohedron::heap_recursive(&mut start, |permutation| {
@@ -384,23 +311,17 @@ impl Indices {
             indices: HashMap::new(),
         }
     }
-    fn set_index(&mut self, index: SummationIndex, value: u8) {
-        self.indices.insert(index, value);
+    fn set_index<T: Into<SummationIndex>>(&mut self, index: T, value: u8) {
+        self.indices.insert(index.into(), value);
     }
-    fn unset_index(&mut self, index: SummationIndex) {
-        self.indices.remove(&index);
-    }
-}
-impl std::ops::Index<LorentzIndex> for Indices {
-    type Output = u8;
-    fn index(&self, idx: LorentzIndex) -> &u8 {
-        self.indices.index(&SummationIndex::Lorentz { index: idx })
+    fn unset_index<T: Into<SummationIndex>>(&mut self, index: T) {
+        self.indices.remove(&index.into());
     }
 }
-impl std::ops::Index<SpinorIndex> for Indices {
+impl<T: Into<SummationIndex>> std::ops::Index<T> for Indices {
     type Output = u8;
-    fn index(&self, idx: SpinorIndex) -> &u8 {
-        self.indices.index(&SummationIndex::Spinor { index: idx })
+    fn index(&self, idx: T) -> &u8 {
+        self.indices.index(&idx.into())
     }
 }
 
@@ -493,10 +414,10 @@ fn is_permutation_even(permutation: &[u8]) -> bool {
 
 #[derive(Clone, Debug, PartialEq, Deserialize)]
 struct SpinTensorComponentsInternal {
-    epsilon_sign: f64,
-    metric: [f64; 4],
-    gamma: [[[Complex64; 4]; 4]; 4],
-    charge_conjugation: [[Complex64; 4]; 4],
+    epsilon_sign: Number,
+    metric: [Number; 4],
+    gamma: [[[Number; 4]; 4]; 4],
+    charge_conjugation: [[Number; 4]; 4],
     gamma5: SpinTensorRelation,
     proj_p: SpinTensorRelation,
     proj_m: SpinTensorRelation,
@@ -514,62 +435,82 @@ struct SpinTensorRelation {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+pub struct TensorComponents<T>
+where
+    T: std::hash::Hash + Eq,
+{
+    components: HashMap<T, Number>,
+}
+impl<T> TensorComponents<T>
+where
+    T: std::hash::Hash + Eq,
+{
+    fn new() -> TensorComponents<T> {
+        TensorComponents {
+            components: HashMap::new(),
+        }
+    }
+    pub fn get(&self, index: &T) -> Number {
+        *self.components.get(index).unwrap_or(&Number::zero())
+    }
+    fn insert<V: Into<Number> + Zero>(&mut self, index: T, value: V) {
+        if !value.is_zero() {
+            self.components.insert(index, value.into());
+        }
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
 pub struct TensorComponents2 {
-    components: HashMap<(u8, u8), Number>,
+    components: TensorComponents<(u8, u8)>,
 }
 impl TensorComponents2 {
     fn new() -> TensorComponents2 {
         TensorComponents2 {
-            components: HashMap::new(),
+            components: TensorComponents::new(),
         }
     }
     pub fn get(&self, i1: u8, i2: u8) -> Number {
-        *self.components.get(&(i1, i2)).unwrap_or(&Number::zero())
+        self.components.get(&(i1, i2))
     }
-    fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, value: T) {
-        self.components.insert((i1, i2), value.into());
+    fn insert<T: Into<Number> + Zero>(&mut self, i1: u8, i2: u8, value: T) {
+        self.components.insert((i1, i2), value);
     }
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TensorComponents3 {
-    components: HashMap<(u8, u8, u8), Number>,
+    components: TensorComponents<(u8, u8, u8)>,
 }
 impl TensorComponents3 {
     fn new() -> TensorComponents3 {
         TensorComponents3 {
-            components: HashMap::new(),
+            components: TensorComponents::new(),
         }
     }
     pub fn get(&self, i1: u8, i2: u8, i3: u8) -> Number {
-        *self
-            .components
-            .get(&(i1, i2, i3))
-            .unwrap_or(&Number::zero())
+        self.components.get(&(i1, i2, i3))
     }
-    fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, i3: u8, value: T) {
-        self.components.insert((i1, i2, i3), value.into());
+    fn insert<T: Into<Number> + Zero>(&mut self, i1: u8, i2: u8, i3: u8, value: T) {
+        self.components.insert((i1, i2, i3), value);
     }
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TensorComponents4 {
-    components: HashMap<(u8, u8, u8, u8), Number>,
+    components: TensorComponents<(u8, u8, u8, u8)>,
 }
 impl TensorComponents4 {
     fn new() -> TensorComponents4 {
         TensorComponents4 {
-            components: HashMap::new(),
+            components: TensorComponents::new(),
         }
     }
     pub fn get(&self, i1: u8, i2: u8, i3: u8, i4: u8) -> Number {
-        *self
-            .components
-            .get(&(i1, i2, i3, i4))
-            .unwrap_or(&Number::zero())
+        self.components.get(&(i1, i2, i3, i4))
     }
-    fn insert<T: Into<Number>>(&mut self, i1: u8, i2: u8, i3: u8, i4: u8, value: T) {
-        self.components.insert((i1, i2, i3, i4), value.into());
+    fn insert<T: Into<Number> + Zero>(&mut self, i1: u8, i2: u8, i3: u8, i4: u8, value: T) {
+        self.components.insert((i1, i2, i3, i4), value);
     }
 }
 
@@ -577,7 +518,6 @@ impl TensorComponents4 {
 pub enum SpinComponentsError {
     IoError(std::io::Error),
     TomlConversionError(toml::de::Error),
-    JsonConversionError(serde_json::Error),
 }
 impl From<std::io::Error> for SpinComponentsError {
     fn from(err: std::io::Error) -> SpinComponentsError {
@@ -589,11 +529,6 @@ impl From<toml::de::Error> for SpinComponentsError {
         SpinComponentsError::TomlConversionError(err)
     }
 }
-impl From<serde_json::Error> for SpinComponentsError {
-    fn from(err: serde_json::Error) -> SpinComponentsError {
-        SpinComponentsError::JsonConversionError(err)
-    }
-}
 impl fmt::Display for SpinComponentsError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
@@ -603,9 +538,6 @@ impl fmt::Display for SpinComponentsError {
             SpinComponentsError::TomlConversionError(ref err) => {
                 write!(f, "Failed to parse the spin structures file: {}", err)
             }
-            SpinComponentsError::JsonConversionError(ref err) => {
-                write!(f, "Failed to parse the spin relations file: {}", err)
-            }
         }
     }
 }
@@ -613,6 +545,7 @@ impl std::error::Error for SpinComponentsError {}
 
 #[cfg(test)]
 mod test {
+    use crate::math_expr::Number;
     use num_complex::Complex64;
 
     #[test]
@@ -630,7 +563,7 @@ mod test {
 
     #[test]
     fn epsilon() {
-        let eps = super::SpinTensorComponents::compute_epsilon(1f64);
+        let eps = super::SpinTensorComponents::compute_epsilon(Number::Integer(1));
         assert_eq!(eps.get(0, 1, 2, 3).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(eps.get(2, 1, 3, 0).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(eps.get(3, 2, 1, 0).as_complex(), Complex64::new(1f64, 0f64));
@@ -659,7 +592,7 @@ mod test {
         assert_eq!(gamma5.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(gamma5.get(3, 3).as_complex(), Complex64::new(-1f64, 0f64));
         assert_eq!(gamma5.get(4, 4).as_complex(), Complex64::new(-1f64, 0f64));
-        assert_eq!(gamma5.components.len(), 4);
+        assert_eq!(gamma5.components.components.len(), 4);
     }
 
     #[test]
@@ -669,7 +602,7 @@ mod test {
         let projm = components.proj_m;
         assert_eq!(projm.get(3, 3).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projm.get(4, 4).as_complex(), Complex64::new(1f64, 0f64));
-        assert_eq!(projm.components.len(), 2);
+        assert_eq!(projm.components.components.len(), 2);
     }
 
     #[test]
@@ -679,6 +612,6 @@ mod test {
         let projp = components.proj_p;
         assert_eq!(projp.get(1, 1).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projp.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
-        assert_eq!(projp.components.len(), 2);
+        assert_eq!(projp.components.components.len(), 2);
     }
 }

@@ -223,7 +223,7 @@ pub enum Number {
     Complex(Complex64),
 }
 impl Number {
-    fn as_complex(self) -> Complex64 {
+    pub fn as_complex(self) -> Complex64 {
         match self {
             Number::Integer(i) => Complex64::new(i as f64, 0f64),
             Number::Real(f) => Complex64::new(f, 0f64),
@@ -444,7 +444,7 @@ fn constant_propagation_binary(
         _ => (),
     };
     MathExpr::BinaryOp {
-        operator: operator,
+        operator,
         left: Box::new(left),
         right: Box::new(right),
     }

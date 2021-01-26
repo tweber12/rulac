@@ -256,7 +256,6 @@ pub struct FunctionDefinition {
 
 #[cfg(test)]
 mod test {
-    use serde_json;
     use std::fs;
 
     #[test]

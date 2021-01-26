@@ -13,3 +13,4 @@ permutohedron = "^0.2"
 toml = "0.5.8"
 num-complex = {version="^0.3.1", features=["serde"]}
 num-traits = "0.2.14"
+rustpython-parser = "0.1.2"

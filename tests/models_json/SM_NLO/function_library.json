@@ -1,218 +1,62 @@
 [
   {
-    "expr": {
-      "function": "__complex_conjugate__", 
-      "args": [
-        {
-          "type": "variable", 
-          "name": "z"
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "z.conjugate()", 
     "name": "complexconjugate", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "__real__", 
-      "args": [
-        {
-          "type": "variable", 
-          "name": "z"
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "z.real", 
     "name": "re", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "__imag__", 
-      "args": [
-        {
-          "type": "variable", 
-          "name": "z"
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "z.imag", 
     "name": "im", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "operator": "div", 
-      "right": {
-        "function": "cos", 
-        "args": [
-          {
-            "function": "__real__", 
-            "args": [
-              {
-                "type": "variable", 
-                "name": "z"
-              }
-            ], 
-            "type": "call"
-          }
-        ], 
-        "type": "call"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "type": "number", 
-        "value": 1.0
-      }
-    }, 
+    "expr": "1./cmath.cos(z.real)", 
     "name": "sec", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "acos", 
-      "args": [
-        {
-          "operator": "div", 
-          "right": {
-            "function": "__real__", 
-            "args": [
-              {
-                "type": "variable", 
-                "name": "z"
-              }
-            ], 
-            "type": "call"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "type": "number", 
-            "value": 1.0
-          }
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "cmath.acos(1./(z.real))", 
     "name": "asec", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "operator": "div", 
-      "right": {
-        "function": "sin", 
-        "args": [
-          {
-            "function": "__real__", 
-            "args": [
-              {
-                "type": "variable", 
-                "name": "z"
-              }
-            ], 
-            "type": "call"
-          }
-        ], 
-        "type": "call"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "type": "number", 
-        "value": 1.0
-      }
-    }, 
+    "expr": "1./cmath.sin(z.real)", 
     "name": "csc", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "asin", 
-      "args": [
-        {
-          "operator": "div", 
-          "right": {
-            "function": "__real__", 
-            "args": [
-              {
-                "type": "variable", 
-                "name": "z"
-              }
-            ], 
-            "type": "call"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "type": "number", 
-            "value": 1.0
-          }
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "cmath.asin(1./(z.real))", 
     "name": "acsc", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "operator": "div", 
-      "right": {
-        "function": "tan", 
-        "args": [
-          {
-            "function": "__real__", 
-            "args": [
-              {
-                "type": "variable", 
-                "name": "z"
-              }
-            ], 
-            "type": "call"
-          }
-        ], 
-        "type": "call"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "type": "number", 
-        "value": 1.0
-      }
-    }, 
+    "expr": "1./cmath.tan(z.real)", 
     "name": "cot", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "if_false": {
-        "type": "variable", 
-        "name": "z"
-      }, 
-      "type": "conditional", 
-      "condition": {
-        "type": "variable", 
-        "name": "x"
-      }, 
-      "if_true": {
-        "type": "variable", 
-        "name": "y"
-      }
-    }, 
+    "expr": "y if x else z", 
     "name": "theta_function", 
     "arguments": [
       "x", 
@@ -221,33 +65,7 @@
     ]
   }, 
   {
-    "expr": {
-      "if_false": {
-        "type": "variable", 
-        "name": "ExprFalse"
-      }, 
-      "type": "conditional", 
-      "condition": {
-        "comparators": [
-          {
-            "type": "number", 
-            "value": 0.0
-          }
-        ], 
-        "operators": [
-          "equals"
-        ], 
-        "type": "comparison", 
-        "left": {
-          "type": "variable", 
-          "name": "condition"
-        }
-      }, 
-      "if_true": {
-        "type": "variable", 
-        "name": "ExprTrue"
-      }
-    }, 
+    "expr": "(ExprTrue if condition==0.0 else ExprFalse)", 
     "name": "cond", 
     "arguments": [
       "condition", 
@@ -256,45 +74,7 @@
     ]
   }, 
   {
-    "expr": {
-      "if_false": {
-        "function": "log", 
-        "args": [
-          {
-            "function": "__real__", 
-            "args": [
-              {
-                "type": "variable", 
-                "name": "z"
-              }
-            ], 
-            "type": "call"
-          }
-        ], 
-        "type": "call"
-      }, 
-      "type": "conditional", 
-      "condition": {
-        "comparators": [
-          {
-            "type": "number", 
-            "value": 0.0
-          }
-        ], 
-        "operators": [
-          "equals"
-        ], 
-        "type": "comparison", 
-        "left": {
-          "type": "variable", 
-          "name": "z"
-        }
-      }, 
-      "if_true": {
-        "type": "number", 
-        "value": 0.0
-      }
-    }, 
+    "expr": "(0.0 if z==0.0 else cmath.log(z.real))", 
     "name": "reglog", 
     "arguments": [
       "z"

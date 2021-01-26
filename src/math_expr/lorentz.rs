@@ -11,6 +11,11 @@ use permutohedron;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct LorentzIndex(i64);
+impl From<i64> for LorentzIndex {
+    fn from(index: i64) -> LorentzIndex {
+        LorentzIndex(index)
+    }
+}
 impl IndexRange for LorentzIndex {
     fn range() -> std::ops::Range<u8> {
         0..4
@@ -19,6 +24,11 @@ impl IndexRange for LorentzIndex {
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct SpinorIndex(i64);
+impl From<i64> for SpinorIndex {
+    fn from(index: i64) -> SpinorIndex {
+        SpinorIndex(index)
+    }
+}
 impl IndexRange for SpinorIndex {
     fn range() -> std::ops::Range<u8> {
         1..5
@@ -75,8 +85,6 @@ impl SpinTensorComponents {
         let mut contents = Vec::new();
         fs::File::open(path)?.read_to_end(&mut contents)?;
         let internal: SpinTensorComponentsInternal = toml::from_slice(&mut contents)?;
-        let jfile = fs::File::open("models/common/spin_relations.json")?;
-        let relations: SpinTensorRelations = serde_json::from_reader(jfile)?;
         let identity = SpinTensorComponents::compute_identity();
         let epsilon = SpinTensorComponents::compute_epsilon(internal.epsilon_sign);
         let mut components = SpinTensorComponents {
@@ -90,10 +98,10 @@ impl SpinTensorComponents {
             proj_p: TensorComponents2::new(),
             sigma: TensorComponents4::new(),
         };
-        SpinTensorComponents::compute_gamma5(&relations.gamma5, &mut components);
-        SpinTensorComponents::compute_projm(&relations.proj_m, &mut components);
-        SpinTensorComponents::compute_projp(&relations.proj_p, &mut components);
-        SpinTensorComponents::compute_sigma(&relations.sigma, &mut components);
+        SpinTensorComponents::compute_gamma5(&internal.gamma5, &mut components);
+        SpinTensorComponents::compute_projm(&internal.proj_m, &mut components);
+        SpinTensorComponents::compute_projp(&internal.proj_p, &mut components);
+        SpinTensorComponents::compute_sigma(&internal.sigma, &mut components);
         Ok(components)
     }
 
@@ -320,11 +328,10 @@ fn expand_sums(expr: &MathExpr, components: &SpinTensorComponents, indices: &mut
                 if_false: Box::new(expand_sums(if_false, components, indices)),
             }
         }
-        MathExpr::Comparison { left, operators, comparators } => {
+        MathExpr::Comparison { operators, values } => {
             MathExpr::Comparison {
-                left: Box::new(expand_sums(left, components, indices)),
+                values: values.iter().map(|c| expand_sums(c, components, indices)).collect(),
                 operators: operators.clone(),
-                comparators: comparators.iter().map(|c| expand_sums(c, components, indices)).collect(),
             }
         }
         MathExpr::Call { function, args } => {
@@ -362,10 +369,6 @@ struct SpinTensorComponentsInternal {
     metric: [f64;4],
     gamma: [[[Complex64;4];4];4],
     charge_conjugation: [[Complex64;4];4],
-}
-
-#[derive(Clone, Debug, PartialEq, Deserialize)]
-struct SpinTensorRelations {
     gamma5: SpinTensorRelation,
     proj_p: SpinTensorRelation,
     proj_m: SpinTensorRelation,
@@ -374,6 +377,7 @@ struct SpinTensorRelations {
 
 #[derive(Clone, Debug, PartialEq, Deserialize)]
 struct SpinTensorRelation {
+    #[serde(deserialize_with = "crate::math_expr::parse::deserialize_lorentz_expr")]
     expr: MathExpr,
     #[serde(default)]
     lorentz: Vec<LorentzIndex>,
@@ -471,23 +475,6 @@ impl std::error::Error for SpinComponentsError {}
 mod test {
     use toml;
     use num_complex::Complex64;
-
-    #[test]
-    fn read() {
-        use std::collections::HashMap;
-        use serde::Serialize;
-        #[derive(Serialize)]
-        struct Foo {
-            b: f64,
-            a: HashMap<String,i64>,
-        }
-        let mut a = HashMap::new();
-        a.insert("a".to_string(), 5);
-        a.insert("b".to_string(), 8);
-        let f = Foo { a, b: -8.0 };
-        println!("{}", toml::to_string_pretty(&f).unwrap());
-        assert_eq!("a", "b");
-    }
 
     #[test]
     fn is_permutation_even() {

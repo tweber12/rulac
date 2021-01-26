@@ -12,7 +12,6 @@ import json
 import os
 import sys
 
-from convert_math import parse_math
 import util
 
 def _convert_orders(orders):
@@ -47,10 +46,6 @@ def _convert_vertex(vertex):
     vertex_dict = vertex.__dict__
     vertex_dict["particles"] = [p.pdg_code for p in vertex_dict["particles"]]
     vertex_dict["lorentz"] = [l.name for l in vertex_dict["lorentz"]]
-    vertex_dict["color"] = [
-        parse_math(c, mode="color", location="the color structure of vertex {}".format(vertex.name))
-        for c in vertex_dict["color"]
-    ]
     vertex_dict["couplings"] = [
         {"color": pieces[0], "lorentz": pieces[1], "coupling": v.name}
         for (pieces, v) in vertex_dict["couplings"].iteritems()
@@ -59,57 +54,35 @@ def _convert_vertex(vertex):
 
 def _convert_coupling(coupling):
     """Convert a ufo Coupling object to a dictionary"""
-    vertex_dict = coupling.__dict__
-    value = vertex_dict["value"]
-    location = "the coupling {}".format(coupling.name)
-    if isinstance(value, dict):
+    coupling_dict = coupling.__dict__
+    if isinstance(coupling_dict["value"], dict):
         # The coupling value is expanded in epsilon for counterterms, etc
         # In this case the coupling is not just a single expression but a dictionary
         # mapping orders to expressions
-        value = {
-            "type": "orders",
-            "value": {
-                o: parse_math(c, location=location)
-                for (o, c) in value.iteritems()
-            }
-        }
+        kind = "orders"
     else:
-        value = {
-            "type": "simple",
-            "value": parse_math(vertex_dict["value"], location=location)
-        }
-    vertex_dict["value"] = value
-    return vertex_dict
+        kind = "simple"
+    coupling_dict["value"] = {
+        "type": kind,
+        "value": coupling_dict["value"]
+    }
+    print coupling_dict
+    return coupling_dict
 
 def _convert_lorentz(lorentz):
     """Convert a ufo Lorentz object to a dictionary"""
-    lorentz_dict = lorentz.__dict__
-    lorentz_dict["structure"] = parse_math(
-        lorentz_dict["structure"],
-        mode="lorentz",
-        location="the lorentz structure {}".format(lorentz.name)
-    )
-    return lorentz_dict
+    return lorentz.__dict__
 
 def _convert_parameter(parameter):
     """Convert a ufo Parameter object to a dictionary"""
-    parameter_dict = parameter.__dict__
-    if isinstance(parameter_dict["value"], str):
-        parameter_dict["value"] = parse_math(
-            parameter_dict["value"],
-            location="the value of parameter {}".format(parameter.name)
-        )
-    return parameter_dict
+    return parameter.__dict__
 
 def _convert_decay(decay):
     """Convert a ufo Decay object to a dictionary"""
     decay_dict = decay.__dict__
     decay_dict["particle"] = decay_dict["particle"].pdg_code
     decay_dict["partial_widths"] = [
-        {
-            "decay_products": [p.name for p in prods],
-            "width": parse_math(width, location="the width of particle {}".format(decay.particle))
-        }
+        { "decay_products": [p.name for p in prods], "width": width }
         for (prods, width) in decay_dict["partial_widths"].iteritems()
     ]
     return decay_dict
@@ -117,10 +90,6 @@ def _convert_decay(decay):
 def _convert_function(function):
     """Convert a ufo Function object to a dictionary"""
     function_dict = function.__dict__
-    function_dict["expr"] = parse_math(
-        function_dict["expr"],
-        location="the definition of the function {}".format(function.name)
-    )
     args = function_dict["arguments"]
     if not isinstance(args, tuple) and not isinstance(args, list):
         function_dict["arguments"] = (args,)
@@ -168,26 +137,20 @@ def convert(model_path, model_name, output_path):
 
 def convert_relations(outfile):
     gamma5 = {
-        "expr": parse_math(
-            "complex(0,1)*Gamma(1,11,-22)*Gamma(2,-22,-33)*Gamma(3,-33,-44)*Gamma(4,-44,55)",
-            mode="lorentz"
-        ),
+        "expr": "complex(0,1)*Gamma(1,11,-22)*Gamma(2,-22,-33)*Gamma(3,-33,-44)*Gamma(4,-44,55)",
         "lorentz": [1, 2, 3, 4],
         "spinor": [11, 55],
     }
     proj_p = {
-        "expr": parse_math("(Identity(1,2)+Gamma5(1,2))/2", mode="lorentz"),
+        "expr": "(Identity(1,2)+Gamma5(1,2))/2",
         "spinor": [1, 2],
     }
     proj_m = {
-        "expr": parse_math("(Identity(1,2)-Gamma5(1,2))/2", mode="lorentz"),
+        "expr": "(Identity(1,2)-Gamma5(1,2))/2",
         "spinor": [1, 2],
     }
     sigma = {
-        "expr": parse_math(
-            "complex(0,1)/2*(Gamma(1,11,-22)*Gamma(2,-22,33) - Gamma(2,11,-22)*Gamma(1,-22,11))",
-            mode="lorentz"
-        ),
+        "expr": "complex(0,1)/2*(Gamma(1,11,-22)*Gamma(2,-22,33) - Gamma(2,11,-22)*Gamma(1,-22,11))",
         "lorentz": [1, 2],
         "spinor": [11, 33],
     }

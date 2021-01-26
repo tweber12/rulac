@@ -5,8 +5,6 @@ use std::fmt;
 use std::fs;
 use std::path;
 
-use crate::math_expr::MathExpr;
-
 #[derive(Debug)]
 pub struct UfoModel {
     pub function_library: HashMap<String, FunctionDefinition>,
@@ -108,6 +106,9 @@ derive_named_string!(FunctionDefinition);
 derive_named_string!(Lorentz);
 derive_named_string!(Parameter);
 
+#[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+pub struct UfoMath(pub String);
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct PdgCode(pub i64);
 impl fmt::Display for PdgCode {
@@ -179,14 +180,14 @@ pub enum ParameterType {
 #[serde(untagged)]
 pub enum ValOrExpr {
     Value(f64),
-    Expr(MathExpr),
+    Expr(UfoMath),
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", content = "value", rename_all = "snake_case")]
 pub enum CouplingValue {
-    Simple(MathExpr),
-    Orders(HashMap<i64, MathExpr>),
+    Simple(UfoMath),
+    Orders(HashMap<i64, UfoMath>),
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -214,7 +215,7 @@ pub struct VertexCoupling {
 pub struct Vertex {
     pub name: String,
     pub particles: Vec<PdgCode>,
-    pub color: Vec<MathExpr>,
+    pub color: Vec<UfoMath>,
     pub lorentz: Vec<String>,
     pub couplings: Vec<VertexCoupling>,
 }
@@ -223,13 +224,13 @@ pub struct Vertex {
 pub struct Lorentz {
     pub name: String,
     pub spins: Vec<i64>,
-    pub structure: MathExpr,
+    pub structure: UfoMath,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PartialWidth {
     pub decay_products: Vec<String>,
-    pub width: MathExpr,
+    pub width: UfoMath,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -250,7 +251,7 @@ pub struct Coupling {
 pub struct FunctionDefinition {
     pub name: String,
     pub arguments: Vec<String>,
-    pub expr: MathExpr,
+    pub expr: UfoMath,
 }
 
 #[cfg(test)]

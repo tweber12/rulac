@@ -1,143 +1,48 @@
 [
   {
-    "expr": {
-      "function": "__complex_conjugate__", 
-      "args": [
-        {
-          "type": "variable", 
-          "name": "z"
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "z.conjugate()", 
     "name": "complexconjugate", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "__real__", 
-      "args": [
-        {
-          "type": "variable", 
-          "name": "z"
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "z.real", 
     "name": "re", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "__imag__", 
-      "args": [
-        {
-          "type": "variable", 
-          "name": "z"
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "z.imag", 
     "name": "im", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "operator": "div", 
-      "right": {
-        "function": "cos", 
-        "args": [
-          {
-            "type": "variable", 
-            "name": "z"
-          }
-        ], 
-        "type": "call"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "type": "number", 
-        "value": 1.0
-      }
-    }, 
+    "expr": "1./cos(z)", 
     "name": "sec", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "acos", 
-      "args": [
-        {
-          "operator": "div", 
-          "right": {
-            "type": "variable", 
-            "name": "z"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "type": "number", 
-            "value": 1.0
-          }
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "acos(1./z)", 
     "name": "asec", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "operator": "div", 
-      "right": {
-        "function": "sin", 
-        "args": [
-          {
-            "type": "variable", 
-            "name": "z"
-          }
-        ], 
-        "type": "call"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "type": "number", 
-        "value": 1.0
-      }
-    }, 
+    "expr": "1./sin(z)", 
     "name": "csc", 
     "arguments": [
       "z"
     ]
   }, 
   {
-    "expr": {
-      "function": "asin", 
-      "args": [
-        {
-          "operator": "div", 
-          "right": {
-            "type": "variable", 
-            "name": "z"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "type": "number", 
-            "value": 1.0
-          }
-        }
-      ], 
-      "type": "call"
-    }, 
+    "expr": "asin(1./z)", 
     "name": "acsc", 
     "arguments": [
       "z"

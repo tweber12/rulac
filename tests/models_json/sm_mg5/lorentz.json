@@ -1,9 +1,6 @@
 [
   {
-    "structure": {
-      "type": "number", 
-      "value": 1
-    }, 
+    "structure": "1", 
     "name": "UUS1", 
     "spins": [
       -1, 
@@ -12,22 +9,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "add", 
-      "right": {
-        "mu1": 3, 
-        "type": "lorentz_tensor", 
-        "tensor": "P", 
-        "particle": 3
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "mu1": 3, 
-        "type": "lorentz_tensor", 
-        "tensor": "P", 
-        "particle": 2
-      }
-    }, 
+    "structure": "P(3,2) + P(3,3)", 
     "name": "UUV1", 
     "spins": [
       -1, 
@@ -36,10 +18,7 @@
     ]
   }, 
   {
-    "structure": {
-      "type": "number", 
-      "value": 1
-    }, 
+    "structure": "1", 
     "name": "SSS1", 
     "spins": [
       1, 
@@ -48,12 +27,7 @@
     ]
   }, 
   {
-    "structure": {
-      "i1": 2, 
-      "i2": 1, 
-      "type": "lorentz_tensor", 
-      "tensor": "ProjM"
-    }, 
+    "structure": "ProjM(2,1)", 
     "name": "FFS1", 
     "spins": [
       2, 
@@ -62,22 +36,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "i1": 2, 
-        "i2": 1, 
-        "type": "lorentz_tensor", 
-        "tensor": "ProjP"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "i1": 2, 
-        "i2": 1, 
-        "type": "lorentz_tensor", 
-        "tensor": "ProjM"
-      }
-    }, 
+    "structure": "ProjM(2,1) - ProjP(2,1)", 
     "name": "FFS2", 
     "spins": [
       2, 
@@ -86,12 +45,7 @@
     ]
   }, 
   {
-    "structure": {
-      "i1": 2, 
-      "i2": 1, 
-      "type": "lorentz_tensor", 
-      "tensor": "ProjP"
-    }, 
+    "structure": "ProjP(2,1)", 
     "name": "FFS3", 
     "spins": [
       2, 
@@ -100,22 +54,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "add", 
-      "right": {
-        "i1": 2, 
-        "i2": 1, 
-        "type": "lorentz_tensor", 
-        "tensor": "ProjP"
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "i1": 2, 
-        "i2": 1, 
-        "type": "lorentz_tensor", 
-        "tensor": "ProjM"
-      }
-    }, 
+    "structure": "ProjM(2,1) + ProjP(2,1)", 
     "name": "FFS4", 
     "spins": [
       2, 
@@ -124,13 +63,7 @@
     ]
   }, 
   {
-    "structure": {
-      "mu1": 3, 
-      "i3": 1, 
-      "i2": 2, 
-      "type": "lorentz_tensor", 
-      "tensor": "Gamma"
-    }, 
+    "structure": "Gamma(3,2,1)", 
     "name": "FFV1", 
     "spins": [
       2, 
@@ -139,30 +72,7 @@
     ]
   }, 
   {
-    "structure": {
-      "expr": {
-        "operator": "mul", 
-        "right": {
-          "i1": -1, 
-          "i2": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "ProjM"
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 3, 
-          "i3": -1, 
-          "i2": 2, 
-          "type": "lorentz_tensor", 
-          "tensor": "Gamma"
-        }
-      }, 
-      "type": "sum", 
-      "index": {
-        "index": -1, 
-        "kind": "spinor"
-      }
-    }, 
+    "structure": "Gamma(3,2,-1)*ProjM(-1,1)", 
     "name": "FFV2", 
     "spins": [
       2, 
@@ -171,66 +81,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "expr": {
-          "operator": "mul", 
-          "right": {
-            "i1": -1, 
-            "i2": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "ProjP"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "mu1": 3, 
-              "i3": -1, 
-              "i2": 2, 
-              "type": "lorentz_tensor", 
-              "tensor": "Gamma"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "type": "number", 
-              "value": 2
-            }
-          }
-        }, 
-        "type": "sum", 
-        "index": {
-          "index": -1, 
-          "kind": "spinor"
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "expr": {
-          "operator": "mul", 
-          "right": {
-            "i1": -1, 
-            "i2": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "ProjM"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 3, 
-            "i3": -1, 
-            "i2": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Gamma"
-          }
-        }, 
-        "type": "sum", 
-        "index": {
-          "index": -1, 
-          "kind": "spinor"
-        }
-      }
-    }, 
+    "structure": "Gamma(3,2,-1)*ProjM(-1,1) - 2*Gamma(3,2,-1)*ProjP(-1,1)", 
     "name": "FFV3", 
     "spins": [
       2, 
@@ -239,66 +90,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "add", 
-      "right": {
-        "expr": {
-          "operator": "mul", 
-          "right": {
-            "i1": -1, 
-            "i2": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "ProjP"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "mu1": 3, 
-              "i3": -1, 
-              "i2": 2, 
-              "type": "lorentz_tensor", 
-              "tensor": "Gamma"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "type": "number", 
-              "value": 2
-            }
-          }
-        }, 
-        "type": "sum", 
-        "index": {
-          "index": -1, 
-          "kind": "spinor"
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "expr": {
-          "operator": "mul", 
-          "right": {
-            "i1": -1, 
-            "i2": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "ProjM"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 3, 
-            "i3": -1, 
-            "i2": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Gamma"
-          }
-        }, 
-        "type": "sum", 
-        "index": {
-          "index": -1, 
-          "kind": "spinor"
-        }
-      }
-    }, 
+    "structure": "Gamma(3,2,-1)*ProjM(-1,1) + 2*Gamma(3,2,-1)*ProjP(-1,1)", 
     "name": "FFV4", 
     "spins": [
       2, 
@@ -307,66 +99,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "add", 
-      "right": {
-        "expr": {
-          "operator": "mul", 
-          "right": {
-            "i1": -1, 
-            "i2": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "ProjP"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "mu1": 3, 
-              "i3": -1, 
-              "i2": 2, 
-              "type": "lorentz_tensor", 
-              "tensor": "Gamma"
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "type": "number", 
-              "value": 4
-            }
-          }
-        }, 
-        "type": "sum", 
-        "index": {
-          "index": -1, 
-          "kind": "spinor"
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "expr": {
-          "operator": "mul", 
-          "right": {
-            "i1": -1, 
-            "i2": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "ProjM"
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 3, 
-            "i3": -1, 
-            "i2": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Gamma"
-          }
-        }, 
-        "type": "sum", 
-        "index": {
-          "index": -1, 
-          "kind": "spinor"
-        }
-      }
-    }, 
+    "structure": "Gamma(3,2,-1)*ProjM(-1,1) + 4*Gamma(3,2,-1)*ProjP(-1,1)", 
     "name": "FFV5", 
     "spins": [
       2, 
@@ -375,22 +108,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "mu1": 1, 
-        "type": "lorentz_tensor", 
-        "tensor": "P", 
-        "particle": 3
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "mu1": 1, 
-        "type": "lorentz_tensor", 
-        "tensor": "P", 
-        "particle": 2
-      }
-    }, 
+    "structure": "P(1,2) - P(1,3)", 
     "name": "VSS1", 
     "spins": [
       3, 
@@ -399,12 +117,7 @@
     ]
   }, 
   {
-    "structure": {
-      "mu1": 1, 
-      "type": "lorentz_tensor", 
-      "tensor": "Metric", 
-      "mu2": 2
-    }, 
+    "structure": "Metric(1,2)", 
     "name": "VVS1", 
     "spins": [
       3, 
@@ -413,122 +126,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 2, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 3
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "P", 
-          "particle": 3
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "operator": "add", 
-        "right": {
-          "operator": "mul", 
-          "right": {
-            "mu1": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 3
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "P", 
-            "particle": 2
-          }
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "operator": "add", 
-          "right": {
-            "operator": "mul", 
-            "right": {
-              "mu1": 1, 
-              "type": "lorentz_tensor", 
-              "tensor": "Metric", 
-              "mu2": 3
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "mu1": 2, 
-              "type": "lorentz_tensor", 
-              "tensor": "P", 
-              "particle": 3
-            }
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "sub", 
-            "right": {
-              "operator": "mul", 
-              "right": {
-                "mu1": 1, 
-                "type": "lorentz_tensor", 
-                "tensor": "Metric", 
-                "mu2": 3
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "mu1": 2, 
-                "type": "lorentz_tensor", 
-                "tensor": "P", 
-                "particle": 1
-              }
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "operator": "sub", 
-              "right": {
-                "operator": "mul", 
-                "right": {
-                  "mu1": 1, 
-                  "type": "lorentz_tensor", 
-                  "tensor": "Metric", 
-                  "mu2": 2
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "mu1": 3, 
-                  "type": "lorentz_tensor", 
-                  "tensor": "P", 
-                  "particle": 2
-                }
-              }, 
-              "type": "binary_op", 
-              "left": {
-                "operator": "mul", 
-                "right": {
-                  "mu1": 1, 
-                  "type": "lorentz_tensor", 
-                  "tensor": "Metric", 
-                  "mu2": 2
-                }, 
-                "type": "binary_op", 
-                "left": {
-                  "mu1": 3, 
-                  "type": "lorentz_tensor", 
-                  "tensor": "P", 
-                  "particle": 1
-                }
-              }
-            }
-          }
-        }
-      }
-    }, 
+    "structure": "P(3,1)*Metric(1,2) - P(3,2)*Metric(1,2) - P(2,1)*Metric(1,3) + P(2,3)*Metric(1,3) + P(1,2)*Metric(2,3) - P(1,3)*Metric(2,3)", 
     "name": "VVV1", 
     "spins": [
       3, 
@@ -537,10 +135,7 @@
     ]
   }, 
   {
-    "structure": {
-      "type": "number", 
-      "value": 1
-    }, 
+    "structure": "1", 
     "name": "SSSS1", 
     "spins": [
       1, 
@@ -550,12 +145,7 @@
     ]
   }, 
   {
-    "structure": {
-      "mu1": 1, 
-      "type": "lorentz_tensor", 
-      "tensor": "Metric", 
-      "mu2": 2
-    }, 
+    "structure": "Metric(1,2)", 
     "name": "VVSS1", 
     "spins": [
       3, 
@@ -565,42 +155,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 2, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 3
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 2, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 3
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }
-      }
-    }, 
+    "structure": "Metric(1,4)*Metric(2,3) - Metric(1,3)*Metric(2,4)", 
     "name": "VVVV1", 
     "spins": [
       3, 
@@ -610,70 +165,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 3, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "operator": "mul", 
-          "right": {
-            "mu1": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 2
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "type": "number", 
-            "value": 2
-          }
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "operator": "add", 
-        "right": {
-          "operator": "mul", 
-          "right": {
-            "mu1": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 4
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 3
-          }
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "operator": "mul", 
-          "right": {
-            "mu1": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 3
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 4
-          }
-        }
-      }
-    }, 
+    "structure": "Metric(1,4)*Metric(2,3) + Metric(1,3)*Metric(2,4) - 2*Metric(1,2)*Metric(3,4)", 
     "name": "VVVV2", 
     "spins": [
       3, 
@@ -683,42 +175,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 3, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 2
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 2, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 3
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }
-      }
-    }, 
+    "structure": "Metric(1,4)*Metric(2,3) - Metric(1,2)*Metric(3,4)", 
     "name": "VVVV3", 
     "spins": [
       3, 
@@ -728,42 +185,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 3, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 2
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "operator": "mul", 
-        "right": {
-          "mu1": 2, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 4
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "mu1": 1, 
-          "type": "lorentz_tensor", 
-          "tensor": "Metric", 
-          "mu2": 3
-        }
-      }
-    }, 
+    "structure": "Metric(1,3)*Metric(2,4) - Metric(1,2)*Metric(3,4)", 
     "name": "VVVV4", 
     "spins": [
       3, 
@@ -773,78 +195,7 @@
     ]
   }, 
   {
-    "structure": {
-      "operator": "sub", 
-      "right": {
-        "operator": "div", 
-        "right": {
-          "type": "number", 
-          "value": 2.0
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "operator": "mul", 
-          "right": {
-            "mu1": 3, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 4
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 2
-          }
-        }
-      }, 
-      "type": "binary_op", 
-      "left": {
-        "operator": "sub", 
-        "right": {
-          "operator": "div", 
-          "right": {
-            "type": "number", 
-            "value": 2.0
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "operator": "mul", 
-            "right": {
-              "mu1": 2, 
-              "type": "lorentz_tensor", 
-              "tensor": "Metric", 
-              "mu2": 4
-            }, 
-            "type": "binary_op", 
-            "left": {
-              "mu1": 1, 
-              "type": "lorentz_tensor", 
-              "tensor": "Metric", 
-              "mu2": 3
-            }
-          }
-        }, 
-        "type": "binary_op", 
-        "left": {
-          "operator": "mul", 
-          "right": {
-            "mu1": 2, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 3
-          }, 
-          "type": "binary_op", 
-          "left": {
-            "mu1": 1, 
-            "type": "lorentz_tensor", 
-            "tensor": "Metric", 
-            "mu2": 4
-          }
-        }
-      }
-    }, 
+    "structure": "Metric(1,4)*Metric(2,3) - (Metric(1,3)*Metric(2,4))/2. - (Metric(1,2)*Metric(3,4))/2.", 
     "name": "VVVV5", 
     "spins": [
       3, 

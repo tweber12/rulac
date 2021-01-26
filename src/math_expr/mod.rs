@@ -1,4 +1,5 @@
 pub mod lorentz;
+pub mod parse;
 
 use num_complex::Complex64;
 use serde::{Deserialize, Serialize};
@@ -9,7 +10,11 @@ pub enum Function {
     Abs,
     Cos,
     Sin,
+    Tan,
+    ASin,
+    ACos,
     Sqrt,
+    Log,
     Complex,
     ComplexConjugate,
     RealPart,
@@ -37,6 +42,11 @@ where
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct FundamentalIndex(i64);
+impl From<i64> for FundamentalIndex {
+    fn from(index: i64) -> FundamentalIndex {
+        FundamentalIndex(index)
+    }
+}
 impl IndexRange for FundamentalIndex {
     fn range() -> std::ops::Range<u8> {
         1..4
@@ -45,6 +55,11 @@ impl IndexRange for FundamentalIndex {
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct AdjointIndex(i64);
+impl From<i64> for AdjointIndex {
+    fn from(index: i64) -> AdjointIndex {
+        AdjointIndex(index)
+    }
+}
 impl IndexRange for AdjointIndex {
     fn range() -> std::ops::Range<u8> {
         1..9
@@ -53,6 +68,11 @@ impl IndexRange for AdjointIndex {
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct SextetIndex(i64);
+impl From<i64> for SextetIndex {
+    fn from(index: i64) -> SextetIndex {
+        SextetIndex(index)
+    }
+}
 impl IndexRange for SextetIndex {
     fn range() -> std::ops::Range<u8> {
         1..7
@@ -102,6 +122,31 @@ impl SummationIndex {
             SummationIndex::Lorentz { .. } => lorentz::LorentzIndex::range(),
             SummationIndex::Spinor { .. } => lorentz::SpinorIndex::range(),
         }
+    }
+}
+impl From<FundamentalIndex> for SummationIndex {
+    fn from(index: FundamentalIndex) -> SummationIndex {
+        SummationIndex::Fundamental { index }
+    }
+}
+impl From<SextetIndex> for SummationIndex {
+    fn from(index: SextetIndex) -> SummationIndex {
+        SummationIndex::Sextet { index }
+    }
+}
+impl From<AdjointIndex> for SummationIndex {
+    fn from(index: AdjointIndex) -> SummationIndex {
+        SummationIndex::Adjoint { index }
+    }
+}
+impl From<lorentz::LorentzIndex> for SummationIndex {
+    fn from(index: lorentz::LorentzIndex) -> SummationIndex {
+        SummationIndex::Lorentz { index }
+    }
+}
+impl From<lorentz::SpinorIndex> for SummationIndex {
+    fn from(index: lorentz::SpinorIndex) -> SummationIndex {
+        SummationIndex::Spinor { index }
     }
 }
 
@@ -180,9 +225,8 @@ pub enum MathExpr {
         color: ColorTensor
     },
     Comparison {
-        left: Box<MathExpr>,
+        values: Vec<MathExpr>,
         operators: Vec<ComparisonOperator>,
-        comparators: Vec<MathExpr>,
     },
     Sum {
         expr: Box<MathExpr>,

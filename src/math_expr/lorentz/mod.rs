@@ -167,43 +167,7 @@ fn expand_sums(
             let value = lorentz.get_component(components, indices);
             MathExpr::Number { value }
         }
-        MathExpr::BinaryOp {
-            operator,
-            left,
-            right,
-        } => MathExpr::BinaryOp {
-            operator: *operator,
-            left: Box::new(expand_sums(left, components, indices)),
-            right: Box::new(expand_sums(right, components, indices)),
-        },
-        MathExpr::UnaryOp { operator, operand } => MathExpr::UnaryOp {
-            operator: *operator,
-            operand: Box::new(expand_sums(operand, components, indices)),
-        },
-        MathExpr::Conditional {
-            condition,
-            if_true,
-            if_false,
-        } => MathExpr::Conditional {
-            condition: Box::new(expand_sums(condition, components, indices)),
-            if_true: Box::new(expand_sums(if_true, components, indices)),
-            if_false: Box::new(expand_sums(if_false, components, indices)),
-        },
-        MathExpr::Comparison { operators, values } => MathExpr::Comparison {
-            values: values
-                .iter()
-                .map(|c| expand_sums(c, components, indices))
-                .collect(),
-            operators: operators.clone(),
-        },
-        MathExpr::Call { function, args } => MathExpr::Call {
-            function: function.clone(),
-            args: args
-                .iter()
-                .map(|a| expand_sums(a, components, indices))
-                .collect(),
-        },
-        _ => expr.clone(),
+        _ => expr.apply_on_subexpressions(&mut |e| expand_sums(&e, components, indices)),
     }
 }
 

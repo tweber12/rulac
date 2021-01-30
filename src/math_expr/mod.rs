@@ -356,19 +356,61 @@ pub enum MathExpr {
     },
 }
 impl MathExpr {
-    fn constant_propagation(self) -> MathExpr {
+    pub fn apply_on_subexpressions<F>(&self, fun: &mut F) -> MathExpr
+    where
+        F: FnMut(&MathExpr) -> MathExpr,
+    {
+        match self {
+            MathExpr::BinaryOp {
+                operator,
+                left,
+                right,
+            } => MathExpr::BinaryOp {
+                operator: *operator,
+                left: Box::new(fun(left)),
+                right: Box::new(fun(right)),
+            },
+            MathExpr::Call { function, args } => MathExpr::Call {
+                function: function.clone(),
+                args: args.iter().map(|e| fun(e)).collect(),
+            },
+            MathExpr::Comparison { operators, values } => MathExpr::Comparison {
+                operators: operators.clone(),
+                values: values.iter().map(|e| fun(e)).collect(),
+            },
+            MathExpr::Conditional {
+                condition,
+                if_true,
+                if_false,
+            } => MathExpr::Conditional {
+                condition: Box::new(fun(condition)),
+                if_true: Box::new(fun(if_true)),
+                if_false: Box::new(fun(if_false)),
+            },
+            MathExpr::Sum { expr, index } => MathExpr::Sum {
+                expr: Box::new(fun(expr)),
+                index: *index,
+            },
+            MathExpr::UnaryOp { operator, operand } => MathExpr::UnaryOp {
+                operator: *operator,
+                operand: Box::new(fun(operand)),
+            },
+            _ => self.clone(),
+        }
+    }
+    fn constant_propagation(&self) -> MathExpr {
         match self {
             MathExpr::UnaryOp { operator, operand } => {
                 let op = operand.constant_propagation();
                 if let Some(value) = op.extract_number() {
-                    if operator == UnaryOperator::Minus {
+                    if *operator == UnaryOperator::Minus {
                         MathExpr::Number { value: -value }
                     } else {
                         MathExpr::Number { value }
                     }
                 } else {
                     MathExpr::UnaryOp {
-                        operator,
+                        operator: *operator,
                         operand: Box::new(op),
                     }
                 }
@@ -378,11 +420,11 @@ impl MathExpr {
                 left,
                 right,
             } => constant_propagation_binary(
-                operator,
+                *operator,
                 left.constant_propagation(),
                 right.constant_propagation(),
             ),
-            _ => self,
+            _ => self.apply_on_subexpressions(&mut |e| e.constant_propagation()),
         }
     }
     fn extract_number(&self) -> Option<Number> {

@@ -21,7 +21,7 @@ pub enum ParseMode {
 }
 
 pub fn parse_math(expr: &str, mode: ParseMode) -> Result<MathExpr, ParseError> {
-    let ast = parser::parse_expression(&expr)?;
+    let ast = parser::parse_expression(&expr.trim_start().replace('\n', " "))?;
     let mut indices = Indices::new();
     convert_math(ast, mode, &mut indices)
         .map_err(|err| ParseError::Conversion(expr.to_string(), err))

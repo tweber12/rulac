@@ -10,7 +10,7 @@ use rustpython_parser::ast::ExpressionType;
 use rustpython_parser::error;
 use rustpython_parser::parser;
 use serde::Deserialize;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::fmt;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -23,6 +23,17 @@ pub enum ParseMode {
 pub fn parse_math(expr: &str, mode: ParseMode) -> Result<MathExpr, ParseError> {
     let ast = parser::parse_expression(&expr.trim_start().replace('\n', " "))?;
     let mut indices = Indices::new();
+    convert_math(ast, mode, &mut indices)
+        .map_err(|err| ParseError::Conversion(expr.to_string(), err))
+}
+
+pub fn parse_math_alias(
+    expr: &str,
+    mode: ParseMode,
+    aliases: HashMap<String, i64>,
+) -> Result<MathExpr, ParseError> {
+    let ast = parser::parse_expression(&expr.trim_start().replace('\n', " "))?;
+    let mut indices = Indices::with_aliases(aliases);
     convert_math(ast, mode, &mut indices)
         .map_err(|err| ParseError::Conversion(expr.to_string(), err))
 }
@@ -84,6 +95,7 @@ pub enum ConversionErrorKind {
     UnsupportedAttribute,
     UnsupportedConstant,
     UnsupportedComparisonOperator,
+    UnknownIndex,
     IntegerOutOfRange,
     IntegerExpected,
 }
@@ -109,6 +121,7 @@ impl fmt::Display for ConversionErrorKind {
             ConversionErrorKind::UnsupportedConstant => write!(f, "Unsupported constant"),
             ConversionErrorKind::IntegerOutOfRange => write!(f, "Integer out of range"),
             ConversionErrorKind::IntegerExpected => write!(f, "Integer expected"),
+            ConversionErrorKind::UnknownIndex => write!(f, "Unknown index"),
         }
     }
 }
@@ -134,11 +147,16 @@ where
 #[derive(Debug, PartialEq, Eq)]
 struct Indices {
     indices: HashSet<SummationIndex>,
+    names: HashMap<String, i64>,
 }
 impl Indices {
     fn new() -> Indices {
+        Indices::with_aliases(HashMap::new())
+    }
+    fn with_aliases(aliases: HashMap<String, i64>) -> Indices {
         Indices {
             indices: HashSet::new(),
+            names: aliases,
         }
     }
     fn len(&self) -> usize {
@@ -167,6 +185,10 @@ impl Indices {
             .iter()
             .next()
             .expect("BUG: Single called on empty index collection")
+    }
+    fn get_alias(&self, name: &str) -> Option<i64> {
+        println!("{} -> {:?}", name, self.names);
+        self.names.get(name).copied()
     }
 }
 
@@ -225,8 +247,8 @@ fn convert_binop(
     mode: ParseMode,
     indices: &mut Indices,
 ) -> Result<MathExpr, ConversionError> {
-    let mut indices_left = Indices::new();
-    let mut indices_right = Indices::new();
+    let mut indices_left = Indices::with_aliases(indices.names.clone());
+    let mut indices_right = Indices::with_aliases(indices.names.clone());
     let left = Box::new(convert_math(left_ast, mode, &mut indices_left)?);
     let right = Box::new(convert_math(right_ast, mode, &mut indices_right)?);
     let expr = match operator {
@@ -365,28 +387,36 @@ fn convert_attribute(name: String, value: ast::Expression) -> Result<MathExpr, C
 
 fn convert_call(
     function: ast::Expression,
-    args_ast: Vec<ast::Expression>,
+    args: Vec<ast::Expression>,
     keywords: Vec<ast::Keyword>,
     mode: ParseMode,
     indices: &mut Indices,
 ) -> Result<MathExpr, ConversionError> {
     assert!(keywords.is_empty());
-    let args: Result<Vec<_>, _> = args_ast
-        .into_iter()
-        .map(|arg| convert_math(arg, mode, indices))
-        .collect();
-    let args = args?;
     match function.node {
         ExpressionType::Identifier { name } => match mode {
             ParseMode::Lorentz => convert_call_lorentz(name, args, indices),
             ParseMode::Color => convert_call_color(name, args, indices),
-            ParseMode::Normal => convert_call_simple(name, args),
+            ParseMode::Normal => convert_call_simple(name, convert_call_args(args, mode, indices)?),
         },
-        ExpressionType::Attribute { value, name } => convert_call_attr(name, *value, args),
+        ExpressionType::Attribute { value, name } => {
+            convert_call_attr(name, *value, convert_call_args(args, mode, indices)?)
+        }
         _ => Err(ConversionError::new(
             ConversionErrorKind::UnsupportedFunctionType,
         )),
     }
+}
+
+fn convert_call_args(
+    args_ast: Vec<ast::Expression>,
+    mode: ParseMode,
+    indices: &mut Indices,
+) -> Result<Vec<MathExpr>, ConversionError> {
+    args_ast
+        .into_iter()
+        .map(|arg| convert_math(arg, mode, indices))
+        .collect()
 }
 
 fn convert_call_simple(function: String, args: Vec<MathExpr>) -> Result<MathExpr, ConversionError> {
@@ -491,7 +521,7 @@ fn convert_call_cmath(function: String, args: Vec<MathExpr>) -> Result<MathExpr,
 
 fn convert_call_lorentz(
     name: String,
-    args: Vec<MathExpr>,
+    args: Vec<ast::Expression>,
     indices: &mut Indices,
 ) -> Result<MathExpr, ConversionError> {
     let lorentz = match &*name {
@@ -540,14 +570,16 @@ fn convert_call_lorentz(
             i3: extract_index(&args[2], indices)?,
             i4: extract_index(&args[3], indices)?,
         },
-        _ => return convert_call_simple(name, args),
+        _ => {
+            return convert_call_simple(name, convert_call_args(args, ParseMode::Lorentz, indices)?)
+        }
     };
     Ok(MathExpr::LorentzTensor { lorentz })
 }
 
 fn convert_call_color(
     name: String,
-    args: Vec<MathExpr>,
+    args: Vec<ast::Expression>,
     indices: &mut Indices,
 ) -> Result<MathExpr, ConversionError> {
     let color = match &*name {
@@ -595,16 +627,38 @@ fn convert_call_color(
             i1: extract_index(&args[0], indices)?,
             jb2: extract_index(&args[1], indices)?,
         },
-        _ => return convert_call_simple(name, args),
+        _ => return convert_call_simple(name, convert_call_args(args, ParseMode::Color, indices)?),
     };
     Ok(MathExpr::ColorTensor { color })
 }
 
-fn extract_index<T>(expr: &MathExpr, indices: &mut Indices) -> Result<T, ConversionError>
+fn extract_index<T>(expr: &ast::Expression, indices: &mut Indices) -> Result<T, ConversionError>
 where
     T: Clone + From<i64> + Into<SummationIndex>,
 {
-    let number = extract_integer_literal(expr)?;
+    let number = match &expr.node {
+        ast::ExpressionType::Number { value } => match value {
+            ast::Number::Integer { value } => value
+                .to_i64()
+                .ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerOutOfRange))?,
+            _ => return Err(ConversionError::new(ConversionErrorKind::IntegerExpected)),
+        },
+        ast::ExpressionType::Unop {
+            op: ast::UnaryOperator::Neg,
+            a,
+        } => extract_integer_literal(a).map(|i| -i)?,
+        ast::ExpressionType::Identifier { name } => match indices.get_alias(&name) {
+            Some(i) => i,
+            _ => return Err(ConversionError::new(ConversionErrorKind::UnknownIndex)),
+        },
+        ast::ExpressionType::String {
+            value: ast::StringGroup::Constant { value },
+        } => match indices.get_alias(&value) {
+            Some(i) => i,
+            _ => return Err(ConversionError::new(ConversionErrorKind::UnknownIndex)),
+        },
+        _ => return Err(ConversionError::new(ConversionErrorKind::IntegerExpected)),
+    };
     let index = T::from(number);
     if number < 0 {
         indices.insert(index.clone())
@@ -612,9 +666,18 @@ where
     Ok(index)
 }
 
-fn extract_integer_literal(expr: &MathExpr) -> Result<i64, ConversionError> {
-    match extract_numeric_literal(expr) {
-        Some(Number::Integer(i)) => Ok(i),
+fn extract_integer_literal(expr: &ast::Expression) -> Result<i64, ConversionError> {
+    match &expr.node {
+        ast::ExpressionType::Number { value } => match value {
+            ast::Number::Integer { value } => value
+                .to_i64()
+                .ok_or_else(|| ConversionError::new(ConversionErrorKind::IntegerOutOfRange)),
+            _ => Err(ConversionError::new(ConversionErrorKind::IntegerExpected)),
+        },
+        ast::ExpressionType::Unop {
+            op: ast::UnaryOperator::Neg,
+            a,
+        } => extract_integer_literal(a).map(|i| -i),
         _ => Err(ConversionError::new(ConversionErrorKind::IntegerExpected)),
     }
 }
@@ -646,8 +709,8 @@ fn convert_if_expression(
     indices: &mut Indices,
 ) -> Result<MathExpr, ConversionError> {
     let condition = Box::new(convert_condition(test)?);
-    let mut indices_left = Indices::new();
-    let mut indices_right = Indices::new();
+    let mut indices_left = Indices::with_aliases(indices.names.clone());
+    let mut indices_right = Indices::with_aliases(indices.names.clone());
     let expr = MathExpr::Conditional {
         condition,
         if_true: Box::new(convert_math(body, mode, &mut indices_left)?),

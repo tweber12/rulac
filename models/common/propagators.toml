@@ -1,0 +1,83 @@
+###################################
+# Spin 0
+
+[spin_zero]
+aliases = { rho = -1 }
+numerator = "complex(0,1)"
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"
+
+
+###################################
+# Spin 1/2
+
+[spin_one_half]
+aliases = { i = 1, j = 2, rho = -1 }
+numerator = "complex(0,1) * (Gamma(rho, i, j) * P(rho) + Mass * Identity(i, j))"
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"
+
+
+###################################
+# Spin 1
+
+[spin_one_massive]
+aliases = { mu = 1, nu = 2, rho = -1 }
+numerator = "complex(0,1) * (-1 * Metric(mu, nu) + Metric(mu,rho)* P(rho) * P(nu) / Mass**2)"
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"
+
+[spin_one_massless]
+aliases = { mu = 1, nu = 2, rho = -1 }
+numerator = "complex(0,-1) * Metric(mu, nu)"
+denominator = "P(rho) * P(rho)"
+
+
+###################################
+# Spin 3/2
+
+[spin_three_half_massive]
+aliases = { mu = 1001, nu = 1002, i = 2001, j = 2002, rho = -1, k = -2, l = -3 }
+numerator = """
+    -(P(rho)*Gamma(rho,i,k) + Mass*Identity(i,k))
+    * (
+        Metric(mu,nu)*Identity(k,j)
+        - 2./3. * P(mu)*P(nu)/(Mass*Mass)*Identity(k,j)
+        - 1./3. * Gamma(mu,k,l)*Gamma(nu,l,j)
+        - 1./3./Mass * (P(nu)*Gamma(mu,k,j) - P(mu,0)*Gamma(nu,k,j))
+    )
+    """
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"
+
+[spin_three_half_massless]
+aliases = { mu = 1001, nu = 1002, i = 2001, j = 2002, rho = -1, k = -2, l = -3 }
+numerator = "- Gamma(mu, i,k) * P(rho)*Gamma(rho, k, l) * Gamma(nu, l, j)"
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"
+
+
+###################################
+# Spin 2
+
+[spin_two_massive]
+aliases = { mu = 1001, nu = 1002, alpha = 2001, beta = 2002, rho = -1, sigma = -2 }
+numerator = """
+    1./2. * (
+        (-1 * Metric(mu, alpha) + Metric(mu,rho) * P(rho) * P(alpha) / Mass**2) * 
+        (-1 * Metric(nu, beta) + Metric(nu,sigma) * P(sigma) * P(beta) / Mass**2)
+    )
+    + 1./2. * (
+        (-1 * Metric(mu, beta) + Metric(mu,rho) * P(rho) * P(beta) / Mass**2) * 
+        (-1 * Metric(nu, alpha) + Metric(nu,sigma) * P(sigma) * P(alpha) / Mass**2)
+    )
+    - 1./3. * (
+        (-1 * Metric(mu, nu) + Metric(mu,rho) * P(rho) * P(nu) / Mass**2) * 
+        (-1 * Metric(alpha, beta) + Metric(alpha,sigma) * P(sigma) * P(beta) / Mass**2)
+    )
+    """
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"
+
+[spin_two_massless]
+aliases = { mu = 1001, nu = 1002, alpha = 2001, beta = 2002, rho = -1 }
+numerator = """
+    1./2. * (Metric(mu,alpha) * Metric(nu,beta))
+    + 1./2. * (Metric(mu,beta) * Metric(nu,alpha))
+    - 1./3. * (Metric(mu,nu) * Metric(alpha,beta))
+    """
+denominator = "P(rho) * P(rho) - Mass * Mass + complex(0,1) * Mass * Width"

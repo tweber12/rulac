@@ -1,3 +1,4 @@
+pub mod propagators;
 mod tensor_components;
 
 pub use tensor_components::{SpinComponentsError, SpinTensorComponents};

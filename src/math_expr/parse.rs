@@ -518,7 +518,11 @@ fn convert_call_lorentz(
         },
         "P" => LorentzTensor::Momentum {
             mu1: extract_index(&args[0], indices)?,
-            particle: extract_integer_literal(&args[1])?,
+            particle: if args.len() > 1 {
+                extract_integer_literal(&args[1])?
+            } else {
+                0
+            },
         },
         "Metric" => LorentzTensor::Metric {
             mu1: extract_index(&args[0], indices)?,

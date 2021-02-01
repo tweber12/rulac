@@ -86,8 +86,8 @@ pub enum LorentzTensor {
     },
 }
 impl LorentzTensor {
-    fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> Number {
-        match *self {
+    fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> MathExpr {
+        let number = match *self {
             LorentzTensor::ChargeConjugation { i1, i2 } => {
                 components.charge_conjugation.get(indices[i1], indices[i2])
             }
@@ -112,7 +112,8 @@ impl LorentzTensor {
                     .get(indices[mu1], indices[mu2], indices[i3], indices[i4])
             }
             LorentzTensor::Momentum { .. } => unimplemented! {},
-        }
+        };
+        MathExpr::Number { value: number }
     }
 }
 
@@ -155,10 +156,7 @@ fn expand_sums(
             indices.unset_index(*index);
             val
         }
-        MathExpr::LorentzTensor { lorentz } => {
-            let value = lorentz.get_component(components, indices);
-            MathExpr::Number { value }
-        }
+        MathExpr::LorentzTensor { lorentz } => lorentz.get_component(components, indices),
         _ => expr.apply_on_subexpressions(&mut |e| expand_sums(&e, components, indices)),
     }
 }

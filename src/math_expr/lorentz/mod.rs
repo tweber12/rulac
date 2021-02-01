@@ -147,20 +147,11 @@ fn expand_sums(
 ) -> MathExpr {
     match expr {
         MathExpr::Sum { ref expr, index } => {
-            let mut terms = index.range().map(|i| {
+            let terms = index.range().map(|i| {
                 indices.set_index(*index, i);
                 expand_sums(expr, components, indices)
             });
-            let mut val = terms
-                .next()
-                .expect("BUG: There has to be at least one value for an index!");
-            for t in terms {
-                val = MathExpr::BinaryOp {
-                    operator: BinaryOperator::Add,
-                    left: Box::new(val),
-                    right: Box::new(t),
-                };
-            }
+            let val: MathExpr = terms.sum();
             indices.unset_index(*index);
             val
         }

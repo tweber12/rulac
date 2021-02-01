@@ -180,10 +180,7 @@ fn normalize_momentum(expr: &MathExpr) -> MathExpr {
 fn reverse_momentum(expr: &MathExpr) -> MathExpr {
     match expr {
         MathExpr::LorentzTensor { lorentz } => match lorentz {
-            LorentzTensor::Momentum { .. } => MathExpr::UnaryOp {
-                operator: UnaryOperator::Minus,
-                operand: Box::new(expr.clone()),
-            },
+            LorentzTensor::Momentum { .. } => -(expr.clone()),
             _ => expr.clone(),
         },
         _ => expr.apply_on_subexpressions(&mut |e| reverse_momentum(e)),

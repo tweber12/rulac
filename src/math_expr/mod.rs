@@ -435,6 +435,57 @@ impl MathExpr {
     }
 }
 
+macro_rules! impl_binary_op_expr {
+    ($trait:ident, $op:ident) => {
+        impl ops::$trait<MathExpr> for MathExpr {
+            type Output = MathExpr;
+            fn $op(self, other: MathExpr) -> MathExpr {
+                MathExpr::BinaryOp {
+                    operator: BinaryOperator::$trait,
+                    left: Box::new(self),
+                    right: Box::new(other),
+                }
+            }
+        }
+    };
+}
+impl_binary_op_expr!(Add, add);
+impl_binary_op_expr!(Mul, mul);
+impl_binary_op_expr!(Sub, sub);
+impl_binary_op_expr!(Div, div);
+
+impl ops::Neg for MathExpr {
+    type Output = MathExpr;
+    fn neg(self) -> MathExpr {
+        MathExpr::UnaryOp {
+            operator: UnaryOperator::Minus,
+            operand: Box::new(self),
+        }
+    }
+}
+
+impl std::iter::Sum for MathExpr {
+    fn sum<I>(iter: I) -> MathExpr
+    where
+        I: Iterator<Item = MathExpr>,
+    {
+        iter.fold(
+            MathExpr::Number {
+                value: Number::from(0),
+            },
+            ops::Add::add,
+        )
+    }
+}
+
+impl Default for MathExpr {
+    fn default() -> MathExpr {
+        MathExpr::Number {
+            value: Number::from(0),
+        }
+    }
+}
+
 fn constant_propagation_binary(
     operator: BinaryOperator,
     left: MathExpr,

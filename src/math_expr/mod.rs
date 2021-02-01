@@ -357,6 +357,9 @@ pub enum MathExpr {
         expr: Box<MathExpr>,
         index: SummationIndex,
     },
+    ExternalComponent {
+        component: lorentz::ExternalComponent,
+    },
 }
 impl MathExpr {
     pub fn apply_on_subexpressions<F>(&self, fun: &mut F) -> MathExpr

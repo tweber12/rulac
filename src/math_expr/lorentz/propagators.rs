@@ -1,6 +1,6 @@
 use crate::math_expr::lorentz::LorentzTensor;
 use crate::math_expr::parse::{parse_math_alias, ParseError, ParseMode};
-use crate::math_expr::{MathExpr, UnaryOperator};
+use crate::math_expr::MathExpr;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fmt;
@@ -10,14 +10,14 @@ use std::path::Path;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Propagators {
-    pub spin_zero: Propagator,
-    pub spin_one_half: Propagator,
-    pub spin_one_massive: Propagator,
-    pub spin_one_massless: Propagator,
-    pub spin_three_half_massive: Propagator,
-    pub spin_three_half_massless: Propagator,
-    pub spin_two_massive: Propagator,
-    pub spin_two_massless: Propagator,
+    spin_zero: Propagator,
+    spin_one_half: Propagator,
+    spin_one_massive: Propagator,
+    spin_one_massless: Propagator,
+    spin_three_half_massive: Propagator,
+    spin_three_half_massless: Propagator,
+    spin_two_massive: Propagator,
+    spin_two_massless: Propagator,
     pub custom: HashMap<String, Propagator>,
 }
 impl Propagators {
@@ -39,6 +39,33 @@ impl Propagators {
             custom: HashMap::new(),
         })
     }
+    pub fn spin_zero(&self, _mass: f64) -> &Propagator {
+        &self.spin_zero
+    }
+    pub fn spin_one_half(&self, _mass: f64) -> &Propagator {
+        &self.spin_one_half
+    }
+    pub fn spin_one(&self, mass: f64) -> &Propagator {
+        if mass == 0f64 {
+            &self.spin_one_massless
+        } else {
+            &self.spin_one_massive
+        }
+    }
+    pub fn spin_three_half(&self, mass: f64) -> &Propagator {
+        if mass == 0f64 {
+            &self.spin_three_half_massless
+        } else {
+            &self.spin_three_half_massive
+        }
+    }
+    pub fn spin_two(&self, mass: f64) -> &Propagator {
+        if mass == 0f64 {
+            &self.spin_two_massless
+        } else {
+            &self.spin_two_massive
+        }
+    }
 }
 
 /// A full propagator including different expressions for incoming and outgoing particles.
@@ -46,8 +73,8 @@ impl Propagators {
 /// propagators.
 #[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct Propagator {
-    incoming: BasicPropagator,
-    outgoing: BasicPropagator,
+    pub incoming: BasicPropagator,
+    pub outgoing: BasicPropagator,
 }
 impl Propagator {
     fn new_basic(stored: PropagatorStore) -> Result<Propagator, PropagatorsError> {
@@ -74,12 +101,11 @@ impl Propagator {
 /// The mass of the particle can be refered to by the variable `mass`.
 #[derive(Clone, Debug, PartialEq, Deserialize)]
 pub struct BasicPropagator {
-    numerator: MathExpr,
-    denominator: MathExpr,
+    pub numerator: MathExpr,
+    pub denominator: MathExpr,
 }
 impl BasicPropagator {
     fn from_stored(stored: PropagatorStore) -> Result<BasicPropagator, PropagatorsError> {
-        println!("{:?}", stored);
         let numerator = normalize_momentum(&parse_math_alias(
             &stored.numerator,
             ParseMode::Lorentz,

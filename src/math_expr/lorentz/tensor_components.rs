@@ -88,7 +88,7 @@ impl SpinTensorComponents {
     }
     fn compute_gamma5(&mut self, relation: &SpinTensorRelation) {
         // The lorentz indices are NOT summed over but fixed
-        for (mut indices, values) in IndexIter::new(&[], &relation.spinor) {
+        for (mut indices, values) in IndexIter::new_split(&[], &relation.spinor) {
             for (i, &index) in relation.lorentz.iter().enumerate() {
                 indices.set_index(index, i as u8);
             }
@@ -198,7 +198,7 @@ struct SpinTensorRelation {
 }
 impl SpinTensorRelation {
     fn iter(&self) -> IndexIter {
-        IndexIter::new(&self.lorentz, &self.spinor)
+        IndexIter::new_split(&self.lorentz, &self.spinor)
     }
 }
 

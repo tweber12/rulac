@@ -1,9 +1,11 @@
 pub mod propagators;
 mod tensor_components;
+mod vertex_structures;
 
 pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
+pub use vertex_structures::{StructureBuilder, VertexStructure};
 
-use super::{BinaryOperator, MathExpr, Number, SummationIndex, TensorIndex};
+use super::{MathExpr, SummationIndex, TensorIndex};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -111,10 +113,22 @@ impl LorentzTensor {
                     .sigma
                     .get(indices[mu1], indices[mu2], indices[i3], indices[i4])
             }
-            LorentzTensor::Momentum { .. } => unimplemented! {},
+            LorentzTensor::Momentum { particle, mu1 } => {
+                return MathExpr::ExternalComponent {
+                    component: ExternalComponent::Momentum(particle, indices[mu1]),
+                }
+            }
         };
         MathExpr::Number { value: number }
     }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum ExternalComponent {
+    Scalar(usize),
+    Vector(usize, u8),
+    Tensor(usize, u8, u8),
+    Momentum(i64, u8),
 }
 
 #[derive(Debug, Clone)]
@@ -169,13 +183,25 @@ struct IndexIter {
     iter: std::ops::Range<u8>,
 }
 impl IndexIter {
-    pub fn new(lorentz: &[LorentzIndex], spinor: &[SpinorIndex]) -> IndexIter {
-        let mut indices = lorentz
+    pub fn new(indices: &[SummationIndex]) -> IndexIter {
+        IndexIter::new_internal(indices.iter().copied(), Indices::new())
+    }
+    pub fn with_external(indices: &[SummationIndex], external: Indices) -> IndexIter {
+        IndexIter::new_internal(indices.iter().copied(), external)
+    }
+    pub fn new_split(lorentz: &[LorentzIndex], spinor: &[SpinorIndex]) -> IndexIter {
+        let indices = lorentz
             .iter()
             .map(|&i| SummationIndex::from(i))
             .chain(spinor.iter().map(|&i| i.into()));
+        IndexIter::new_internal(indices, Indices::new())
+    }
+    fn new_internal<I: Iterator<Item = SummationIndex>>(
+        mut indices: I,
+        external: Indices,
+    ) -> IndexIter {
         let mut iter = match indices.next() {
-            Some(i) => IndexIter::leaf(i),
+            Some(i) => IndexIter::leaf(i, external),
             None => return IndexIter::empty(),
         };
         for i in indices {
@@ -192,11 +218,11 @@ impl IndexIter {
             iter: 0..0,
         }
     }
-    fn leaf(index: SummationIndex) -> IndexIter {
+    fn leaf(index: SummationIndex, external: Indices) -> IndexIter {
         IndexIter {
             internal: None,
             current: Vec::new(),
-            indices: Indices::new(),
+            indices: external,
             index,
             iter: index.range(),
         }

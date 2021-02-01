@@ -187,7 +187,6 @@ impl Indices {
             .expect("BUG: Single called on empty index collection")
     }
     fn get_alias(&self, name: &str) -> Option<i64> {
-        println!("{} -> {:?}", name, self.names);
         self.names.get(name).copied()
     }
 }

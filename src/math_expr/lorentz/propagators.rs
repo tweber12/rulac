@@ -162,14 +162,11 @@ struct PropagatorStore {
 fn normalize_momentum(expr: &MathExpr) -> MathExpr {
     match expr {
         MathExpr::LorentzTensor { lorentz } => match lorentz {
-            LorentzTensor::Momentum { mu1, particle: _ } => MathExpr::UnaryOp {
-                operator: UnaryOperator::Minus,
-                operand: Box::new(MathExpr::LorentzTensor {
-                    lorentz: LorentzTensor::Momentum {
-                        particle: 0,
-                        mu1: *mu1,
-                    },
-                }),
+            LorentzTensor::Momentum { mu1, particle: _ } => MathExpr::LorentzTensor {
+                lorentz: LorentzTensor::Momentum {
+                    particle: 0,
+                    mu1: *mu1,
+                },
             },
             _ => expr.clone(),
         },

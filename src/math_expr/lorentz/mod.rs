@@ -3,7 +3,7 @@ mod tensor_components;
 
 pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
 
-use super::{BinaryOperator, IndexRange, MathExpr, Number, SummationIndex};
+use super::{BinaryOperator, MathExpr, Number, SummationIndex, TensorIndex};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -14,9 +14,9 @@ impl From<i64> for LorentzIndex {
         LorentzIndex(index)
     }
 }
-impl IndexRange for LorentzIndex {
-    fn range() -> std::ops::Range<u8> {
-        0..4
+impl TensorIndex for LorentzIndex {
+    fn number_of_values() -> u8 {
+        4
     }
 }
 
@@ -27,9 +27,9 @@ impl From<i64> for SpinorIndex {
         SpinorIndex(index)
     }
 }
-impl IndexRange for SpinorIndex {
-    fn range() -> std::ops::Range<u8> {
-        1..5
+impl TensorIndex for SpinorIndex {
+    fn number_of_values() -> u8 {
+        4
     }
 }
 

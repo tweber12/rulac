@@ -48,9 +48,9 @@ impl From<i64> for FundamentalIndex {
         FundamentalIndex(index)
     }
 }
-impl IndexRange for FundamentalIndex {
-    fn range() -> std::ops::Range<u8> {
-        1..4
+impl TensorIndex for FundamentalIndex {
+    fn number_of_values() -> u8 {
+        4
     }
 }
 
@@ -61,9 +61,9 @@ impl From<i64> for AdjointIndex {
         AdjointIndex(index)
     }
 }
-impl IndexRange for AdjointIndex {
-    fn range() -> std::ops::Range<u8> {
-        1..9
+impl TensorIndex for AdjointIndex {
+    fn number_of_values() -> u8 {
+        8
     }
 }
 
@@ -74,9 +74,9 @@ impl From<i64> for SextetIndex {
         SextetIndex(index)
     }
 }
-impl IndexRange for SextetIndex {
-    fn range() -> std::ops::Range<u8> {
-        1..7
+impl TensorIndex for SextetIndex {
+    fn number_of_values() -> u8 {
+        6
     }
 }
 
@@ -136,8 +136,11 @@ pub enum ColorTensor {
     },
 }
 
-pub trait IndexRange {
-    fn range() -> std::ops::Range<u8>;
+pub trait TensorIndex {
+    fn number_of_values() -> u8;
+    fn range() -> std::ops::Range<u8> {
+        0..Self::number_of_values()
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]

@@ -1,5 +1,5 @@
 use crate::math_expr::lorentz::{expand_sums, IndexIter, LorentzIndex, SpinorIndex};
-use crate::math_expr::{IndexRange, MathExpr, Number};
+use crate::math_expr::{MathExpr, Number, TensorIndex};
 use num_complex::Complex64;
 use num_traits::Zero;
 use serde::Deserialize;
@@ -62,7 +62,7 @@ impl SpinTensorComponents {
         for mu in LorentzIndex::range() {
             for i in SpinorIndex::range() {
                 for j in SpinorIndex::range() {
-                    let value = matrix[mu as usize][(i - 1) as usize][(j - 1) as usize];
+                    let value = matrix[mu as usize][i as usize][j as usize];
                     gamma.insert(mu, i, j, value);
                 }
             }
@@ -73,7 +73,7 @@ impl SpinTensorComponents {
         let mut charge_conjugation = TensorComponents2::new();
         for i in SpinorIndex::range() {
             for j in SpinorIndex::range() {
-                let value = matrix[(i - 1) as usize][(j - 1) as usize];
+                let value = matrix[i as usize][j as usize];
                 charge_conjugation.insert(i, j, value);
             }
         }
@@ -364,10 +364,10 @@ mod test {
         let components =
             super::SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let gamma5 = components.gamma5;
+        assert_eq!(gamma5.get(0, 0).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(gamma5.get(1, 1).as_complex(), Complex64::new(1f64, 0f64));
-        assert_eq!(gamma5.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
+        assert_eq!(gamma5.get(2, 2).as_complex(), Complex64::new(-1f64, 0f64));
         assert_eq!(gamma5.get(3, 3).as_complex(), Complex64::new(-1f64, 0f64));
-        assert_eq!(gamma5.get(4, 4).as_complex(), Complex64::new(-1f64, 0f64));
         assert_eq!(gamma5.components.components.len(), 4);
     }
 
@@ -376,8 +376,8 @@ mod test {
         let components =
             super::SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let projm = components.proj_m;
+        assert_eq!(projm.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projm.get(3, 3).as_complex(), Complex64::new(1f64, 0f64));
-        assert_eq!(projm.get(4, 4).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projm.components.components.len(), 2);
     }
 
@@ -386,8 +386,8 @@ mod test {
         let components =
             super::SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let projp = components.proj_p;
+        assert_eq!(projp.get(0, 0).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projp.get(1, 1).as_complex(), Complex64::new(1f64, 0f64));
-        assert_eq!(projp.get(2, 2).as_complex(), Complex64::new(1f64, 0f64));
         assert_eq!(projp.components.components.len(), 2);
     }
 

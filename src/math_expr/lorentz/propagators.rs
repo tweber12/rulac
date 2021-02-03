@@ -1,6 +1,5 @@
-use crate::math_expr::lorentz::LorentzTensor;
-use crate::math_expr::parse::{parse_math_alias, ParseError, ParseMode};
-use crate::math_expr::MathExpr;
+use crate::math_expr::lorentz::{LorentzExpr, LorentzTensor};
+use crate::math_expr::parse::{parse_math_alias, ParseError};
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fmt;
@@ -71,7 +70,7 @@ impl Propagators {
 /// A full propagator including different expressions for incoming and outgoing particles.
 /// This distinction is necessary for fermions and is how UFO encodes custom particle
 /// propagators.
-#[derive(Clone, Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Propagator {
     pub incoming: BasicPropagator,
     pub outgoing: BasicPropagator,
@@ -99,23 +98,19 @@ impl Propagator {
 /// momentum appearing in the propagator is assumed to refer to the propagating particle, i.e.
 /// `P(1,1)` and `P(329,1)` are treated as identical.
 /// The mass of the particle can be refered to by the variable `mass`.
-#[derive(Clone, Debug, PartialEq, Deserialize)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct BasicPropagator {
-    pub numerator: MathExpr,
-    pub denominator: MathExpr,
+    pub numerator: LorentzExpr,
+    pub denominator: LorentzExpr,
 }
 impl BasicPropagator {
     fn from_stored(stored: PropagatorStore) -> Result<BasicPropagator, PropagatorsError> {
         let numerator = normalize_momentum(&parse_math_alias(
             &stored.numerator,
-            ParseMode::Lorentz,
             stored.aliases.clone(),
         )?);
-        let denominator = normalize_momentum(&parse_math_alias(
-            &stored.denominator,
-            ParseMode::Normal,
-            stored.aliases,
-        )?);
+        let denominator =
+            normalize_momentum(&parse_math_alias(&stored.denominator, stored.aliases)?);
         Ok(BasicPropagator {
             numerator,
             denominator,
@@ -185,11 +180,11 @@ struct PropagatorStore {
     aliases: HashMap<String, i64>,
 }
 
-fn normalize_momentum(expr: &MathExpr) -> MathExpr {
+fn normalize_momentum(expr: &LorentzExpr) -> LorentzExpr {
     match expr {
-        MathExpr::LorentzTensor { lorentz } => match lorentz {
-            LorentzTensor::Momentum { mu1, particle: _ } => MathExpr::LorentzTensor {
-                lorentz: LorentzTensor::Momentum {
+        LorentzExpr::Tensor { tensor } => match tensor {
+            LorentzTensor::Momentum { mu1, particle: _ } => LorentzExpr::Tensor {
+                tensor: LorentzTensor::Momentum {
                     particle: 0,
                     mu1: *mu1,
                 },
@@ -200,9 +195,9 @@ fn normalize_momentum(expr: &MathExpr) -> MathExpr {
     }
 }
 
-fn reverse_momentum(expr: &MathExpr) -> MathExpr {
+fn reverse_momentum(expr: &LorentzExpr) -> LorentzExpr {
     match expr {
-        MathExpr::LorentzTensor { lorentz } => match lorentz {
+        LorentzExpr::Tensor { tensor } => match tensor {
             LorentzTensor::Momentum { .. } => -(expr.clone()),
             _ => expr.clone(),
         },

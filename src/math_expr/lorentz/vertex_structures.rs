@@ -2,25 +2,27 @@ use crate::math_expr;
 use crate::math_expr::lorentz;
 use crate::math_expr::lorentz::propagators::{BasicPropagator, Propagators};
 use crate::math_expr::lorentz::tensor_components::SpinTensorComponents;
-use crate::math_expr::lorentz::{ExternalComponent, IndexIter, Indices, LorentzIndex, SpinorIndex};
-use crate::math_expr::parse::{parse_math, ParseError, ParseMode};
-use crate::math_expr::{MathExpr, Number, SummationIndex};
+use crate::math_expr::lorentz::{
+    ExternalComponent, IndexIter, Indices, LorentzExpr, LorentzIndex, SpinIndex, SpinorIndex,
+};
+use crate::math_expr::parse::{parse_math, ParseError};
+use crate::math_expr::Number;
 use crate::ufo;
 use num_traits::Zero;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum VertexStructure {
     Scalar {
-        factor: MathExpr,
-        structure: MathExpr,
+        factor: LorentzExpr,
+        structure: LorentzExpr,
     },
     Vector {
-        factor: MathExpr,
-        structure: [MathExpr; 4],
+        factor: LorentzExpr,
+        structure: [LorentzExpr; 4],
     },
     Tensor {
-        factor: MathExpr,
-        structure: Box<[[MathExpr; 4]; 4]>,
+        factor: LorentzExpr,
+        structure: Box<[[LorentzExpr; 4]; 4]>,
     },
 }
 
@@ -103,7 +105,7 @@ impl<'a> StructureBuilder<'a> {
         external: usize,
     ) -> Result<VertexStructure, ParseError> {
         let ufo::UfoMath(ref str) = lorentz.structure;
-        let expr = parse_math(str, ParseMode::Lorentz)?;
+        let expr = parse_math(str)?;
         let mut external_indices = Indices::new();
         let factor = amputated_factor(&lorentz.spins, external);
         let structure = self.eval_component(&expr, &lorentz.spins, external, &mut external_indices);
@@ -116,9 +118,9 @@ impl<'a> StructureBuilder<'a> {
         external: usize,
     ) -> Result<VertexStructure, ParseError> {
         let ufo::UfoMath(ref str) = lorentz.structure;
-        let expr = parse_math(str, ParseMode::Lorentz)?;
+        let expr = parse_math(str)?;
         let factor = amputated_factor(&lorentz.spins, external);
-        let mut structure: [MathExpr; 4] = Default::default();
+        let mut structure: [LorentzExpr; 4] = Default::default();
         for (mut index_values, values) in
             IndexIter::new(&indices_for_spin(lorentz.spins[external], external))
         {
@@ -135,9 +137,9 @@ impl<'a> StructureBuilder<'a> {
         external: usize,
     ) -> Result<VertexStructure, ParseError> {
         let ufo::UfoMath(ref str) = lorentz.structure;
-        let expr = parse_math(str, ParseMode::Lorentz)?;
+        let expr = parse_math(str)?;
         let factor = amputated_factor(&lorentz.spins, external);
-        let mut structure: [[MathExpr; 4]; 4] = Default::default();
+        let mut structure: [[LorentzExpr; 4]; 4] = Default::default();
         for (mut index_values, values) in
             IndexIter::new(&indices_for_spin(lorentz.spins[external], external))
         {
@@ -153,19 +155,19 @@ impl<'a> StructureBuilder<'a> {
 
     fn eval_component(
         &self,
-        structure: &MathExpr,
+        structure: &LorentzExpr,
         spins: &[i64],
         external: usize,
         external_indices: &mut Indices,
-    ) -> MathExpr {
+    ) -> LorentzExpr {
         let summed_over = setup_summed_indices(spins, external);
-        let mut expr = MathExpr::Number {
+        let mut expr = LorentzExpr::Number {
             value: Number::zero(),
         };
         for (mut indices, _) in IndexIter::with_external(&summed_over, external_indices.clone()) {
             let mut summand = lorentz::expand_sums(structure, self.components, &mut indices);
             for component in get_external_components(spins, external, &indices).into_iter() {
-                summand = summand * MathExpr::ExternalComponent { component };
+                summand = summand * LorentzExpr::ExternalComponent { component };
             }
             expr = expr + summand
         }
@@ -174,8 +176,8 @@ impl<'a> StructureBuilder<'a> {
 
     fn add_propagator_scalar(
         &mut self,
-        factor: &MathExpr,
-        structure: &MathExpr,
+        factor: &LorentzExpr,
+        structure: &LorentzExpr,
         propagator: &BasicPropagator,
     ) -> VertexStructure {
         VertexStructure::Scalar {
@@ -186,8 +188,8 @@ impl<'a> StructureBuilder<'a> {
 
     fn add_propagator_vector(
         &mut self,
-        factor: &MathExpr,
-        amputated_structure: &[MathExpr; 4],
+        factor: &LorentzExpr,
+        amputated_structure: &[LorentzExpr; 4],
         propagator: &BasicPropagator,
         spin: i64,
         incoming: bool,
@@ -197,7 +199,7 @@ impl<'a> StructureBuilder<'a> {
         } else {
             (indices_for_spin(spin, 1), indices_for_spin(spin, 0))
         };
-        let mut structure: [MathExpr; 4] = Default::default();
+        let mut structure: [LorentzExpr; 4] = Default::default();
         for (index_values_out, values_out) in IndexIter::new(&indices_out) {
             for (mut index_values_in, values_in) in
                 IndexIter::with_external(&indices_in, index_values_out)
@@ -220,8 +222,8 @@ impl<'a> StructureBuilder<'a> {
 
     fn add_propagator_tensor(
         &mut self,
-        factor: &MathExpr,
-        amputated_structure: &[[MathExpr; 4]; 4],
+        factor: &LorentzExpr,
+        amputated_structure: &[[LorentzExpr; 4]; 4],
         propagator: &BasicPropagator,
         spin: i64,
         incoming: bool,
@@ -231,7 +233,7 @@ impl<'a> StructureBuilder<'a> {
         } else {
             (indices_for_spin(spin, 1), indices_for_spin(spin, 0))
         };
-        let mut structure: [[MathExpr; 4]; 4] = Default::default();
+        let mut structure: [[LorentzExpr; 4]; 4] = Default::default();
         for (index_values_out, values_out) in IndexIter::new(&indices_out) {
             for (mut index_values_in, values_in) in
                 IndexIter::with_external(&indices_in, index_values_out)
@@ -254,18 +256,18 @@ impl<'a> StructureBuilder<'a> {
     }
 }
 
-fn amputated_factor(spins: &[i64], left_out: usize) -> MathExpr {
-    let mut factor = MathExpr::Number {
+fn amputated_factor(spins: &[i64], left_out: usize) -> LorentzExpr {
+    let mut factor = LorentzExpr::Number {
         value: Number::from(1),
     };
     for (i, &s) in spins.iter().enumerate().skip(left_out) {
         if s != 1 {
             continue;
         }
-        factor = MathExpr::BinaryOp {
+        factor = LorentzExpr::BinaryOp {
             operator: math_expr::BinaryOperator::Mul,
             left: Box::new(factor),
-            right: Box::new(MathExpr::ExternalComponent {
+            right: Box::new(LorentzExpr::ExternalComponent {
                 component: ExternalComponent::Scalar(i + 1),
             }),
         }
@@ -293,7 +295,7 @@ fn get_external_components(
     components
 }
 
-fn setup_summed_indices(spins: &[i64], external: usize) -> Vec<SummationIndex> {
+fn setup_summed_indices(spins: &[i64], external: usize) -> Vec<SpinIndex> {
     let mut indices = Vec::new();
     for (i, &s) in spins.iter().enumerate() {
         if i == external {
@@ -304,7 +306,7 @@ fn setup_summed_indices(spins: &[i64], external: usize) -> Vec<SummationIndex> {
     indices
 }
 
-fn indices_for_spin(spin: i64, particle: usize) -> Vec<SummationIndex> {
+fn indices_for_spin(spin: i64, particle: usize) -> Vec<SpinIndex> {
     let i = particle as i64 + 1;
     match spin {
         1 => Vec::new(),

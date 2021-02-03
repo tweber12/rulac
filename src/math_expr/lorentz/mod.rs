@@ -5,9 +5,11 @@ mod vertex_structures;
 pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
 pub use vertex_structures::{StructureBuilder, VertexStructure};
 
-use super::{MathExpr, SummationIndex, TensorIndex};
+use super::{MathExpr, Tensor, TensorIndex};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+pub type LorentzExpr = MathExpr<LorentzTensor>;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct LorentzIndex(i64);
@@ -32,6 +34,30 @@ impl From<i64> for SpinorIndex {
 impl TensorIndex for SpinorIndex {
     fn number_of_values() -> u8 {
         4
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum SpinIndex {
+    Lorentz { index: LorentzIndex },
+    Spinor { index: SpinorIndex },
+}
+impl SpinIndex {
+    fn range(&self) -> std::ops::Range<u8> {
+        match self {
+            SpinIndex::Lorentz { .. } => LorentzIndex::range(),
+            SpinIndex::Spinor { .. } => SpinorIndex::range(),
+        }
+    }
+}
+impl From<LorentzIndex> for SpinIndex {
+    fn from(index: LorentzIndex) -> SpinIndex {
+        SpinIndex::Lorentz { index }
+    }
+}
+impl From<SpinorIndex> for SpinIndex {
+    fn from(index: SpinorIndex) -> SpinIndex {
+        SpinIndex::Spinor { index }
     }
 }
 
@@ -88,7 +114,7 @@ pub enum LorentzTensor {
     },
 }
 impl LorentzTensor {
-    fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> MathExpr {
+    fn get_component(&self, components: &SpinTensorComponents, indices: &Indices) -> LorentzExpr {
         let number = match *self {
             LorentzTensor::ChargeConjugation { i1, i2 } => {
                 components.charge_conjugation.get(indices[i1], indices[i2])
@@ -114,12 +140,70 @@ impl LorentzTensor {
                     .get(indices[mu1], indices[mu2], indices[i3], indices[i4])
             }
             LorentzTensor::Momentum { particle, mu1 } => {
-                return MathExpr::ExternalComponent {
+                return LorentzExpr::ExternalComponent {
                     component: ExternalComponent::Momentum(particle, indices[mu1]),
                 }
             }
         };
-        MathExpr::Number { value: number }
+        LorentzExpr::Number { value: number }
+    }
+}
+impl Tensor for LorentzTensor {
+    type Indices = SpinIndex;
+    type ExternalComponent = ExternalComponent;
+    fn parse(
+        name: &str,
+        indices: &mut super::parse::IndexParser<SpinIndex>,
+    ) -> Result<Option<LorentzTensor>, super::parse::ConversionError> {
+        let lorentz = match name {
+            "ProjP" => LorentzTensor::ProjP {
+                i1: indices.next_index()?,
+                i2: indices.next_index()?,
+            },
+            "ProjM" => LorentzTensor::ProjM {
+                i1: indices.next_index()?,
+                i2: indices.next_index()?,
+            },
+            "Gamma" => LorentzTensor::Gamma {
+                mu1: indices.next_index()?,
+                i2: indices.next_index()?,
+                i3: indices.next_index()?,
+            },
+            "Identity" => LorentzTensor::KroneckerDelta {
+                i1: indices.next_index()?,
+                i2: indices.next_index()?,
+            },
+            "Gamma5" => LorentzTensor::Gamma5 {
+                i1: indices.next_index()?,
+                i2: indices.next_index()?,
+            },
+            "P" => LorentzTensor::Momentum {
+                mu1: indices.next_index()?,
+                particle: if indices.n_args() > 1 {
+                    indices.next_integer()?
+                } else {
+                    0
+                },
+            },
+            "Metric" => LorentzTensor::Metric {
+                mu1: indices.next_index()?,
+                mu2: indices.next_index()?,
+            },
+            "Epsilon" => LorentzTensor::Epsilon {
+                mu1: indices.next_index()?,
+                mu2: indices.next_index()?,
+                mu3: indices.next_index()?,
+                mu4: indices.next_index()?,
+            },
+            "Sigma" => LorentzTensor::Sigma {
+                mu1: indices.next_index()?,
+                mu2: indices.next_index()?,
+                i3: indices.next_index()?,
+                i4: indices.next_index()?,
+            },
+            _ => return Ok(None),
+        };
+        Ok(Some(lorentz))
     }
 }
 
@@ -133,7 +217,7 @@ pub enum ExternalComponent {
 
 #[derive(Debug, Clone)]
 struct Indices {
-    indices: HashMap<SummationIndex, u8>,
+    indices: HashMap<SpinIndex, u8>,
 }
 impl Indices {
     fn new() -> Indices {
@@ -141,14 +225,14 @@ impl Indices {
             indices: HashMap::new(),
         }
     }
-    fn set_index<T: Into<SummationIndex>>(&mut self, index: T, value: u8) {
+    fn set_index<T: Into<SpinIndex>>(&mut self, index: T, value: u8) {
         self.indices.insert(index.into(), value);
     }
-    fn unset_index<T: Into<SummationIndex>>(&mut self, index: T) {
+    fn unset_index<T: Into<SpinIndex>>(&mut self, index: T) {
         self.indices.remove(&index.into());
     }
 }
-impl<T: Into<SummationIndex>> std::ops::Index<T> for Indices {
+impl<T: Into<SpinIndex>> std::ops::Index<T> for Indices {
     type Output = u8;
     fn index(&self, idx: T) -> &u8 {
         self.indices.index(&idx.into())
@@ -156,21 +240,21 @@ impl<T: Into<SummationIndex>> std::ops::Index<T> for Indices {
 }
 
 fn expand_sums(
-    expr: &MathExpr,
+    expr: &LorentzExpr,
     components: &SpinTensorComponents,
     indices: &mut Indices,
-) -> MathExpr {
+) -> LorentzExpr {
     match expr {
-        MathExpr::Sum { ref expr, index } => {
+        LorentzExpr::Sum { ref expr, index } => {
             let terms = index.range().map(|i| {
                 indices.set_index(*index, i);
                 expand_sums(expr, components, indices)
             });
-            let val: MathExpr = terms.sum();
+            let val: LorentzExpr = terms.sum();
             indices.unset_index(*index);
             val
         }
-        MathExpr::LorentzTensor { lorentz } => lorentz.get_component(components, indices),
+        LorentzExpr::Tensor { tensor } => tensor.get_component(components, indices),
         _ => expr.apply_on_subexpressions(&mut |e| expand_sums(&e, components, indices)),
     }
 }
@@ -179,27 +263,24 @@ struct IndexIter {
     internal: Option<Box<IndexIter>>,
     current: Vec<u8>,
     indices: Indices,
-    index: SummationIndex,
+    index: SpinIndex,
     iter: std::ops::Range<u8>,
 }
 impl IndexIter {
-    pub fn new(indices: &[SummationIndex]) -> IndexIter {
+    pub fn new(indices: &[SpinIndex]) -> IndexIter {
         IndexIter::new_internal(indices.iter().copied(), Indices::new())
     }
-    pub fn with_external(indices: &[SummationIndex], external: Indices) -> IndexIter {
+    pub fn with_external(indices: &[SpinIndex], external: Indices) -> IndexIter {
         IndexIter::new_internal(indices.iter().copied(), external)
     }
     pub fn new_split(lorentz: &[LorentzIndex], spinor: &[SpinorIndex]) -> IndexIter {
         let indices = lorentz
             .iter()
-            .map(|&i| SummationIndex::from(i))
+            .map(|&i| SpinIndex::from(i))
             .chain(spinor.iter().map(|&i| i.into()));
         IndexIter::new_internal(indices, Indices::new())
     }
-    fn new_internal<I: Iterator<Item = SummationIndex>>(
-        mut indices: I,
-        external: Indices,
-    ) -> IndexIter {
+    fn new_internal<I: Iterator<Item = SpinIndex>>(mut indices: I, external: Indices) -> IndexIter {
         let mut iter = match indices.next() {
             Some(i) => IndexIter::leaf(i, external),
             None => return IndexIter::empty(),
@@ -214,11 +295,11 @@ impl IndexIter {
             internal: None,
             current: Vec::new(),
             indices: Indices::new(),
-            index: SummationIndex::from(SpinorIndex(0)),
+            index: SpinIndex::from(SpinorIndex(0)),
             iter: 0..0,
         }
     }
-    fn leaf(index: SummationIndex, external: Indices) -> IndexIter {
+    fn leaf(index: SpinIndex, external: Indices) -> IndexIter {
         IndexIter {
             internal: None,
             current: Vec::new(),
@@ -227,7 +308,7 @@ impl IndexIter {
             iter: index.range(),
         }
     }
-    fn node(internal: IndexIter, index: SummationIndex) -> IndexIter {
+    fn node(internal: IndexIter, index: SpinIndex) -> IndexIter {
         IndexIter {
             internal: Some(Box::new(internal)),
             current: Vec::new(),

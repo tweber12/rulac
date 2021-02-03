@@ -23,24 +23,6 @@ pub enum Function {
     Other(String),
 }
 
-fn deserialize_function<'de, D>(deserializer: D) -> Result<Function, D::Error>
-where
-    D: serde::Deserializer<'de>,
-{
-    let s = String::deserialize(deserializer)?;
-    match s.as_ref() {
-        "abs" => Ok(Function::Abs),
-        "cos" => Ok(Function::Cos),
-        "sin" => Ok(Function::Sin),
-        "sqrt" => Ok(Function::Sqrt),
-        "complex" => Ok(Function::Complex),
-        "__complex_conjugate__" => Ok(Function::ComplexConjugate),
-        "__real_" => Ok(Function::RealPart),
-        "__imag__" => Ok(Function::ImaginaryPart),
-        _ => Ok(Function::Other(s)),
-    }
-}
-
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct FundamentalIndex(i64);
 impl From<i64> for FundamentalIndex {
@@ -145,47 +127,24 @@ pub trait TensorIndex {
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
-pub enum SummationIndex {
+pub enum ColorIndex {
     Fundamental { index: FundamentalIndex },
     Adjoint { index: AdjointIndex },
     Sextet { index: SextetIndex },
-    Lorentz { index: lorentz::LorentzIndex },
-    Spinor { index: lorentz::SpinorIndex },
 }
-impl SummationIndex {
-    fn range(&self) -> std::ops::Range<u8> {
-        match self {
-            SummationIndex::Fundamental { .. } => FundamentalIndex::range(),
-            SummationIndex::Sextet { .. } => SextetIndex::range(),
-            SummationIndex::Adjoint { .. } => AdjointIndex::range(),
-            SummationIndex::Lorentz { .. } => lorentz::LorentzIndex::range(),
-            SummationIndex::Spinor { .. } => lorentz::SpinorIndex::range(),
-        }
+impl From<FundamentalIndex> for ColorIndex {
+    fn from(index: FundamentalIndex) -> ColorIndex {
+        ColorIndex::Fundamental { index }
     }
 }
-impl From<FundamentalIndex> for SummationIndex {
-    fn from(index: FundamentalIndex) -> SummationIndex {
-        SummationIndex::Fundamental { index }
+impl From<SextetIndex> for ColorIndex {
+    fn from(index: SextetIndex) -> ColorIndex {
+        ColorIndex::Sextet { index }
     }
 }
-impl From<SextetIndex> for SummationIndex {
-    fn from(index: SextetIndex) -> SummationIndex {
-        SummationIndex::Sextet { index }
-    }
-}
-impl From<AdjointIndex> for SummationIndex {
-    fn from(index: AdjointIndex) -> SummationIndex {
-        SummationIndex::Adjoint { index }
-    }
-}
-impl From<lorentz::LorentzIndex> for SummationIndex {
-    fn from(index: lorentz::LorentzIndex) -> SummationIndex {
-        SummationIndex::Lorentz { index }
-    }
-}
-impl From<lorentz::SpinorIndex> for SummationIndex {
-    fn from(index: lorentz::SpinorIndex) -> SummationIndex {
-        SummationIndex::Spinor { index }
+impl From<AdjointIndex> for ColorIndex {
+    fn from(index: AdjointIndex) -> ColorIndex {
+        ColorIndex::Adjoint { index }
     }
 }
 
@@ -307,16 +266,14 @@ impl From<Complex64> for Number {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(tag = "type", rename_all = "snake_case")]
-pub enum MathExpr {
+#[derive(Clone, Debug, PartialEq)]
+pub enum MathExpr<T: Tensor> {
     Number {
         value: Number,
     },
     Call {
-        #[serde(deserialize_with = "deserialize_function")]
         function: Function,
-        args: Vec<MathExpr>,
+        args: Vec<MathExpr<T>>,
     },
     Variable {
         name: String,
@@ -326,45 +283,40 @@ pub enum MathExpr {
     },
     UnaryOp {
         operator: UnaryOperator,
-        operand: Box<MathExpr>,
+        operand: Box<MathExpr<T>>,
     },
     BinaryOp {
         operator: BinaryOperator,
-        left: Box<MathExpr>,
-        right: Box<MathExpr>,
+        left: Box<MathExpr<T>>,
+        right: Box<MathExpr<T>>,
     },
     Constant {
         name: Constant,
     },
     Conditional {
-        condition: Box<MathExpr>,
-        if_true: Box<MathExpr>,
-        if_false: Box<MathExpr>,
+        condition: Box<MathExpr<T>>,
+        if_true: Box<MathExpr<T>>,
+        if_false: Box<MathExpr<T>>,
     },
-    LorentzTensor {
-        #[serde(flatten)]
-        lorentz: lorentz::LorentzTensor,
-    },
-    ColorTensor {
-        #[serde(flatten)]
-        color: ColorTensor,
+    Tensor {
+        tensor: T,
     },
     Comparison {
-        values: Vec<MathExpr>,
+        values: Vec<MathExpr<T>>,
         operators: Vec<ComparisonOperator>,
     },
     Sum {
-        expr: Box<MathExpr>,
-        index: SummationIndex,
+        expr: Box<MathExpr<T>>,
+        index: T::Indices,
     },
     ExternalComponent {
-        component: lorentz::ExternalComponent,
+        component: T::ExternalComponent,
     },
 }
-impl MathExpr {
-    pub fn apply_on_subexpressions<F>(&self, fun: &mut F) -> MathExpr
+impl<T: Tensor> MathExpr<T> {
+    pub fn apply_on_subexpressions<F>(&self, fun: &mut F) -> MathExpr<T>
     where
-        F: FnMut(&MathExpr) -> MathExpr,
+        F: FnMut(&MathExpr<T>) -> MathExpr<T>,
     {
         match self {
             MathExpr::BinaryOp {
@@ -404,7 +356,7 @@ impl MathExpr {
             _ => self.clone(),
         }
     }
-    fn constant_propagation(&self) -> MathExpr {
+    fn constant_propagation(&self) -> MathExpr<T> {
         match self {
             MathExpr::UnaryOp { operator, operand } => {
                 let op = operand.constant_propagation();
@@ -443,9 +395,9 @@ impl MathExpr {
 
 macro_rules! impl_binary_op_expr {
     ($trait:ident, $op:ident) => {
-        impl ops::$trait<MathExpr> for MathExpr {
-            type Output = MathExpr;
-            fn $op(self, other: MathExpr) -> MathExpr {
+        impl<T: Tensor> ops::$trait<MathExpr<T>> for MathExpr<T> {
+            type Output = MathExpr<T>;
+            fn $op(self, other: MathExpr<T>) -> MathExpr<T> {
                 MathExpr::BinaryOp {
                     operator: BinaryOperator::$trait,
                     left: Box::new(self),
@@ -460,9 +412,9 @@ impl_binary_op_expr!(Mul, mul);
 impl_binary_op_expr!(Sub, sub);
 impl_binary_op_expr!(Div, div);
 
-impl ops::Neg for MathExpr {
-    type Output = MathExpr;
-    fn neg(self) -> MathExpr {
+impl<T: Tensor> ops::Neg for MathExpr<T> {
+    type Output = MathExpr<T>;
+    fn neg(self) -> MathExpr<T> {
         MathExpr::UnaryOp {
             operator: UnaryOperator::Minus,
             operand: Box::new(self),
@@ -470,10 +422,10 @@ impl ops::Neg for MathExpr {
     }
 }
 
-impl std::iter::Sum for MathExpr {
-    fn sum<I>(iter: I) -> MathExpr
+impl<T: Tensor> std::iter::Sum for MathExpr<T> {
+    fn sum<I>(iter: I) -> MathExpr<T>
     where
-        I: Iterator<Item = MathExpr>,
+        I: Iterator<Item = MathExpr<T>>,
     {
         iter.fold(
             MathExpr::Number {
@@ -484,19 +436,19 @@ impl std::iter::Sum for MathExpr {
     }
 }
 
-impl Default for MathExpr {
-    fn default() -> MathExpr {
+impl<T: Tensor> Default for MathExpr<T> {
+    fn default() -> MathExpr<T> {
         MathExpr::Number {
             value: Number::from(0),
         }
     }
 }
 
-fn constant_propagation_binary(
+fn constant_propagation_binary<T: Tensor>(
     operator: BinaryOperator,
-    left: MathExpr,
-    right: MathExpr,
-) -> MathExpr {
+    left: MathExpr<T>,
+    right: MathExpr<T>,
+) -> MathExpr<T> {
     let vl = left.extract_number();
     let vr = right.extract_number();
     match operator {
@@ -548,3 +500,89 @@ fn constant_propagation_binary(
         right: Box::new(right),
     }
 }
+
+pub trait Tensor: Clone + std::fmt::Debug {
+    type Indices: Copy + std::fmt::Debug + std::hash::Hash + Eq;
+    type ExternalComponent: Clone + std::fmt::Debug;
+    fn parse(
+        name: &str,
+        indices: &mut parse::IndexParser<Self::Indices>,
+    ) -> Result<Option<Self>, parse::ConversionError>;
+}
+impl Tensor for ColorTensor {
+    type Indices = ColorIndex;
+    type ExternalComponent = NoComponents;
+    fn parse(
+        name: &str,
+        indices: &mut parse::IndexParser<ColorIndex>,
+    ) -> Result<Option<ColorTensor>, parse::ConversionError> {
+        let color = match name {
+            "f" => ColorTensor::StructureConstant {
+                a1: indices.next_index()?,
+                a2: indices.next_index()?,
+                a3: indices.next_index()?,
+            },
+            "d" => ColorTensor::SymmetricTensor {
+                a1: indices.next_index()?,
+                a2: indices.next_index()?,
+                a3: indices.next_index()?,
+            },
+            "T" => ColorTensor::FundamentalRep {
+                a1: indices.next_index()?,
+                i2: indices.next_index()?,
+                jb3: indices.next_index()?,
+            },
+            "Epsilon" => ColorTensor::Epsilon {
+                i1: indices.next_index()?,
+                i2: indices.next_index()?,
+                i3: indices.next_index()?,
+            },
+            "EpsilonBar" => ColorTensor::EpsilonBar {
+                ib1: indices.next_index()?,
+                ib2: indices.next_index()?,
+                ib3: indices.next_index()?,
+            },
+            "T6" => ColorTensor::SextetRep {
+                a1: indices.next_index()?,
+                alpha2: indices.next_index()?,
+                betab3: indices.next_index()?,
+            },
+            "K6" => ColorTensor::SextetClebschGordan {
+                alpha1: indices.next_index()?,
+                ib2: indices.next_index()?,
+                jb3: indices.next_index()?,
+            },
+            "K6Bar" => ColorTensor::AntiSextetClebschGordan {
+                alphab1: indices.next_index()?,
+                i2: indices.next_index()?,
+                j3: indices.next_index()?,
+            },
+            "Identity" => ColorTensor::KroneckerDelta {
+                i1: indices.next_index()?,
+                jb2: indices.next_index()?,
+            },
+            _ => return Ok(None),
+        };
+        Ok(Some(color))
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+pub struct NoTensor {}
+impl Tensor for NoTensor {
+    type Indices = NoIndices;
+    type ExternalComponent = NoComponents;
+    fn parse(
+        _name: &str,
+        _indices: &mut parse::IndexParser<NoIndices>,
+    ) -> Result<Option<NoTensor>, parse::ConversionError> {
+        Ok(None)
+    }
+}
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+pub struct NoIndices {}
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+pub struct NoComponents {}
+
+type MathExprPlain = MathExpr<NoTensor>;
+type ColorExpr = MathExpr<ColorTensor>;

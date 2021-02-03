@@ -1,7 +1,6 @@
 use crate::math_expr::lorentz::LorentzTensor;
 use crate::math_expr::{
-    BinaryOperator, ColorTensor, ComparisonOperator, Constant, Function, MathExpr, Number,
-    SummationIndex, UnaryOperator,
+    BinaryOperator, ComparisonOperator, Constant, Function, MathExpr, Number, Tensor, UnaryOperator,
 };
 use num_complex::Complex64;
 use num_traits::ToPrimitive;
@@ -13,29 +12,19 @@ use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fmt;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum ParseMode {
-    Normal,
-    Lorentz,
-    Color,
-}
-
-pub fn parse_math(expr: &str, mode: ParseMode) -> Result<MathExpr, ParseError> {
+pub fn parse_math<T: Tensor>(expr: &str) -> Result<MathExpr<T>, ParseError> {
     let ast = parser::parse_expression(&expr.trim_start().replace('\n', " "))?;
     let mut indices = Indices::new();
-    convert_math(ast, mode, &mut indices)
-        .map_err(|err| ParseError::Conversion(expr.to_string(), err))
+    convert_math(ast, &mut indices).map_err(|err| ParseError::Conversion(expr.to_string(), err))
 }
 
-pub fn parse_math_alias(
+pub fn parse_math_alias<T: Tensor>(
     expr: &str,
-    mode: ParseMode,
     aliases: HashMap<String, i64>,
-) -> Result<MathExpr, ParseError> {
+) -> Result<MathExpr<T>, ParseError> {
     let ast = parser::parse_expression(&expr.trim_start().replace('\n', " "))?;
     let mut indices = Indices::with_aliases(aliases);
-    convert_math(ast, mode, &mut indices)
-        .map_err(|err| ParseError::Conversion(expr.to_string(), err))
+    convert_math(ast, &mut indices).map_err(|err| ParseError::Conversion(expr.to_string(), err))
 }
 
 #[derive(Debug)]
@@ -98,6 +87,8 @@ pub enum ConversionErrorKind {
     UnknownIndex,
     IntegerOutOfRange,
     IntegerExpected,
+    NotEnoughIndices,
+    TooManyIndices,
 }
 impl fmt::Display for ConversionErrorKind {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -122,6 +113,8 @@ impl fmt::Display for ConversionErrorKind {
             ConversionErrorKind::IntegerOutOfRange => write!(f, "Integer out of range"),
             ConversionErrorKind::IntegerExpected => write!(f, "Integer expected"),
             ConversionErrorKind::UnknownIndex => write!(f, "Unknown index"),
+            ConversionErrorKind::TooManyIndices => write!(f, "Too many indices"),
+            ConversionErrorKind::NotEnoughIndices => write!(f, "Not enough indices"),
         }
     }
 }
@@ -135,25 +128,27 @@ impl<T> ResultExt for Result<T, ConversionError> {
     }
 }
 
-pub fn deserialize_lorentz_expr<'de, D>(deserializer: D) -> Result<MathExpr, D::Error>
+pub fn deserialize_lorentz_expr<'de, D>(
+    deserializer: D,
+) -> Result<MathExpr<LorentzTensor>, D::Error>
 where
     D: serde::de::Deserializer<'de>,
 {
     let expr = String::deserialize(deserializer)?;
-    let math = parse_math(&expr, ParseMode::Lorentz).unwrap();
+    let math = parse_math(&expr).unwrap();
     Ok(math)
 }
 
 #[derive(Debug, PartialEq, Eq)]
-struct Indices {
-    indices: HashSet<SummationIndex>,
+struct Indices<T: std::hash::Hash + Eq> {
+    indices: HashSet<T>,
     names: HashMap<String, i64>,
 }
-impl Indices {
-    fn new() -> Indices {
+impl<T: std::hash::Hash + Eq + Copy> Indices<T> {
+    fn new() -> Indices<T> {
         Indices::with_aliases(HashMap::new())
     }
-    fn with_aliases(aliases: HashMap<String, i64>) -> Indices {
+    fn with_aliases(aliases: HashMap<String, i64>) -> Indices<T> {
         Indices {
             indices: HashSet::new(),
             names: aliases,
@@ -162,24 +157,24 @@ impl Indices {
     fn len(&self) -> usize {
         self.indices.len()
     }
-    fn insert<T: Into<SummationIndex>>(&mut self, index: T) {
+    fn insert<I: Into<T>>(&mut self, index: I) {
         self.indices.insert(index.into());
     }
-    fn add_differences(&mut self, i1: &Indices, i2: &Indices) {
+    fn add_differences(&mut self, i1: &Indices<T>, i2: &Indices<T>) {
         for i in i1.indices.symmetric_difference(&i2.indices) {
             self.indices.insert(*i);
         }
     }
-    fn extend(&mut self, other: &Indices) {
+    fn extend(&mut self, other: &Indices<T>) {
         self.indices.extend(&other.indices)
     }
-    fn intersection<'a>(&'a self, other: &'a Indices) -> impl Iterator<Item = &'a SummationIndex> {
+    fn intersection<'a>(&'a self, other: &'a Indices<T>) -> impl Iterator<Item = &'a T> {
         self.indices.intersection(&other.indices)
     }
     fn is_empty(&self) -> bool {
         self.indices.is_empty()
     }
-    fn single(&self) -> SummationIndex {
+    fn single(&self) -> T {
         *self
             .indices
             .iter()
@@ -191,24 +186,23 @@ impl Indices {
     }
 }
 
-fn convert_math(
+fn convert_math<T: Tensor>(
     expr: ast::Expression,
-    mode: ParseMode,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
+    indices: &mut Indices<T::Indices>,
+) -> Result<MathExpr<T>, ConversionError> {
     let result = match expr.node {
         ExpressionType::Number { value } => convert_number(value),
-        ExpressionType::Binop { op, a, b } => convert_binop(op, *a, *b, mode, indices),
-        ExpressionType::Unop { op, a } => convert_unop(op, *a, mode, indices),
+        ExpressionType::Binop { op, a, b } => convert_binop(op, *a, *b, indices),
+        ExpressionType::Unop { op, a } => convert_unop(op, *a, indices),
         ExpressionType::Identifier { name } => Ok(MathExpr::Variable { name }),
         ExpressionType::Call {
             function,
             args,
             keywords,
-        } => convert_call(*function, args, keywords, mode, indices),
+        } => convert_call(*function, args, keywords, indices),
         ExpressionType::Attribute { value, name } => convert_attribute(name, *value),
         ExpressionType::IfExpression { test, body, orelse } => {
-            convert_if_expression(*test, *body, *orelse, mode, indices)
+            convert_if_expression(*test, *body, *orelse, indices)
         }
         ExpressionType::Compare { vals, ops } => convert_comparison(vals, ops),
         _ => Err(ConversionError {
@@ -219,7 +213,7 @@ fn convert_math(
     result.localize_err(expr.location)
 }
 
-fn convert_number(value: ast::Number) -> Result<MathExpr, ConversionError> {
+fn convert_number<T: Tensor>(value: ast::Number) -> Result<MathExpr<T>, ConversionError> {
     let num = match value {
         ast::Number::Integer { value } => {
             let num = value
@@ -239,17 +233,16 @@ fn convert_number(value: ast::Number) -> Result<MathExpr, ConversionError> {
     Ok(num)
 }
 
-fn convert_binop(
+fn convert_binop<T: Tensor>(
     operator: ast::Operator,
     left_ast: ast::Expression,
     right_ast: ast::Expression,
-    mode: ParseMode,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
+    indices: &mut Indices<T::Indices>,
+) -> Result<MathExpr<T>, ConversionError> {
     let mut indices_left = Indices::with_aliases(indices.names.clone());
     let mut indices_right = Indices::with_aliases(indices.names.clone());
-    let left = Box::new(convert_math(left_ast, mode, &mut indices_left)?);
-    let right = Box::new(convert_math(right_ast, mode, &mut indices_right)?);
+    let left = Box::new(convert_math(left_ast, &mut indices_left)?);
+    let right = Box::new(convert_math(right_ast, &mut indices_right)?);
     let expr = match operator {
         ast::Operator::Add => {
             assert_eq!(indices_left, indices_right);
@@ -326,13 +319,12 @@ fn convert_binop(
     Ok(expr)
 }
 
-fn convert_unop(
+fn convert_unop<T: Tensor>(
     operator: ast::UnaryOperator,
     operand_ast: ast::Expression,
-    mode: ParseMode,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
-    let operand = Box::new(convert_math(operand_ast, mode, indices)?);
+    indices: &mut Indices<T::Indices>,
+) -> Result<MathExpr<T>, ConversionError> {
+    let operand = Box::new(convert_math(operand_ast, indices)?);
     let op = match operator {
         ast::UnaryOperator::Pos => MathExpr::UnaryOp {
             operator: UnaryOperator::Plus,
@@ -351,7 +343,10 @@ fn convert_unop(
     Ok(op)
 }
 
-fn convert_attribute(name: String, value: ast::Expression) -> Result<MathExpr, ConversionError> {
+fn convert_attribute<T: Tensor>(
+    name: String,
+    value: ast::Expression,
+) -> Result<MathExpr<T>, ConversionError> {
     let prefix = match value.node {
         ExpressionType::Identifier { name } => name,
         _ => {
@@ -384,22 +379,26 @@ fn convert_attribute(name: String, value: ast::Expression) -> Result<MathExpr, C
     Ok(attr)
 }
 
-fn convert_call(
+fn convert_call<T: Tensor>(
     function: ast::Expression,
     args: Vec<ast::Expression>,
     keywords: Vec<ast::Keyword>,
-    mode: ParseMode,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
+    indices: &mut Indices<T::Indices>,
+) -> Result<MathExpr<T>, ConversionError> {
     assert!(keywords.is_empty());
     match function.node {
-        ExpressionType::Identifier { name } => match mode {
-            ParseMode::Lorentz => convert_call_lorentz(name, args, indices),
-            ParseMode::Color => convert_call_color(name, args, indices),
-            ParseMode::Normal => convert_call_simple(name, convert_call_args(args, mode, indices)?),
-        },
+        ExpressionType::Identifier { name } => {
+            let mut index_parser = IndexParser::new(&args, indices);
+            match T::parse(&name, &mut index_parser)? {
+                Some(tensor) => {
+                    index_parser.finalize()?;
+                    Ok(MathExpr::Tensor { tensor })
+                }
+                None => convert_call_simple(name, convert_call_args(args, indices)?),
+            }
+        }
         ExpressionType::Attribute { value, name } => {
-            convert_call_attr(name, *value, convert_call_args(args, mode, indices)?)
+            convert_call_attr(name, *value, convert_call_args(args, indices)?)
         }
         _ => Err(ConversionError::new(
             ConversionErrorKind::UnsupportedFunctionType,
@@ -407,18 +406,20 @@ fn convert_call(
     }
 }
 
-fn convert_call_args(
+fn convert_call_args<T: Tensor>(
     args_ast: Vec<ast::Expression>,
-    mode: ParseMode,
-    indices: &mut Indices,
-) -> Result<Vec<MathExpr>, ConversionError> {
+    indices: &mut Indices<T::Indices>,
+) -> Result<Vec<MathExpr<T>>, ConversionError> {
     args_ast
         .into_iter()
-        .map(|arg| convert_math(arg, mode, indices))
+        .map(|arg| convert_math(arg, indices))
         .collect()
 }
 
-fn convert_call_simple(function: String, args: Vec<MathExpr>) -> Result<MathExpr, ConversionError> {
+fn convert_call_simple<T: Tensor>(
+    function: String,
+    args: Vec<MathExpr<T>>,
+) -> Result<MathExpr<T>, ConversionError> {
     let fun = match &*function {
         "complex" => {
             let re = args.get(0).and_then(extract_float_literal);
@@ -445,11 +446,11 @@ fn convert_call_simple(function: String, args: Vec<MathExpr>) -> Result<MathExpr
     Ok(fun)
 }
 
-fn convert_call_attr(
+fn convert_call_attr<T: Tensor>(
     name: String,
     value: ast::Expression,
-    args: Vec<MathExpr>,
-) -> Result<MathExpr, ConversionError> {
+    args: Vec<MathExpr<T>>,
+) -> Result<MathExpr<T>, ConversionError> {
     let attr = match value.node {
         ExpressionType::Identifier { name } => name,
         _ => {
@@ -475,7 +476,10 @@ fn convert_call_attr(
     Ok(fun)
 }
 
-fn convert_call_cmath(function: String, args: Vec<MathExpr>) -> Result<MathExpr, ConversionError> {
+fn convert_call_cmath<T: Tensor>(
+    function: String,
+    args: Vec<MathExpr<T>>,
+) -> Result<MathExpr<T>, ConversionError> {
     let fun = match &*function {
         "abs" => MathExpr::Call {
             function: Function::Abs,
@@ -518,122 +522,56 @@ fn convert_call_cmath(function: String, args: Vec<MathExpr>) -> Result<MathExpr,
     Ok(fun)
 }
 
-fn convert_call_lorentz(
-    name: String,
-    args: Vec<ast::Expression>,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
-    let lorentz = match &*name {
-        "ProjP" => LorentzTensor::ProjP {
-            i1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-        },
-        "ProjM" => LorentzTensor::ProjM {
-            i1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-        },
-        "Gamma" => LorentzTensor::Gamma {
-            mu1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-            i3: extract_index(&args[2], indices)?,
-        },
-        "Identity" => LorentzTensor::KroneckerDelta {
-            i1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-        },
-        "Gamma5" => LorentzTensor::Gamma5 {
-            i1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-        },
-        "P" => LorentzTensor::Momentum {
-            mu1: extract_index(&args[0], indices)?,
-            particle: if args.len() > 1 {
-                extract_integer_literal(&args[1])?
-            } else {
-                0
-            },
-        },
-        "Metric" => LorentzTensor::Metric {
-            mu1: extract_index(&args[0], indices)?,
-            mu2: extract_index(&args[1], indices)?,
-        },
-        "Epsilon" => LorentzTensor::Epsilon {
-            mu1: extract_index(&args[0], indices)?,
-            mu2: extract_index(&args[1], indices)?,
-            mu3: extract_index(&args[2], indices)?,
-            mu4: extract_index(&args[3], indices)?,
-        },
-        "Sigma" => LorentzTensor::Sigma {
-            mu1: extract_index(&args[0], indices)?,
-            mu2: extract_index(&args[1], indices)?,
-            i3: extract_index(&args[2], indices)?,
-            i4: extract_index(&args[3], indices)?,
-        },
-        _ => {
-            return convert_call_simple(name, convert_call_args(args, ParseMode::Lorentz, indices)?)
+pub struct IndexParser<'a, T: std::hash::Hash + Eq + Copy> {
+    index: usize,
+    args: &'a [ast::Expression],
+    indices: &'a mut Indices<T>,
+}
+impl<'a, T: std::hash::Hash + Eq + Copy> IndexParser<'a, T> {
+    fn new(args: &'a [ast::Expression], indices: &'a mut Indices<T>) -> IndexParser<'a, T> {
+        IndexParser {
+            index: 0,
+            args,
+            indices,
         }
-    };
-    Ok(MathExpr::LorentzTensor { lorentz })
+    }
+    pub fn n_args(&self) -> usize {
+        self.args.len()
+    }
+    pub fn next_integer(&mut self) -> Result<i64, ConversionError> {
+        if self.index < self.args.len() {
+            let result = extract_integer_literal(&self.args[self.index]);
+            self.index += 1;
+            result
+        } else {
+            Err(ConversionError::new(ConversionErrorKind::NotEnoughIndices))
+        }
+    }
+    pub fn next_index<I: Clone + From<i64> + Into<T>>(&mut self) -> Result<I, ConversionError> {
+        if self.index < self.args.len() {
+            let result = extract_index(&self.args[self.index], self.indices);
+            self.index += 1;
+            result
+        } else {
+            Err(ConversionError::new(ConversionErrorKind::NotEnoughIndices))
+        }
+    }
+    fn finalize(&self) -> Result<(), ConversionError> {
+        if self.index != self.args.len() {
+            Err(ConversionError::new(ConversionErrorKind::TooManyIndices))
+        } else {
+            Ok(())
+        }
+    }
 }
 
-fn convert_call_color(
-    name: String,
-    args: Vec<ast::Expression>,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
-    let color = match &*name {
-        "f" => ColorTensor::StructureConstant {
-            a1: extract_index(&args[0], indices)?,
-            a2: extract_index(&args[1], indices)?,
-            a3: extract_index(&args[2], indices)?,
-        },
-        "d" => ColorTensor::SymmetricTensor {
-            a1: extract_index(&args[0], indices)?,
-            a2: extract_index(&args[1], indices)?,
-            a3: extract_index(&args[2], indices)?,
-        },
-        "T" => ColorTensor::FundamentalRep {
-            a1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-            jb3: extract_index(&args[2], indices)?,
-        },
-        "Epsilon" => ColorTensor::Epsilon {
-            i1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-            i3: extract_index(&args[2], indices)?,
-        },
-        "EpsilonBar" => ColorTensor::EpsilonBar {
-            ib1: extract_index(&args[0], indices)?,
-            ib2: extract_index(&args[1], indices)?,
-            ib3: extract_index(&args[2], indices)?,
-        },
-        "T6" => ColorTensor::SextetRep {
-            a1: extract_index(&args[0], indices)?,
-            alpha2: extract_index(&args[1], indices)?,
-            betab3: extract_index(&args[2], indices)?,
-        },
-        "K6" => ColorTensor::SextetClebschGordan {
-            alpha1: extract_index(&args[0], indices)?,
-            ib2: extract_index(&args[1], indices)?,
-            jb3: extract_index(&args[2], indices)?,
-        },
-        "K6Bar" => ColorTensor::AntiSextetClebschGordan {
-            alphab1: extract_index(&args[0], indices)?,
-            i2: extract_index(&args[1], indices)?,
-            j3: extract_index(&args[2], indices)?,
-        },
-        "Identity" => ColorTensor::KroneckerDelta {
-            i1: extract_index(&args[0], indices)?,
-            jb2: extract_index(&args[1], indices)?,
-        },
-        _ => return convert_call_simple(name, convert_call_args(args, ParseMode::Color, indices)?),
-    };
-    Ok(MathExpr::ColorTensor { color })
-}
-
-fn extract_index<T>(expr: &ast::Expression, indices: &mut Indices) -> Result<T, ConversionError>
+fn extract_index<T, U>(
+    expr: &ast::Expression,
+    indices: &mut Indices<U>,
+) -> Result<T, ConversionError>
 where
-    T: Clone + From<i64> + Into<SummationIndex>,
+    U: Copy + Eq + std::hash::Hash,
+    T: Clone + From<i64> + Into<U>,
 {
     let number = match &expr.node {
         ast::ExpressionType::Number { value } => match value {
@@ -681,7 +619,7 @@ fn extract_integer_literal(expr: &ast::Expression) -> Result<i64, ConversionErro
     }
 }
 
-fn extract_float_literal(expr: &MathExpr) -> Option<f64> {
+fn extract_float_literal<T: Tensor>(expr: &MathExpr<T>) -> Option<f64> {
     match extract_numeric_literal(expr) {
         Some(Number::Integer(i)) => Some(i as f64),
         Some(Number::Real(f)) => Some(f),
@@ -689,7 +627,7 @@ fn extract_float_literal(expr: &MathExpr) -> Option<f64> {
     }
 }
 
-fn extract_numeric_literal(expr: &MathExpr) -> Option<Number> {
+fn extract_numeric_literal<T: Tensor>(expr: &MathExpr<T>) -> Option<Number> {
     match expr {
         MathExpr::Number { value } => Some(*value),
         MathExpr::UnaryOp { operator, operand } => match operator {
@@ -700,34 +638,33 @@ fn extract_numeric_literal(expr: &MathExpr) -> Option<Number> {
     }
 }
 
-fn convert_if_expression(
+fn convert_if_expression<T: Tensor>(
     test: ast::Expression,
     body: ast::Expression,
     orelse: ast::Expression,
-    mode: ParseMode,
-    indices: &mut Indices,
-) -> Result<MathExpr, ConversionError> {
+    indices: &mut Indices<T::Indices>,
+) -> Result<MathExpr<T>, ConversionError> {
     let condition = Box::new(convert_condition(test)?);
     let mut indices_left = Indices::with_aliases(indices.names.clone());
     let mut indices_right = Indices::with_aliases(indices.names.clone());
     let expr = MathExpr::Conditional {
         condition,
-        if_true: Box::new(convert_math(body, mode, &mut indices_left)?),
-        if_false: Box::new(convert_math(orelse, mode, &mut indices_right)?),
+        if_true: Box::new(convert_math(body, &mut indices_left)?),
+        if_false: Box::new(convert_math(orelse, &mut indices_right)?),
     };
     assert_eq!(indices_left, indices_right);
     indices.extend(&indices_left);
     Ok(expr)
 }
 
-fn convert_condition(expr: ast::Expression) -> Result<MathExpr, ConversionError> {
-    convert_math(expr, ParseMode::Normal, &mut Indices::new())
+fn convert_condition<T: Tensor>(expr: ast::Expression) -> Result<MathExpr<T>, ConversionError> {
+    convert_math(expr, &mut Indices::new())
 }
 
-fn convert_comparison(
+fn convert_comparison<T: Tensor>(
     values: Vec<ast::Expression>,
     operators: Vec<ast::Comparison>,
-) -> Result<MathExpr, ConversionError> {
+) -> Result<MathExpr<T>, ConversionError> {
     let operators: Result<_, _> = operators
         .into_iter()
         .map(|op| {
@@ -744,7 +681,7 @@ fn convert_comparison(
         .collect();
     let values: Result<_, _> = values
         .into_iter()
-        .map(|expr| convert_math(expr, ParseMode::Normal, &mut Indices::new()))
+        .map(|expr| convert_math(expr, &mut Indices::new()))
         .collect();
     Ok(MathExpr::Comparison {
         values: values?,
@@ -754,46 +691,46 @@ fn convert_comparison(
 
 #[cfg(test)]
 mod test {
-    use super::ParseMode;
-    use crate::math_expr::MathExpr;
+    use crate::math_expr::lorentz::LorentzExpr;
+    use crate::math_expr::{ColorExpr, MathExprPlain};
     use crate::ufo;
     use crate::ufo::UfoModel;
 
     #[test]
     fn expr1() {
-        super::parse_math("1+1", ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math("1+1").unwrap();
     }
 
     #[test]
     fn gc_1() {
         let value = "-(ee*complex(0,1))/3.";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn gc_47() {
         let value = "(CKM3x1*ee*complex(0,1))/(sw*cmath.sqrt(2))";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn gc_81() {
         let value = "ee**2*complex(0,1)*vev + (cw**2*ee**2*complex(0,1)*vev)/(2.*sw**2) + (ee**2*complex(0,1)*sw**2*vev)/(2.*cw**2)";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn ffs1() {
         let structure = "ProjM(2,1)";
-        super::parse_math(structure, ParseMode::Lorentz).unwrap();
+        let _: LorentzExpr = super::parse_math(structure).unwrap();
     }
 
     #[test]
     fn ffv2() {
         let structure = "Gamma(3,2,-1)*ProjM(-1,1)";
-        let expr = super::parse_math(structure, ParseMode::Lorentz).unwrap();
+        let expr: LorentzExpr = super::parse_math(structure).unwrap();
         match expr {
-            MathExpr::Sum { .. } => (),
+            LorentzExpr::Sum { .. } => (),
             _ => panic!("Sum expected"),
         }
     }
@@ -801,83 +738,79 @@ mod test {
     #[test]
     fn i1x31() {
         let value = "yb*complexconjugate(CKM1x3)";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn mw() {
         let value =
             "cmath.sqrt(MZ**2/2. + cmath.sqrt(MZ**4/4. - (aEW*cmath.pi*MZ**2)/(Gf*cmath.sqrt(2))))";
-        let result = super::parse_math(value, ParseMode::Normal);
-        if result.is_err() {
-            println!("{}", result.err().unwrap());
-            panic!("Error");
-        }
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn uvgc_123_24() {
         let value = "( 0 if MB else (complex(0,1)*G**3)/(48.*cmath.pi**2) )";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
     #[test]
     fn uvgc_147_46() {
         let value = "( (5*complex(0,1)*G**2)/(12.*cmath.pi**2) - (complex(0,1)*G**2*reglog(MB/MU_R))/(2.*cmath.pi**2) if MB else (complex(0,1)*G**2)/(12.*cmath.pi**2) ) - (complex(0,1)*G**2)/(12.*cmath.pi**2)";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn re() {
         let value = "z.real";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn asc() {
         let value = "asin(1./z)";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     #[test]
     fn reglog() {
         let value = "(0.0 if z==0.0 else cmath.log(z.real))";
-        super::parse_math(value, ParseMode::Normal).unwrap();
+        let _: MathExprPlain = super::parse_math(value).unwrap();
     }
 
     fn parse_model(model: &str) {
         let model = UfoModel::load(model).unwrap();
         for parameter in model.parameters.values() {
             if let ufo::ValOrExpr::Expr(ufo::UfoMath(ref expr)) = &parameter.value {
-                super::parse_math(&expr, ParseMode::Normal).unwrap();
+                let _: MathExprPlain = super::parse_math(&expr).unwrap();
             }
         }
         for lorentz in model.lorentz_structures.values() {
             let ufo::UfoMath(ref expr) = lorentz.structure;
-            super::parse_math(&expr, ParseMode::Lorentz).unwrap();
+            let _: LorentzExpr = super::parse_math(&expr).unwrap();
         }
         for vertex in model.vertices.iter() {
             for c in vertex.color.iter() {
                 let ufo::UfoMath(ref expr) = c;
-                super::parse_math(&expr, ParseMode::Color).unwrap();
+                let _: ColorExpr = super::parse_math(&expr).unwrap();
             }
         }
         for coupling in model.couplings.values() {
             match coupling.value {
                 ufo::CouplingValue::Simple(ref expr) => {
                     let ufo::UfoMath(ref expr) = expr;
-                    super::parse_math(&expr, ParseMode::Color).unwrap();
+                    let _: ColorExpr = super::parse_math(&expr).unwrap();
                 }
                 ufo::CouplingValue::Orders(ref orders) => {
                     for o in orders.values() {
                         let ufo::UfoMath(ref expr) = o;
-                        super::parse_math(&expr, ParseMode::Color).unwrap();
+                        let _: ColorExpr = super::parse_math(&expr).unwrap();
                     }
                 }
             }
         }
         for function in model.function_library.values() {
             let ufo::UfoMath(ref expr) = function.expr;
-            super::parse_math(&expr, ParseMode::Normal).unwrap();
+            let _: MathExprPlain = super::parse_math(&expr).unwrap();
         }
     }
 

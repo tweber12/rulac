@@ -1,5 +1,5 @@
-use crate::math_expr::lorentz::{LorentzExpr, LorentzTensor};
 use crate::math_expr::parse::{parse_math_alias, ParseError};
+use crate::spin::{LorentzExpr, LorentzTensor};
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fmt;

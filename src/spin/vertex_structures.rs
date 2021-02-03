@@ -1,12 +1,12 @@
 use crate::math_expr;
-use crate::math_expr::lorentz;
-use crate::math_expr::lorentz::propagators::{BasicPropagator, Propagators};
-use crate::math_expr::lorentz::tensor_components::SpinTensorComponents;
-use crate::math_expr::lorentz::{
-    ExternalComponent, IndexIter, Indices, LorentzExpr, LorentzIndex, SpinIndex, SpinorIndex,
-};
 use crate::math_expr::parse::{parse_math, ParseError};
 use crate::math_expr::Number;
+use crate::spin;
+use crate::spin::propagators::{BasicPropagator, Propagators};
+use crate::spin::tensor_components::SpinTensorComponents;
+use crate::spin::{
+    ExternalComponent, IndexIter, Indices, LorentzExpr, LorentzIndex, SpinIndex, SpinorIndex,
+};
 use crate::ufo;
 use num_traits::Zero;
 
@@ -165,7 +165,7 @@ impl<'a> StructureBuilder<'a> {
             value: Number::zero(),
         };
         for (mut indices, _) in IndexIter::with_external(&summed_over, external_indices.clone()) {
-            let mut summand = lorentz::expand_sums(structure, self.components, &mut indices);
+            let mut summand = spin::expand_sums(structure, self.components, &mut indices);
             for component in get_external_components(spins, external, &indices).into_iter() {
                 summand = summand * LorentzExpr::ExternalComponent { component };
             }
@@ -204,7 +204,7 @@ impl<'a> StructureBuilder<'a> {
             for (mut index_values_in, values_in) in
                 IndexIter::with_external(&indices_in, index_values_out)
             {
-                let mut summand = lorentz::expand_sums(
+                let mut summand = spin::expand_sums(
                     &propagator.numerator,
                     &self.components,
                     &mut index_values_in,
@@ -238,7 +238,7 @@ impl<'a> StructureBuilder<'a> {
             for (mut index_values_in, values_in) in
                 IndexIter::with_external(&indices_in, index_values_out)
             {
-                let mut summand = lorentz::expand_sums(
+                let mut summand = spin::expand_sums(
                     &propagator.numerator,
                     &self.components,
                     &mut index_values_in,
@@ -321,8 +321,8 @@ fn indices_for_spin(spin: i64, particle: usize) -> Vec<SpinIndex> {
 
 #[cfg(test)]
 mod test {
-    use crate::math_expr::lorentz::propagators::Propagators;
-    use crate::math_expr::lorentz::tensor_components::SpinTensorComponents;
+    use crate::spin::propagators::Propagators;
+    use crate::spin::tensor_components::SpinTensorComponents;
     use crate::ufo::UfoModel;
 
     #[test]

@@ -1,4 +1,3 @@
-use crate::math_expr::lorentz::LorentzTensor;
 use crate::math_expr::{
     BinaryOperator, ComparisonOperator, Constant, Function, MathExpr, Number, Tensor, UnaryOperator,
 };
@@ -8,7 +7,6 @@ use rustpython_parser::ast;
 use rustpython_parser::ast::ExpressionType;
 use rustpython_parser::error;
 use rustpython_parser::parser;
-use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fmt;
 
@@ -126,17 +124,6 @@ impl<T> ResultExt for Result<T, ConversionError> {
     fn localize_err(self, location: ast::Location) -> Result<T, ConversionError> {
         self.map_err(|e| e.localize(location))
     }
-}
-
-pub fn deserialize_lorentz_expr<'de, D>(
-    deserializer: D,
-) -> Result<MathExpr<LorentzTensor>, D::Error>
-where
-    D: serde::de::Deserializer<'de>,
-{
-    let expr = String::deserialize(deserializer)?;
-    let math = parse_math(&expr).unwrap();
-    Ok(math)
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -691,8 +678,9 @@ fn convert_comparison<T: Tensor>(
 
 #[cfg(test)]
 mod test {
-    use crate::math_expr::lorentz::LorentzExpr;
-    use crate::math_expr::{ColorExpr, MathExprPlain};
+    use crate::color::ColorExpr;
+    use crate::math_expr::MathExprPlain;
+    use crate::spin::LorentzExpr;
     use crate::ufo;
     use crate::ufo::UfoModel;
 

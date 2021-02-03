@@ -5,7 +5,8 @@ mod vertex_structures;
 pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
 pub use vertex_structures::{StructureBuilder, VertexStructure};
 
-use super::{MathExpr, Tensor, TensorIndex};
+use crate::math_expr::parse;
+use crate::math_expr::{MathExpr, Tensor, TensorIndex};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -153,8 +154,8 @@ impl Tensor for LorentzTensor {
     type ExternalComponent = ExternalComponent;
     fn parse(
         name: &str,
-        indices: &mut super::parse::IndexParser<SpinIndex>,
-    ) -> Result<Option<LorentzTensor>, super::parse::ConversionError> {
+        indices: &mut parse::IndexParser<SpinIndex>,
+    ) -> Result<Option<LorentzTensor>, parse::ConversionError> {
         let lorentz = match name {
             "ProjP" => LorentzTensor::ProjP {
                 i1: indices.next_index()?,
@@ -336,4 +337,15 @@ impl Iterator for IndexIter {
         }
         None
     }
+}
+
+pub fn deserialize_lorentz_expr<'de, D>(
+    deserializer: D,
+) -> Result<MathExpr<LorentzTensor>, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    let expr = String::deserialize(deserializer)?;
+    let math = parse::parse_math(&expr).unwrap();
+    Ok(math)
 }

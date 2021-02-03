@@ -1,5 +1,5 @@
-use crate::math_expr::lorentz::{expand_sums, IndexIter, LorentzExpr, LorentzIndex, SpinorIndex};
 use crate::math_expr::{Number, TensorIndex};
+use crate::spin::{expand_sums, IndexIter, LorentzExpr, LorentzIndex, SpinorIndex};
 use num_complex::Complex64;
 use num_traits::Zero;
 use serde::Deserialize;
@@ -189,7 +189,7 @@ struct SpinTensorComponentsInternal {
 
 #[derive(Clone, Debug, PartialEq, Deserialize)]
 struct SpinTensorRelation {
-    #[serde(deserialize_with = "crate::math_expr::parse::deserialize_lorentz_expr")]
+    #[serde(deserialize_with = "crate::spin::deserialize_lorentz_expr")]
     expr: LorentzExpr,
     #[serde(default)]
     lorentz: Vec<LorentzIndex>,

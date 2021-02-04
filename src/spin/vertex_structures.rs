@@ -47,12 +47,10 @@ impl<'a> StructureBuilder<'a> {
     ) -> Result<VertexStructure, ParseError> {
         assert!(external < lorentz.spins.len());
         match lorentz.spins[external] {
-            1 => self.amputated_scalar(lorentz, external),
-            2 | 3 => self.amputated_vector(lorentz, external),
-            4 | 5 => self.amputated_tensor(lorentz, external),
-            0 => panic!("BUG: Spin+1 = 0 is nonsensical, so something went terribly wrong!"),
-            -1 => unimplemented!("Ghosts are currently not supported"),
-            s => unimplemented!("Only spins up to 2 are supported: {}", s),
+            ufo::Spin::Zero => self.amputated_scalar(lorentz, external),
+            ufo::Spin::OneHalf | ufo::Spin::One => self.amputated_vector(lorentz, external),
+            ufo::Spin::ThreeHalf | ufo::Spin::Two => self.amputated_tensor(lorentz, external),
+            ufo::Spin::Ghost => unimplemented!("Ghosts are currently not supported"),
         }
     }
 
@@ -65,12 +63,12 @@ impl<'a> StructureBuilder<'a> {
     ) -> Result<VertexStructure, ParseError> {
         let amputated = self.amputated_structure(lorentz, external)?;
         let propagator = match lorentz.spins[external] {
-            1 => &self.propagators.spin_zero(mass),
-            2 => self.propagators.spin_one_half(mass),
-            3 => self.propagators.spin_one(mass),
-            4 => self.propagators.spin_three_half(mass),
-            5 => self.propagators.spin_two(mass),
-            _ => unimplemented!("Unsupported spin"),
+            ufo::Spin::Zero => &self.propagators.spin_zero(mass),
+            ufo::Spin::OneHalf => self.propagators.spin_one_half(mass),
+            ufo::Spin::One => self.propagators.spin_one(mass),
+            ufo::Spin::ThreeHalf => self.propagators.spin_three_half(mass),
+            ufo::Spin::Two => self.propagators.spin_two(mass),
+            ufo::Spin::Ghost => unimplemented!("Ghosts are not currently supported"),
         };
         let propagator = if anti_particle {
             &propagator.outgoing
@@ -156,7 +154,7 @@ impl<'a> StructureBuilder<'a> {
     fn eval_component(
         &self,
         structure: &LorentzExpr,
-        spins: &[i64],
+        spins: &[ufo::Spin],
         external: usize,
         external_indices: &mut Indices,
     ) -> LorentzExpr {
@@ -191,7 +189,7 @@ impl<'a> StructureBuilder<'a> {
         factor: &LorentzExpr,
         amputated_structure: &[LorentzExpr; 4],
         propagator: &BasicPropagator,
-        spin: i64,
+        spin: ufo::Spin,
         incoming: bool,
     ) -> VertexStructure {
         let (indices_in, indices_out) = if incoming {
@@ -225,7 +223,7 @@ impl<'a> StructureBuilder<'a> {
         factor: &LorentzExpr,
         amputated_structure: &[[LorentzExpr; 4]; 4],
         propagator: &BasicPropagator,
-        spin: i64,
+        spin: ufo::Spin,
         incoming: bool,
     ) -> VertexStructure {
         let (indices_in, indices_out) = if incoming {
@@ -256,12 +254,12 @@ impl<'a> StructureBuilder<'a> {
     }
 }
 
-fn amputated_factor(spins: &[i64], left_out: usize) -> LorentzExpr {
+fn amputated_factor(spins: &[ufo::Spin], left_out: usize) -> LorentzExpr {
     let mut factor = LorentzExpr::Number {
         value: Number::from(1),
     };
     for (i, &s) in spins.iter().enumerate().skip(left_out) {
-        if s != 1 {
+        if s != ufo::Spin::Zero {
             continue;
         }
         factor = LorentzExpr::BinaryOp {
@@ -276,7 +274,7 @@ fn amputated_factor(spins: &[i64], left_out: usize) -> LorentzExpr {
 }
 
 fn get_external_components(
-    spins: &[i64],
+    spins: &[ufo::Spin],
     external: usize,
     index_values: &Indices,
 ) -> Vec<ExternalComponent> {
@@ -295,7 +293,7 @@ fn get_external_components(
     components
 }
 
-fn setup_summed_indices(spins: &[i64], external: usize) -> Vec<SpinIndex> {
+fn setup_summed_indices(spins: &[ufo::Spin], external: usize) -> Vec<SpinIndex> {
     let mut indices = Vec::new();
     for (i, &s) in spins.iter().enumerate() {
         if i == external {
@@ -306,16 +304,15 @@ fn setup_summed_indices(spins: &[i64], external: usize) -> Vec<SpinIndex> {
     indices
 }
 
-fn indices_for_spin(spin: i64, particle: usize) -> Vec<SpinIndex> {
+fn indices_for_spin(spin: ufo::Spin, particle: usize) -> Vec<SpinIndex> {
     let i = particle as i64 + 1;
     match spin {
-        1 => Vec::new(),
-        2 => vec![SpinorIndex(i).into()],
-        3 => vec![LorentzIndex(i).into()],
-        4 => vec![LorentzIndex(i + 1000).into(), SpinorIndex(i + 2000).into()],
-        5 => vec![LorentzIndex(i + 1000).into(), LorentzIndex(i + 2000).into()],
-        -1 => unimplemented!("Ghosts are currently not supported!"),
-        _ => unimplemented!("Only spins up to 2 are currently supported!"),
+        ufo::Spin::Zero => Vec::new(),
+        ufo::Spin::OneHalf => vec![SpinorIndex(i).into()],
+        ufo::Spin::One => vec![LorentzIndex(i).into()],
+        ufo::Spin::ThreeHalf => vec![LorentzIndex(i + 1000).into(), SpinorIndex(i + 2000).into()],
+        ufo::Spin::Two => vec![LorentzIndex(i + 1000).into(), LorentzIndex(i + 2000).into()],
+        ufo::Spin::Ghost => unimplemented!("Ghosts are currently not supported!"),
     }
 }
 
@@ -323,7 +320,7 @@ fn indices_for_spin(spin: i64, particle: usize) -> Vec<SpinIndex> {
 mod test {
     use crate::spin::propagators::Propagators;
     use crate::spin::tensor_components::SpinTensorComponents;
-    use crate::ufo::UfoModel;
+    use crate::ufo::{Spin, UfoModel};
 
     #[test]
     fn sm_mg5_amputated() {
@@ -332,7 +329,7 @@ mod test {
         let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
         let mut builder = super::StructureBuilder::new(&components, &propagators);
         for structure in model.lorentz_structures.values() {
-            if structure.spins.contains(&-1) {
+            if structure.spins.contains(&Spin::Ghost) {
                 continue;
             }
             for (i, _) in structure.spins.iter().enumerate() {
@@ -340,15 +337,15 @@ mod test {
             }
         }
     }
-    #[test]
 
+    #[test]
     fn sm_mg5_full() {
         let propagators = Propagators::load("models/common/propagators.toml").unwrap();
         let components = SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
         let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
         let mut builder = super::StructureBuilder::new(&components, &propagators);
         for structure in model.lorentz_structures.values() {
-            if structure.spins.contains(&-1) {
+            if structure.spins.contains(&Spin::Ghost) {
                 continue;
             }
             for (i, _) in structure.spins.iter().enumerate() {

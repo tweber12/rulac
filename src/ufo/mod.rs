@@ -1,5 +1,6 @@
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::collections::HashMap;
 use std::fmt;
 use std::fs;
@@ -118,6 +119,19 @@ impl fmt::Display for PdgCode {
     }
 }
 
+#[derive(
+    Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize_repr, Deserialize_repr,
+)]
+#[repr(i8)]
+pub enum Spin {
+    Ghost = -1,
+    Zero = 1,
+    OneHalf = 2,
+    One = 3,
+    ThreeHalf = 4,
+    Two = 5,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CouplingOrder {
     pub name: String,
@@ -131,7 +145,7 @@ pub struct Particle {
     pub pdg_code: PdgCode,
     pub name: String,
     pub antiname: String,
-    pub spin: i64,
+    pub spin: Spin,
     pub color: i64,
     pub mass: String,
     pub width: String,
@@ -223,7 +237,7 @@ pub struct Vertex {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Lorentz {
     pub name: String,
-    pub spins: Vec<i64>,
+    pub spins: Vec<Spin>,
     pub structure: UfoMath,
 }
 

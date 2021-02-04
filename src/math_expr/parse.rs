@@ -1,5 +1,5 @@
 use crate::math_expr::{
-    BinaryOperator, Comparison, ComparisonOperator, Constant, Function, MathExpr, Number, Tensor,
+    BinaryOperator, Comparison, ComparisonOperator, Function, MathExpr, Number, Tensor,
     UnaryOperator,
 };
 use num_complex::Complex64;
@@ -10,6 +10,7 @@ use rustpython_parser::error;
 use rustpython_parser::parser;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
+use std::f64;
 use std::fmt;
 
 pub fn parse_math<T: Tensor>(expr: &str) -> Result<MathExpr<T>, ParseError> {
@@ -383,7 +384,12 @@ fn convert_attribute<T: Tensor>(
         }
     };
     let attr = match (&*prefix, &*name) {
-        ("cmath", "pi") => MathExpr::Constant { name: Constant::Pi },
+        ("cmath", "pi") => MathExpr::Number {
+            value: Number::Real(f64::consts::PI),
+        },
+        ("cmath", "e") => MathExpr::Number {
+            value: Number::Real(f64::consts::E),
+        },
         ("cmath", _) => {
             return Err(ConversionError::new(
                 ConversionErrorKind::UnsupportedConstant,

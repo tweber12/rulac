@@ -70,12 +70,6 @@ pub enum ComparisonOperator {
     NotEqual,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub enum Constant {
-    Pi,
-}
-
 #[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Number {
@@ -185,9 +179,6 @@ pub enum MathExpr<T: Tensor> {
         operator: BinaryOperator,
         left: Box<MathExpr<T>>,
         right: Box<MathExpr<T>>,
-    },
-    Constant {
-        name: Constant,
     },
     Conditional {
         condition: Box<Comparison<T>>,

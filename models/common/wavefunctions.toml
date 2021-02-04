@@ -1,0 +1,97 @@
+#############################################################################
+# All necessary external wavefunctions up to spin 2
+#
+# The wavefunctions for spin 3/2 and 2 are automatically computed from the
+# spin 1/2 and spin 1 ones.
+#
+# Technically, the barred / starred wavefunctions for spin 1/2 and 1
+# could also be computed automatically and they might be in the future.
+#
+# Special variables that can be used in the expressions:
+# * pe, px, py, pz: Momentum of the particle
+# * mass: Mass of the particle
+# * beam: Indicates if the particle is ALWAYS along the beam direction
+#   -  1: Going along +z (|p| = pz)
+#   -  0: Not along the beam
+#   - -1: Going along -z (|p| = -pz)
+#
+# The default wavefunctions assume that no particle with `beam` = 0 can have
+# a transverse momentum of 0. All terms that would ensure the wavefunctions
+# to function in this limit have been neglected.
+#
+# Variables for use in the spinor expressions can be defined in the
+# respective `definitions` sections. Variables in such a section can
+# depend on other variables defined in the same section. Such dependencies
+# are independent of the order in which the variables are listed.
+# The names of such variables must be valid python identifiers and must not
+# collide with the variable names indicated above.
+##############################################################################
+
+###################################
+# Spin 0
+
+spin_zero = "1"
+
+
+###################################
+# Spin 1/2
+
+[spin_one_half.massive.particle.in]
+"+1" = ["rc", "arp", "-mbr", "-mrp"] # u_plus
+"-1" = ["-mrp", "-mbr", "-arp_star", "rc"] # u_minus
+[spin_one_half.massive.particle.out]
+"+1" = ["mbr", "mrp_star", "-rc", "-arp_star"] # u_plus_bar
+"-1" = ["arp", "-rc", "-mrp", "mbr"] # u_minus_bar
+[spin_one_half.massive.anti_particle.in]
+"+1" = ["-mrp", "mbr", "-arp_star", "rc"] #v_plus
+"-1" = ["rc", "arp", "mbr", "mrp"] # v_minus
+[spin_one_half.massive.anti_particle.out]
+"+1" = ["arp", "-rc", "mrp", "-mbr"] # v_plus_bar
+"-1" = ["-mbr", "-mrp_star", "-rc", "-arp_star"] # v_minus_bar
+
+[spin_one_half.massive.definitions]
+mpv = "sqrt(px**2+py**2+pz**2) if beam==0 else abs(pz)"
+a = "pe+mpv"
+b = "pz+mpv"
+c = "2*mpv"
+r = "sqrt(a*b*c)"
+sqrt_a = "sqrt(a)"
+arp = "a/r*complex(px,py) if beam!=-1 else -sqrt_a"
+arp_star = "a/r*complex(px,-py) if beam!=-1 else -sqrt_a"
+mrp = "mass/r*complex(px,py) if beam!=-1 else -mass/sqrt_a"
+mrp_star = "mass/r*complex(px,-py) if beam!=-1 else -mass/sqrt_a"
+mbr = "mr*b if beam!=-1 else 0"
+rc = "r/c if beam!=-1 else 0"
+
+[spin_one_half.massless.in]
+"+1" = ["sqrt_ez", "c2", "0", "0"] # u_r
+"-1" = ["0", "0", "-c2_star", "sqrt_ez"] # u_l
+[spin_one_half.massless.out]
+"+1" = ["0", "0", "-sqrt_ez", "-c2_star"] # u_r_bar
+"-1" = ["c2", "-sqrt_ez", "0", "0"] # u_l_bar
+
+[spin_one_half.massless.definitions]
+sqrt_ez = "sqrt(pe+pz) if beam != -1 else 0"
+c2 = "complex(px,py)/sqrt_ez if beam != 0 else (sqrt(pe-pz) if beam == -1 else 0)"
+c2_star = "complex(px,-py)/sqrt_ez if beam != 0 else (sqrt(pe-pz) if beam == -1 else 0)"
+
+
+###################################
+# Spin 1
+
+[spin_one.in]
+"+1" = ["0", "complex(e1,e2)", "complex(e3,e4)", "ppt"]
+"0" = ["pp/mass", "px*emp", "py*emp", "pe*emp"]
+"-1" = ["0", "complex(-e1,e2)", "complex(-e3,e4)", "-ppt"]
+
+[spin_one.definitions]
+pp = "sqrt(px**2 + py**2 + pz**2)"
+pt = "sqrt(px**2 + py**2)"
+ppt = "sqrt(0.5)*ppt/pp if beam==0 else 0"
+pzpp = "pz/pp/pt*sqrt(0.5)"
+pts2 = "sqrt(0.5)/pt"
+e1 = "-px*pzpp if beam==0 else -sqrt(0.5)"
+e2 = "-py*pts2 if beam==0 else 0"
+e3 = "-py*pzpp if beam==0 else 0"
+e4 = "px*pts2 if beam==0 else (-sqrt(0.5) if beam==-1 else sqrt(0.5))"
+emp = "pe/mass/pp"

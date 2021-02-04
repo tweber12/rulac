@@ -50,6 +50,7 @@ pub enum BinaryOperator {
 #[serde(rename_all = "snake_case")]
 pub enum ComparisonOperator {
     Equals,
+    NotEqual,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]

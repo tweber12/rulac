@@ -7,6 +7,7 @@ use rustpython_parser::ast;
 use rustpython_parser::ast::ExpressionType;
 use rustpython_parser::error;
 use rustpython_parser::parser;
+use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::fmt;
 
@@ -115,6 +116,45 @@ impl fmt::Display for ConversionErrorKind {
             ConversionErrorKind::NotEnoughIndices => write!(f, "Not enough indices"),
         }
     }
+}
+
+pub fn deserialize_math_expr<'de, D, T: Tensor>(deserializer: D) -> Result<MathExpr<T>, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    let expr = String::deserialize(deserializer)?;
+    parse_math(&expr).map_err(serde::de::Error::custom)
+}
+
+pub fn deserialize_math_map<'de, D, S, T>(
+    deserializer: D,
+) -> Result<HashMap<S, MathExpr<T>>, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+    S: serde::Deserialize<'de> + Eq + std::hash::Hash,
+    T: Tensor,
+{
+    let expr = HashMap::<S, &str>::deserialize(deserializer)?;
+    expr.into_iter()
+        .map(|(k, v)| {
+            parse_math(v)
+                .map(|v| (k, v))
+                .map_err(serde::de::Error::custom)
+        })
+        .collect()
+}
+
+pub fn deserialize_math_array_four<'de, D, T>(deserializer: D) -> Result<[MathExpr<T>; 4], D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+    T: Tensor,
+{
+    let expr: [&str; 4] = Deserialize::deserialize(deserializer)?;
+    let mut out: [MathExpr<T>; 4] = Default::default();
+    for (i, e) in expr.iter().enumerate() {
+        out[i] = parse_math(e).map_err(serde::de::Error::custom)?;
+    }
+    Ok(out)
 }
 
 trait ResultExt {
@@ -657,6 +697,7 @@ fn convert_comparison<T: Tensor>(
         .map(|op| {
             let op = match op {
                 ast::Comparison::Equal => ComparisonOperator::Equals,
+                ast::Comparison::NotEqual => ComparisonOperator::NotEqual,
                 _ => {
                     return Err(ConversionError::new(
                         ConversionErrorKind::UnsupportedComparisonOperator,

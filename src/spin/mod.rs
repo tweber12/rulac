@@ -1,6 +1,7 @@
 pub mod propagators;
 mod tensor_components;
 mod vertex_structures;
+pub mod wavefunctions;
 
 pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
 pub use vertex_structures::{StructureBuilder, VertexStructure};

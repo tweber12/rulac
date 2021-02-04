@@ -159,9 +159,6 @@ pub enum MathExpr<T: Tensor> {
     Variable {
         name: String,
     },
-    String {
-        value: String,
-    },
     UnaryOp {
         operator: UnaryOperator,
         operand: Box<MathExpr<T>>,

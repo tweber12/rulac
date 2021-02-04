@@ -46,6 +46,23 @@ pub enum BinaryOperator {
     Pow,
 }
 
+#[derive(Clone, Debug, PartialEq)]
+pub struct Comparison<T: Tensor> {
+    values: Vec<MathExpr<T>>,
+    operators: Vec<ComparisonOperator>,
+}
+impl<T: Tensor> Comparison<T> {
+    pub fn apply<F>(&self, fun: &mut F) -> Comparison<T>
+    where
+        F: FnMut(&MathExpr<T>) -> MathExpr<T>,
+    {
+        Comparison {
+            operators: self.operators.clone(),
+            values: self.values.iter().map(|x| fun(x)).collect(),
+        }
+    }
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum ComparisonOperator {
@@ -173,16 +190,12 @@ pub enum MathExpr<T: Tensor> {
         name: Constant,
     },
     Conditional {
-        condition: Box<MathExpr<T>>,
+        condition: Box<Comparison<T>>,
         if_true: Box<MathExpr<T>>,
         if_false: Box<MathExpr<T>>,
     },
     Tensor {
         tensor: T,
-    },
-    Comparison {
-        values: Vec<MathExpr<T>>,
-        operators: Vec<ComparisonOperator>,
     },
     Sum {
         expr: Box<MathExpr<T>>,
@@ -211,16 +224,12 @@ impl<T: Tensor> MathExpr<T> {
                 function: function.clone(),
                 args: args.iter().map(|e| fun(e)).collect(),
             },
-            MathExpr::Comparison { operators, values } => MathExpr::Comparison {
-                operators: operators.clone(),
-                values: values.iter().map(|e| fun(e)).collect(),
-            },
             MathExpr::Conditional {
                 condition,
                 if_true,
                 if_false,
             } => MathExpr::Conditional {
-                condition: Box::new(fun(condition)),
+                condition: Box::new(condition.apply(fun)),
                 if_true: Box::new(fun(if_true)),
                 if_false: Box::new(fun(if_false)),
             },
@@ -380,9 +389,9 @@ fn constant_propagation_binary<T: Tensor>(
     }
 }
 
-pub trait Tensor: Clone + std::fmt::Debug {
+pub trait Tensor: Clone + std::fmt::Debug + PartialEq {
     type Indices: Copy + std::fmt::Debug + std::hash::Hash + Eq;
-    type ExternalComponent: Clone + std::fmt::Debug;
+    type ExternalComponent: Clone + std::fmt::Debug + PartialEq;
     fn parse(
         name: &str,
         indices: &mut parse::IndexParser<Self::Indices>,

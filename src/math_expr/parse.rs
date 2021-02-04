@@ -1,8 +1,9 @@
 use crate::math_expr::{
-    BinaryOperator, ComparisonOperator, Constant, Function, MathExpr, Number, Tensor, UnaryOperator,
+    BinaryOperator, Comparison, ComparisonOperator, Constant, Function, MathExpr, Number, Tensor,
+    UnaryOperator,
 };
 use num_complex::Complex64;
-use num_traits::ToPrimitive;
+use num_traits::{ToPrimitive, Zero};
 use rustpython_parser::ast;
 use rustpython_parser::ast::ExpressionType;
 use rustpython_parser::error;
@@ -231,7 +232,6 @@ fn convert_math<T: Tensor>(
         ExpressionType::IfExpression { test, body, orelse } => {
             convert_if_expression(*test, *body, *orelse, indices)
         }
-        ExpressionType::Compare { vals, ops } => convert_comparison(vals, ops),
         _ => Err(ConversionError {
             location: Some(expr.location),
             kind: ConversionErrorKind::UnsupportedExpression,
@@ -684,14 +684,29 @@ fn convert_if_expression<T: Tensor>(
     Ok(expr)
 }
 
-fn convert_condition<T: Tensor>(expr: ast::Expression) -> Result<MathExpr<T>, ConversionError> {
-    convert_math(expr, &mut Indices::new())
+fn convert_condition<T: Tensor>(expr: ast::Expression) -> Result<Comparison<T>, ConversionError> {
+    match expr.node {
+        ExpressionType::Compare { vals, ops } => convert_comparison(vals, ops),
+        _ => {
+            // If there is no explicit comparison, this means that the expression is compared using `!= 0`
+            let val = convert_math(expr, &mut Indices::new())?;
+            Ok(Comparison {
+                operators: vec![ComparisonOperator::NotEqual],
+                values: vec![
+                    val,
+                    MathExpr::Number {
+                        value: Number::zero(),
+                    },
+                ],
+            })
+        }
+    }
 }
 
 fn convert_comparison<T: Tensor>(
     values: Vec<ast::Expression>,
     operators: Vec<ast::Comparison>,
-) -> Result<MathExpr<T>, ConversionError> {
+) -> Result<Comparison<T>, ConversionError> {
     let operators: Result<_, _> = operators
         .into_iter()
         .map(|op| {
@@ -711,7 +726,7 @@ fn convert_comparison<T: Tensor>(
         .into_iter()
         .map(|expr| convert_math(expr, &mut Indices::new()))
         .collect();
-    Ok(MathExpr::Comparison {
+    Ok(Comparison {
         values: values?,
         operators: operators?,
     })

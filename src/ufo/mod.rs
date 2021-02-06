@@ -132,6 +132,19 @@ pub enum Spin {
     Two = 5,
 }
 
+#[derive(
+    Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize_repr, Deserialize_repr,
+)]
+#[repr(i8)]
+pub enum Color {
+    Singlet = 1,
+    Triplet = 3,
+    AntiTriplet = -3,
+    Sextet = 6,
+    AntiSextet = -6,
+    Octet = 8,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CouplingOrder {
     pub name: String,
@@ -146,7 +159,7 @@ pub struct Particle {
     pub name: String,
     pub antiname: String,
     pub spin: Spin,
-    pub color: i64,
+    pub color: Color,
     pub mass: String,
     pub width: String,
     pub texname: String,

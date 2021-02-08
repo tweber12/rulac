@@ -1,0 +1,2533 @@
+[
+  {
+    "texname": "0", 
+    "name": "ZERO", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "0.0", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{\\mu_r}", 
+    "name": "MU_R", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": 91.188, 
+    "lhablock": "LOOP", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRd1x1}", 
+    "name": "RRd1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 1.0, 
+    "lhablock": "DSQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRd2x2}", 
+    "name": "RRd2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 1.0, 
+    "lhablock": "DSQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRd3x3}", 
+    "name": "RRd3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 1.0, 
+    "lhablock": "DSQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRd4x4}", 
+    "name": "RRd4x4", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      4
+    ], 
+    "value": 1.0, 
+    "lhablock": "DSQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRd5x5}", 
+    "name": "RRd5x5", 
+    "nature": "external", 
+    "lhacode": [
+      5, 
+      5
+    ], 
+    "value": 1.0, 
+    "lhablock": "DSQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRd6x6}", 
+    "name": "RRd6x6", 
+    "nature": "external", 
+    "lhacode": [
+      6, 
+      6
+    ], 
+    "value": 1.0, 
+    "lhablock": "DSQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\alpha", 
+    "name": "alp", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": -0.11382521, 
+    "lhablock": "FRALPHA", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMUH}", 
+    "name": "RMUH", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": 357.680977, 
+    "lhablock": "HMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "t_b", 
+    "name": "tb", 
+    "nature": "external", 
+    "lhacode": [
+      2
+    ], 
+    "value": 9.74862403, 
+    "lhablock": "HMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmD21x1}", 
+    "name": "RmD21x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 273684.674, 
+    "lhablock": "MSD2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmD22x2}", 
+    "name": "RmD22x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 273684.674, 
+    "lhablock": "MSD2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmD23x3}", 
+    "name": "RmD23x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 270261.969, 
+    "lhablock": "MSD2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmE21x1}", 
+    "name": "RmE21x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 18630.6287, 
+    "lhablock": "MSE2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmE22x2}", 
+    "name": "RmE22x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 18630.6287, 
+    "lhablock": "MSE2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmE23x3}", 
+    "name": "RmE23x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 17967.6406, 
+    "lhablock": "MSE2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmL21x1}", 
+    "name": "RmL21x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 38155.67, 
+    "lhablock": "MSL2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmL22x2}", 
+    "name": "RmL22x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 38155.67, 
+    "lhablock": "MSL2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmL23x3}", 
+    "name": "RmL23x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 37828.6769, 
+    "lhablock": "MSL2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMx1}", 
+    "name": "RMx1", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": 101.396534, 
+    "lhablock": "MSOFT", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMx2}", 
+    "name": "RMx2", 
+    "nature": "external", 
+    "lhacode": [
+      2
+    ], 
+    "value": 191.504241, 
+    "lhablock": "MSOFT", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMx3}", 
+    "name": "RMx3", 
+    "nature": "external", 
+    "lhacode": [
+      3
+    ], 
+    "value": 588.263031, 
+    "lhablock": "MSOFT", 
+    "type": "real"
+  }, 
+  {
+    "texname": "m_{H_d}^2", 
+    "name": "mHd2", 
+    "nature": "external", 
+    "lhacode": [
+      21
+    ], 
+    "value": 32337.4943, 
+    "lhablock": "MSOFT", 
+    "type": "real"
+  }, 
+  {
+    "texname": "m_{H_u}^2", 
+    "name": "mHu2", 
+    "nature": "external", 
+    "lhacode": [
+      22
+    ], 
+    "value": -128800.134, 
+    "lhablock": "MSOFT", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmQ21x1}", 
+    "name": "RmQ21x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 299836.701, 
+    "lhablock": "MSQ2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmQ22x2}", 
+    "name": "RmQ22x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 299836.701, 
+    "lhablock": "MSQ2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmQ23x3}", 
+    "name": "RmQ23x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 248765.367, 
+    "lhablock": "MSQ2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmU21x1}", 
+    "name": "RmU21x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 280382.106, 
+    "lhablock": "MSU2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmU22x2}", 
+    "name": "RmU22x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 280382.106, 
+    "lhablock": "MSU2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RmU23x3}", 
+    "name": "RmU23x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 179137.072, 
+    "lhablock": "MSU2", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN1x1}", 
+    "name": "RNN1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 0.98636443, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN1x2}", 
+    "name": "RNN1x2", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      2
+    ], 
+    "value": -0.0531103553, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN1x3}", 
+    "name": "RNN1x3", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      3
+    ], 
+    "value": 0.146433995, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN1x4}", 
+    "name": "RNN1x4", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      4
+    ], 
+    "value": -0.0531186117, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN2x1}", 
+    "name": "RNN2x1", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      1
+    ], 
+    "value": 0.0993505358, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN2x2}", 
+    "name": "RNN2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 0.944949299, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN2x3}", 
+    "name": "RNN2x3", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      3
+    ], 
+    "value": -0.26984672, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN2x4}", 
+    "name": "RNN2x4", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      4
+    ], 
+    "value": 0.156150698, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN3x1}", 
+    "name": "RNN3x1", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      1
+    ], 
+    "value": -0.0603388002, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN3x2}", 
+    "name": "RNN3x2", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      2
+    ], 
+    "value": 0.0877004854, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN3x3}", 
+    "name": "RNN3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 0.695877493, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN3x4}", 
+    "name": "RNN3x4", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      4
+    ], 
+    "value": 0.710226984, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN4x1}", 
+    "name": "RNN4x1", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      1
+    ], 
+    "value": -0.116507132, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN4x2}", 
+    "name": "RNN4x2", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      2
+    ], 
+    "value": 0.310739017, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN4x3}", 
+    "name": "RNN4x3", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      3
+    ], 
+    "value": 0.64922596, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RNN4x4}", 
+    "name": "RNN4x4", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      4
+    ], 
+    "value": -0.684377823, 
+    "lhablock": "NMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRl1x1}", 
+    "name": "RRl1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 1.0, 
+    "lhablock": "SELMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRl2x2}", 
+    "name": "RRl2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 1.0, 
+    "lhablock": "SELMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRl3x3}", 
+    "name": "RRl3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 1.0, 
+    "lhablock": "SELMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRl4x4}", 
+    "name": "RRl4x4", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      4
+    ], 
+    "value": 1.0, 
+    "lhablock": "SELMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRl5x5}", 
+    "name": "RRl5x5", 
+    "nature": "external", 
+    "lhacode": [
+      5, 
+      5
+    ], 
+    "value": 1.0, 
+    "lhablock": "SELMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRl6x6}", 
+    "name": "RRl6x6", 
+    "nature": "external", 
+    "lhacode": [
+      6, 
+      6
+    ], 
+    "value": 1.0, 
+    "lhablock": "SELMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\alpha _w^{-1}", 
+    "name": "aEWM1", 
+    "nature": "external", 
+    "lhacode": [
+      1
+    ], 
+    "value": 127.934, 
+    "lhablock": "SMINPUTS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\alpha _s", 
+    "name": "aS", 
+    "nature": "external", 
+    "lhacode": [
+      3
+    ], 
+    "value": 0.118, 
+    "lhablock": "SMINPUTS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRn1x1}", 
+    "name": "RRn1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 1.0, 
+    "lhablock": "SNUMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRn2x2}", 
+    "name": "RRn2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 1.0, 
+    "lhablock": "SNUMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRn3x3}", 
+    "name": "RRn3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 1.0, 
+    "lhablock": "SNUMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Rtd3x3}", 
+    "name": "Rtd3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": -110.693742, 
+    "lhablock": "TD", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Rte3x3}", 
+    "name": "Rte3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": -25.4019727, 
+    "lhablock": "TE", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Rtu3x3}", 
+    "name": "Rtu3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": -444.752457, 
+    "lhablock": "TU", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RUU1x1}", 
+    "name": "RUU1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 0.916834859, 
+    "lhablock": "UMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RUU1x2}", 
+    "name": "RUU1x2", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      2
+    ], 
+    "value": -0.399266629, 
+    "lhablock": "UMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RUU2x1}", 
+    "name": "RUU2x1", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      1
+    ], 
+    "value": 0.399266629, 
+    "lhablock": "UMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RUU2x2}", 
+    "name": "RUU2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 0.916834859, 
+    "lhablock": "UMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMNS1x1}", 
+    "name": "RMNS1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 1.0, 
+    "lhablock": "UPMNS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMNS2x2}", 
+    "name": "RMNS2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 1.0, 
+    "lhablock": "UPMNS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RMNS3x3}", 
+    "name": "RMNS3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 1.0, 
+    "lhablock": "UPMNS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRu1x1}", 
+    "name": "RRu1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 1.0, 
+    "lhablock": "USQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRu2x2}", 
+    "name": "RRu2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 1.0, 
+    "lhablock": "USQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRu3x3}", 
+    "name": "RRu3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 1.0, 
+    "lhablock": "USQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRu4x4}", 
+    "name": "RRu4x4", 
+    "nature": "external", 
+    "lhacode": [
+      4, 
+      4
+    ], 
+    "value": 1.0, 
+    "lhablock": "USQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRu5x5}", 
+    "name": "RRu5x5", 
+    "nature": "external", 
+    "lhacode": [
+      5, 
+      5
+    ], 
+    "value": 1.0, 
+    "lhablock": "USQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RRu6x6}", 
+    "name": "RRu6x6", 
+    "nature": "external", 
+    "lhacode": [
+      6, 
+      6
+    ], 
+    "value": 1.0, 
+    "lhablock": "USQMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RCKM1x1}", 
+    "name": "RCKM1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 1.0, 
+    "lhablock": "VCKM", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RCKM2x2}", 
+    "name": "RCKM2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 1.0, 
+    "lhablock": "VCKM", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RCKM3x3}", 
+    "name": "RCKM3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 1.0, 
+    "lhablock": "VCKM", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RVV1x1}", 
+    "name": "RVV1x1", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      1
+    ], 
+    "value": 0.972557835, 
+    "lhablock": "VMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RVV1x2}", 
+    "name": "RVV1x2", 
+    "nature": "external", 
+    "lhacode": [
+      1, 
+      2
+    ], 
+    "value": -0.232661249, 
+    "lhablock": "VMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RVV2x1}", 
+    "name": "RVV2x1", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      1
+    ], 
+    "value": 0.232661249, 
+    "lhablock": "VMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{RVV2x2}", 
+    "name": "RVV2x2", 
+    "nature": "external", 
+    "lhacode": [
+      2, 
+      2
+    ], 
+    "value": 0.972557835, 
+    "lhablock": "VMIX", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Ryd3x3}", 
+    "name": "Ryd3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 0.138840206, 
+    "lhablock": "YD", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Rye3x3}", 
+    "name": "Rye3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 0.10089081, 
+    "lhablock": "YE", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Ryu3x3}", 
+    "name": "Ryu3x3", 
+    "nature": "external", 
+    "lhacode": [
+      3, 
+      3
+    ], 
+    "value": 0.89284455, 
+    "lhablock": "YU", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MZ}", 
+    "name": "MZ", 
+    "nature": "external", 
+    "lhacode": [
+      23
+    ], 
+    "value": 91.1876, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MW}", 
+    "name": "MW", 
+    "nature": "external", 
+    "lhacode": [
+      24
+    ], 
+    "value": 79.8290131, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mneu1}", 
+    "name": "Mneu1", 
+    "nature": "external", 
+    "lhacode": [
+      1000022
+    ], 
+    "value": 96.6880686, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mneu2}", 
+    "name": "Mneu2", 
+    "nature": "external", 
+    "lhacode": [
+      1000023
+    ], 
+    "value": 181.088157, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mneu3}", 
+    "name": "Mneu3", 
+    "nature": "external", 
+    "lhacode": [
+      1000025
+    ], 
+    "value": -363.756027, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mneu4}", 
+    "name": "Mneu4", 
+    "nature": "external", 
+    "lhacode": [
+      1000035
+    ], 
+    "value": 381.729382, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mch1}", 
+    "name": "Mch1", 
+    "nature": "external", 
+    "lhacode": [
+      1000024
+    ], 
+    "value": 181.696474, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mch2}", 
+    "name": "Mch2", 
+    "nature": "external", 
+    "lhacode": [
+      1000037
+    ], 
+    "value": 379.93932, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mgo}", 
+    "name": "Mgo", 
+    "nature": "external", 
+    "lhacode": [
+      1000021
+    ], 
+    "value": 607.713704, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MH01}", 
+    "name": "MH01", 
+    "nature": "external", 
+    "lhacode": [
+      25
+    ], 
+    "value": 110.899057, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MH02}", 
+    "name": "MH02", 
+    "nature": "external", 
+    "lhacode": [
+      35
+    ], 
+    "value": 399.960116, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MA0}", 
+    "name": "MA0", 
+    "nature": "external", 
+    "lhacode": [
+      36
+    ], 
+    "value": 399.583917, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MH}", 
+    "name": "MH", 
+    "nature": "external", 
+    "lhacode": [
+      37
+    ], 
+    "value": 407.879012, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Mta}", 
+    "name": "Mta", 
+    "nature": "external", 
+    "lhacode": [
+      15
+    ], 
+    "value": 1.777, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MT}", 
+    "name": "MT", 
+    "nature": "external", 
+    "lhacode": [
+      6
+    ], 
+    "value": 175.0, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{MB}", 
+    "name": "MB", 
+    "nature": "external", 
+    "lhacode": [
+      5
+    ], 
+    "value": 4.88991651, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msn1}", 
+    "name": "Msn1", 
+    "nature": "external", 
+    "lhacode": [
+      1000012
+    ], 
+    "value": 185.258326, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msn2}", 
+    "name": "Msn2", 
+    "nature": "external", 
+    "lhacode": [
+      1000014
+    ], 
+    "value": 185.258326, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msn3}", 
+    "name": "Msn3", 
+    "nature": "external", 
+    "lhacode": [
+      1000016
+    ], 
+    "value": 184.708464, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msl1}", 
+    "name": "Msl1", 
+    "nature": "external", 
+    "lhacode": [
+      1000011
+    ], 
+    "value": 202.91569, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msl2}", 
+    "name": "Msl2", 
+    "nature": "external", 
+    "lhacode": [
+      1000013
+    ], 
+    "value": 202.91569, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msl3}", 
+    "name": "Msl3", 
+    "nature": "external", 
+    "lhacode": [
+      1000015
+    ], 
+    "value": 134.490864, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msl4}", 
+    "name": "Msl4", 
+    "nature": "external", 
+    "lhacode": [
+      2000011
+    ], 
+    "value": 144.102799, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msl5}", 
+    "name": "Msl5", 
+    "nature": "external", 
+    "lhacode": [
+      2000013
+    ], 
+    "value": 144.102799, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msl6}", 
+    "name": "Msl6", 
+    "nature": "external", 
+    "lhacode": [
+      2000015
+    ], 
+    "value": 206.867805, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msu1}", 
+    "name": "Msu1", 
+    "nature": "external", 
+    "lhacode": [
+      1000002
+    ], 
+    "value": 561.119014, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msu2}", 
+    "name": "Msu2", 
+    "nature": "external", 
+    "lhacode": [
+      1000004
+    ], 
+    "value": 561.119014, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msu3}", 
+    "name": "Msu3", 
+    "nature": "external", 
+    "lhacode": [
+      1000006
+    ], 
+    "value": 399.668493, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msu4}", 
+    "name": "Msu4", 
+    "nature": "external", 
+    "lhacode": [
+      2000002
+    ], 
+    "value": 549.259265, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msu5}", 
+    "name": "Msu5", 
+    "nature": "external", 
+    "lhacode": [
+      2000004
+    ], 
+    "value": 549.259265, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msu6}", 
+    "name": "Msu6", 
+    "nature": "external", 
+    "lhacode": [
+      2000006
+    ], 
+    "value": 585.785818, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msd1}", 
+    "name": "Msd1", 
+    "nature": "external", 
+    "lhacode": [
+      1000001
+    ], 
+    "value": 568.441109, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msd2}", 
+    "name": "Msd2", 
+    "nature": "external", 
+    "lhacode": [
+      1000003
+    ], 
+    "value": 568.441109, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msd3}", 
+    "name": "Msd3", 
+    "nature": "external", 
+    "lhacode": [
+      1000005
+    ], 
+    "value": 513.065179, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msd4}", 
+    "name": "Msd4", 
+    "nature": "external", 
+    "lhacode": [
+      2000001
+    ], 
+    "value": 545.228462, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msd5}", 
+    "name": "Msd5", 
+    "nature": "external", 
+    "lhacode": [
+      2000003
+    ], 
+    "value": 545.228462, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Msd6}", 
+    "name": "Msd6", 
+    "nature": "external", 
+    "lhacode": [
+      2000005
+    ], 
+    "value": 543.726676, 
+    "lhablock": "MASS", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WZ}", 
+    "name": "WZ", 
+    "nature": "external", 
+    "lhacode": [
+      23
+    ], 
+    "value": 2.41143316, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WW}", 
+    "name": "WW", 
+    "nature": "external", 
+    "lhacode": [
+      24
+    ], 
+    "value": 2.00282196, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wneu2}", 
+    "name": "Wneu2", 
+    "nature": "external", 
+    "lhacode": [
+      1000023
+    ], 
+    "value": 0.0207770048, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wneu3}", 
+    "name": "Wneu3", 
+    "nature": "external", 
+    "lhacode": [
+      1000025
+    ], 
+    "value": 1.91598495, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wneu4}", 
+    "name": "Wneu4", 
+    "nature": "external", 
+    "lhacode": [
+      1000035
+    ], 
+    "value": 2.58585079, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wch1}", 
+    "name": "Wch1", 
+    "nature": "external", 
+    "lhacode": [
+      1000024
+    ], 
+    "value": 0.0170414503, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wch2}", 
+    "name": "Wch2", 
+    "nature": "external", 
+    "lhacode": [
+      1000037
+    ], 
+    "value": 2.4868951, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wgo}", 
+    "name": "Wgo", 
+    "nature": "external", 
+    "lhacode": [
+      1000021
+    ], 
+    "value": 5.50675438, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WH01}", 
+    "name": "WH01", 
+    "nature": "external", 
+    "lhacode": [
+      25
+    ], 
+    "value": 0.00198610799, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WH02}", 
+    "name": "WH02", 
+    "nature": "external", 
+    "lhacode": [
+      35
+    ], 
+    "value": 0.574801389, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WA0}", 
+    "name": "WA0", 
+    "nature": "external", 
+    "lhacode": [
+      36
+    ], 
+    "value": 0.632178488, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WH}", 
+    "name": "WH", 
+    "nature": "external", 
+    "lhacode": [
+      37
+    ], 
+    "value": 0.546962813, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{WT}", 
+    "name": "WT", 
+    "nature": "external", 
+    "lhacode": [
+      6
+    ], 
+    "value": 1.56194983, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsn1}", 
+    "name": "Wsn1", 
+    "nature": "external", 
+    "lhacode": [
+      1000012
+    ], 
+    "value": 0.149881634, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsn2}", 
+    "name": "Wsn2", 
+    "nature": "external", 
+    "lhacode": [
+      1000014
+    ], 
+    "value": 0.149881634, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsn3}", 
+    "name": "Wsn3", 
+    "nature": "external", 
+    "lhacode": [
+      1000016
+    ], 
+    "value": 0.147518977, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsl1}", 
+    "name": "Wsl1", 
+    "nature": "external", 
+    "lhacode": [
+      1000011
+    ], 
+    "value": 0.213682161, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsl2}", 
+    "name": "Wsl2", 
+    "nature": "external", 
+    "lhacode": [
+      1000013
+    ], 
+    "value": 0.213682161, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsl3}", 
+    "name": "Wsl3", 
+    "nature": "external", 
+    "lhacode": [
+      1000015
+    ], 
+    "value": 0.148327268, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsl4}", 
+    "name": "Wsl4", 
+    "nature": "external", 
+    "lhacode": [
+      2000011
+    ], 
+    "value": 0.216121626, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsl5}", 
+    "name": "Wsl5", 
+    "nature": "external", 
+    "lhacode": [
+      2000013
+    ], 
+    "value": 0.216121626, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsl6}", 
+    "name": "Wsl6", 
+    "nature": "external", 
+    "lhacode": [
+      2000015
+    ], 
+    "value": 0.269906096, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsu1}", 
+    "name": "Wsu1", 
+    "nature": "external", 
+    "lhacode": [
+      1000002
+    ], 
+    "value": 5.47719539, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsu2}", 
+    "name": "Wsu2", 
+    "nature": "external", 
+    "lhacode": [
+      1000004
+    ], 
+    "value": 5.47719539, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsu3}", 
+    "name": "Wsu3", 
+    "nature": "external", 
+    "lhacode": [
+      1000006
+    ], 
+    "value": 2.02159578, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsu4}", 
+    "name": "Wsu4", 
+    "nature": "external", 
+    "lhacode": [
+      2000002
+    ], 
+    "value": 1.15297292, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsu5}", 
+    "name": "Wsu5", 
+    "nature": "external", 
+    "lhacode": [
+      2000004
+    ], 
+    "value": 1.15297292, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsu6}", 
+    "name": "Wsu6", 
+    "nature": "external", 
+    "lhacode": [
+      2000006
+    ], 
+    "value": 7.37313275, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsd1}", 
+    "name": "Wsd1", 
+    "nature": "external", 
+    "lhacode": [
+      1000001
+    ], 
+    "value": 5.31278772, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsd2}", 
+    "name": "Wsd2", 
+    "nature": "external", 
+    "lhacode": [
+      1000003
+    ], 
+    "value": 5.31278772, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsd3}", 
+    "name": "Wsd3", 
+    "nature": "external", 
+    "lhacode": [
+      1000005
+    ], 
+    "value": 3.73627601, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsd4}", 
+    "name": "Wsd4", 
+    "nature": "external", 
+    "lhacode": [
+      2000001
+    ], 
+    "value": 0.285812308, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsd5}", 
+    "name": "Wsd5", 
+    "nature": "external", 
+    "lhacode": [
+      2000003
+    ], 
+    "value": 0.285812308, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{Wsd6}", 
+    "name": "Wsd6", 
+    "nature": "external", 
+    "lhacode": [
+      2000005
+    ], 
+    "value": 0.801566294, 
+    "lhablock": "DECAY", 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\beta", 
+    "name": "beta", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "cmath.atan(tb)", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{CKM1x1}", 
+    "name": "CKM1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RCKM1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM2x2}", 
+    "name": "CKM2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RCKM2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{CKM3x3}", 
+    "name": "CKM3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RCKM3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "c_w", 
+    "name": "cw", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "MW/MZ", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{mD21x1}", 
+    "name": "mD21x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmD21x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mD22x2}", 
+    "name": "mD22x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmD22x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mD23x3}", 
+    "name": "mD23x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmD23x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mE21x1}", 
+    "name": "mE21x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmE21x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mE22x2}", 
+    "name": "mE22x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmE22x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mE23x3}", 
+    "name": "mE23x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmE23x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mL21x1}", 
+    "name": "mL21x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmL21x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mL22x2}", 
+    "name": "mL22x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmL22x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mL23x3}", 
+    "name": "mL23x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmL23x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mQ21x1}", 
+    "name": "mQ21x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmQ21x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mQ22x2}", 
+    "name": "mQ22x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmQ22x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mQ23x3}", 
+    "name": "mQ23x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmQ23x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mU21x1}", 
+    "name": "mU21x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmU21x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mU22x2}", 
+    "name": "mU22x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmU22x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{mU23x3}", 
+    "name": "mU23x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RmU23x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\mu", 
+    "name": "MUH", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RMUH", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "M_1", 
+    "name": "Mx1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RMx1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "M_2", 
+    "name": "Mx2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RMx2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "M_3", 
+    "name": "Mx3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RMx3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN1x1}", 
+    "name": "NN1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN1x2}", 
+    "name": "NN1x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN1x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN1x3}", 
+    "name": "NN1x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN1x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN1x4}", 
+    "name": "NN1x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN1x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN2x1}", 
+    "name": "NN2x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN2x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN2x2}", 
+    "name": "NN2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN2x3}", 
+    "name": "NN2x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN2x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN2x4}", 
+    "name": "NN2x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN2x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN3x1}", 
+    "name": "NN3x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN3x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN3x2}", 
+    "name": "NN3x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN3x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN3x3}", 
+    "name": "NN3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN3x4}", 
+    "name": "NN3x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN3x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN4x1}", 
+    "name": "NN4x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN4x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN4x2}", 
+    "name": "NN4x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN4x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN4x3}", 
+    "name": "NN4x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN4x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{NN4x4}", 
+    "name": "NN4x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RNN4x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rd1x1}", 
+    "name": "Rd1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRd1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rd2x2}", 
+    "name": "Rd2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRd2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rd3x3}", 
+    "name": "Rd3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRd3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rd4x4}", 
+    "name": "Rd4x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRd4x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rd5x5}", 
+    "name": "Rd5x5", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRd5x5", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rd6x6}", 
+    "name": "Rd6x6", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRd6x6", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rl1x1}", 
+    "name": "Rl1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRl1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rl2x2}", 
+    "name": "Rl2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRl2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rl3x3}", 
+    "name": "Rl3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRl3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rl4x4}", 
+    "name": "Rl4x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRl4x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rl5x5}", 
+    "name": "Rl5x5", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRl5x5", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rl6x6}", 
+    "name": "Rl6x6", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRl6x6", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rn1x1}", 
+    "name": "Rn1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRn1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rn2x2}", 
+    "name": "Rn2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRn2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Rn3x3}", 
+    "name": "Rn3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRn3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Ru1x1}", 
+    "name": "Ru1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRu1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Ru2x2}", 
+    "name": "Ru2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRu2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Ru3x3}", 
+    "name": "Ru3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRu3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Ru4x4}", 
+    "name": "Ru4x4", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRu4x4", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Ru5x5}", 
+    "name": "Ru5x5", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRu5x5", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{Ru6x6}", 
+    "name": "Ru6x6", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RRu6x6", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{UU1x1}", 
+    "name": "UU1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RUU1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{UU1x2}", 
+    "name": "UU1x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RUU1x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{UU2x1}", 
+    "name": "UU2x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RUU2x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{UU2x2}", 
+    "name": "UU2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RUU2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{VV1x1}", 
+    "name": "VV1x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RVV1x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{VV1x2}", 
+    "name": "VV1x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RVV1x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{VV2x1}", 
+    "name": "VV2x1", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RVV2x1", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{VV2x2}", 
+    "name": "VV2x2", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "RVV2x2", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "e", 
+    "name": "ee", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "2*cmath.sqrt(1/aEWM1)*cmath.sqrt(cmath.pi)", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "G", 
+    "name": "G", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "2*cmath.sqrt(aS)*cmath.sqrt(cmath.pi)", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "\\text{td3x3}", 
+    "name": "td3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "Rtd3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{te3x3}", 
+    "name": "te3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "Rte3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{tu3x3}", 
+    "name": "tu3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "Rtu3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{yd3x3}", 
+    "name": "yd3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "Ryd3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{ye3x3}", 
+    "name": "ye3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "Rye3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "\\text{yu3x3}", 
+    "name": "yu3x3", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "Ryu3x3", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "b", 
+    "name": "bb", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "((-mHd2 + mHu2)*cmath.tan(2*alp))/2. - MZ**2*(cmath.sin(2*beta)/2. + cmath.cos(2*beta)*cmath.tan(2*alp))", 
+    "lhablock": null, 
+    "type": "complex"
+  }, 
+  {
+    "texname": "s_w", 
+    "name": "sw", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "cmath.sqrt(1 - cw**2)", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "g'", 
+    "name": "gp", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "ee/cw", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "g_w", 
+    "name": "gw", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "ee/sw", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "v", 
+    "name": "vev", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "(2*cw*MZ*sw)/ee", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "v_d", 
+    "name": "vd", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "vev*cmath.cos(beta)", 
+    "lhablock": null, 
+    "type": "real"
+  }, 
+  {
+    "texname": "v_u", 
+    "name": "vu", 
+    "nature": "internal", 
+    "lhacode": null, 
+    "value": "vev*cmath.sin(beta)", 
+    "lhablock": null, 
+    "type": "real"
+  }
+]

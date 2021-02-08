@@ -172,8 +172,6 @@ pub struct Particle {
     pub goldstoneboson: bool,
     #[serde(rename = "GhostNumber")]
     pub ghost_number: i64,
-    #[serde(rename = "LeptonNumber")]
-    pub lepton_number: i64,
 }
 impl Particle {
     pub fn self_conjugate(&self) -> bool {

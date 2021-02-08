@@ -13,6 +13,7 @@ pub enum Function {
     Tan,
     ASin,
     ACos,
+    ATan,
     Sqrt,
     Log,
     Complex,

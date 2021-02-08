@@ -551,6 +551,10 @@ fn convert_call_cmath<T: Tensor>(
             function: Function::ACos,
             args,
         },
+        "atan" => MathExpr::Call {
+            function: Function::ATan,
+            args,
+        },
         "sqrt" => MathExpr::Call {
             function: super::Function::Sqrt,
             args,
@@ -885,5 +889,10 @@ mod test {
     #[test]
     fn parse_sm_nlo() {
         parse_model("tests/models_json/SM_NLO");
+    }
+
+    #[test]
+    fn parse_loop_mssm() {
+        parse_model("tests/models_json/loop_MSSM");
     }
 }

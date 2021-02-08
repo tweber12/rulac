@@ -365,4 +365,31 @@ mod test {
             }
         }
     }
+
+    #[test]
+    fn loop_mssm_full() {
+        let propagators = Propagators::load("models/common/propagators.toml").unwrap();
+        let components = SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
+        let model = UfoModel::load("tests/models_json/loop_MSSM").unwrap();
+        let mut builder = super::StructureBuilder::new(&components, &propagators);
+        for structure in model.lorentz_structures.values() {
+            if structure.spins.contains(&Spin::Ghost) {
+                continue;
+            }
+            for (i, _) in structure.spins.iter().enumerate() {
+                builder
+                    .complete_structure(&structure, i, false, 0.0)
+                    .unwrap();
+                builder
+                    .complete_structure(&structure, i, false, 10.0)
+                    .unwrap();
+                builder
+                    .complete_structure(&structure, i, true, 0.0)
+                    .unwrap();
+                builder
+                    .complete_structure(&structure, i, true, 10.0)
+                    .unwrap();
+            }
+        }
+    }
 }

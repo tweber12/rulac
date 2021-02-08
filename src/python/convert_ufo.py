@@ -14,9 +14,11 @@ import sys
 
 import util
 
+
 def _convert_orders(orders):
     """Convert a list ufo CouplingOrder objects to a list of dictionaries"""
     return [order.__dict__ for order in orders]
+
 
 def _convert_particle(particle):
     """Convert a ufo Particle object to a dictionary"""
@@ -41,6 +43,7 @@ def _convert_particle(particle):
         pass
     return particle_dict
 
+
 def _convert_vertex(vertex):
     """Convert a ufo Vertex object to a dictionary"""
     vertex_dict = vertex.__dict__
@@ -51,6 +54,7 @@ def _convert_vertex(vertex):
         for (pieces, v) in vertex_dict["couplings"].iteritems()
     ]
     return vertex_dict
+
 
 def _convert_coupling(coupling):
     """Convert a ufo Coupling object to a dictionary"""
@@ -66,26 +70,29 @@ def _convert_coupling(coupling):
         "type": kind,
         "value": coupling_dict["value"]
     }
-    print coupling_dict
     return coupling_dict
+
 
 def _convert_lorentz(lorentz):
     """Convert a ufo Lorentz object to a dictionary"""
     return lorentz.__dict__
 
+
 def _convert_parameter(parameter):
     """Convert a ufo Parameter object to a dictionary"""
     return parameter.__dict__
+
 
 def _convert_decay(decay):
     """Convert a ufo Decay object to a dictionary"""
     decay_dict = decay.__dict__
     decay_dict["particle"] = decay_dict["particle"].pdg_code
     decay_dict["partial_widths"] = [
-        { "decay_products": [p.name for p in prods], "width": width }
+        {"decay_products": [p.name for p in prods], "width": width}
         for (prods, width) in decay_dict["partial_widths"].iteritems()
     ]
     return decay_dict
+
 
 def _convert_function(function):
     """Convert a ufo Function object to a dictionary"""
@@ -94,6 +101,7 @@ def _convert_function(function):
     if not isinstance(args, tuple) and not isinstance(args, list):
         function_dict["arguments"] = (args,)
     return function_dict
+
 
 def convert(model_path, model_name, output_path):
     """
@@ -135,6 +143,7 @@ def convert(model_path, model_name, output_path):
     with open(os.path.join(out_dir, "function_library.json"), "w") as jfile:
         json.dump(functions, jfile, indent=2)
 
+
 def convert_relations(outfile):
     gamma5 = {
         "expr": "complex(0,1)*Gamma(1,11,-22)*Gamma(2,-22,-33)*Gamma(3,-33,-44)*Gamma(4,-44,55)",
@@ -163,6 +172,7 @@ def convert_relations(outfile):
     with open(outfile, "w") as jfile:
         json.dump(relations, jfile, indent=2)
 
+
 convert("tests/models", "SM_NLO", "tests/models_json")
 convert("tests/models", "sm_mg5", "tests/models_json")
-convert_relations("models/common/spin_relations.json")
+convert("tests/models", "loop_MSSM", "tests/models_json")

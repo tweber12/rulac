@@ -1,0 +1,83 @@
+[
+  {
+    "expr": "z.conjugate()", 
+    "name": "complexconjugate", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "z.real", 
+    "name": "re", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "z.imag", 
+    "name": "im", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "1./cmath.cos(z)", 
+    "name": "sec", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "cmath.acos(1./z)", 
+    "name": "asec", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "1./cmath.sin(z)", 
+    "name": "csc", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "cmath.asin(1./z)", 
+    "name": "acsc", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "1./cmath.tan(z)", 
+    "name": "cot", 
+    "arguments": [
+      "z"
+    ]
+  }, 
+  {
+    "expr": "y if x else z", 
+    "name": "theta_function", 
+    "arguments": [
+      "x", 
+      "y", 
+      "z"
+    ]
+  }, 
+  {
+    "expr": "(ExprTrue if condition==0.0 else ExprFalse)", 
+    "name": "cond", 
+    "arguments": [
+      "condition", 
+      "ExprTrue", 
+      "ExprFalse"
+    ]
+  }, 
+  {
+    "expr": "(0.0 if z==0.0 else cmath.log(z))", 
+    "name": "reglog", 
+    "arguments": [
+      "z"
+    ]
+  }
+]

@@ -9,54 +9,54 @@ pub type ColorExpr = MathExpr<ColorTensor>;
 pub enum ColorTensor {
     #[serde(rename = "Identity")]
     KroneckerDelta {
-        i1: FundamentalIndex,
-        jb2: FundamentalIndex,
+        i1: TripletIndex,
+        jb2: AntiTripletIndex,
     },
     #[serde(rename = "T")]
     FundamentalRep {
-        a1: AdjointIndex,
-        i2: FundamentalIndex,
-        jb3: FundamentalIndex,
+        a1: OctetIndex,
+        i2: TripletIndex,
+        jb3: AntiTripletIndex,
     },
     #[serde(rename = "f")]
     StructureConstant {
-        a1: AdjointIndex,
-        a2: AdjointIndex,
-        a3: AdjointIndex,
+        a1: OctetIndex,
+        a2: OctetIndex,
+        a3: OctetIndex,
     },
     #[serde(rename = "d")]
     SymmetricTensor {
-        a1: AdjointIndex,
-        a2: AdjointIndex,
-        a3: AdjointIndex,
+        a1: OctetIndex,
+        a2: OctetIndex,
+        a3: OctetIndex,
     },
     Epsilon {
-        i1: FundamentalIndex,
-        i2: FundamentalIndex,
-        i3: FundamentalIndex,
+        i1: TripletIndex,
+        i2: TripletIndex,
+        i3: TripletIndex,
     },
     EpsilonBar {
-        ib1: FundamentalIndex,
-        ib2: FundamentalIndex,
-        ib3: FundamentalIndex,
+        ib1: AntiTripletIndex,
+        ib2: AntiTripletIndex,
+        ib3: AntiTripletIndex,
     },
     #[serde(rename = "T6")]
     SextetRep {
-        a1: AdjointIndex,
+        a1: OctetIndex,
         alpha2: SextetIndex,
-        betab3: SextetIndex,
+        betab3: AntiSextetIndex,
     },
     #[serde(rename = "K6")]
     SextetClebschGordan {
         alpha1: SextetIndex,
-        ib2: FundamentalIndex,
-        jb3: FundamentalIndex,
+        ib2: AntiTripletIndex,
+        jb3: AntiTripletIndex,
     },
     #[serde(rename = "K6Bar")]
     AntiSextetClebschGordan {
-        alphab1: SextetIndex,
-        i2: FundamentalIndex,
-        j3: FundamentalIndex,
+        alphab1: AntiSextetIndex,
+        i2: TripletIndex,
+        j3: TripletIndex,
     },
 }
 impl Tensor for ColorTensor {
@@ -118,28 +118,26 @@ impl Tensor for ColorTensor {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub struct FundamentalIndex(i64);
-impl From<i64> for FundamentalIndex {
-    fn from(index: i64) -> FundamentalIndex {
-        FundamentalIndex(index)
-    }
-}
-impl TensorIndex for FundamentalIndex {
-    fn number_of_values() -> u8 {
-        4
+pub struct TripletIndex(i64);
+impl From<i64> for TripletIndex {
+    fn from(index: i64) -> TripletIndex {
+        TripletIndex(index)
     }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub struct AdjointIndex(i64);
-impl From<i64> for AdjointIndex {
-    fn from(index: i64) -> AdjointIndex {
-        AdjointIndex(index)
+pub struct AntiTripletIndex(i64);
+impl From<i64> for AntiTripletIndex {
+    fn from(index: i64) -> AntiTripletIndex {
+        AntiTripletIndex(index)
     }
 }
-impl TensorIndex for AdjointIndex {
-    fn number_of_values() -> u8 {
-        8
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct OctetIndex(i64);
+impl From<i64> for OctetIndex {
+    fn from(index: i64) -> OctetIndex {
+        OctetIndex(index)
     }
 }
 
@@ -150,22 +148,32 @@ impl From<i64> for SextetIndex {
         SextetIndex(index)
     }
 }
-impl TensorIndex for SextetIndex {
-    fn number_of_values() -> u8 {
-        6
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct AntiSextetIndex(i64);
+impl From<i64> for AntiSextetIndex {
+    fn from(index: i64) -> AntiSextetIndex {
+        AntiSextetIndex(index)
     }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum ColorIndex {
-    Fundamental { index: FundamentalIndex },
-    Adjoint { index: AdjointIndex },
+    Triplet { index: TripletIndex },
+    AntiTriplet { index: AntiTripletIndex },
     Sextet { index: SextetIndex },
+    AntiSextet { index: AntiSextetIndex },
+    Octet { index: OctetIndex },
 }
-impl From<FundamentalIndex> for ColorIndex {
-    fn from(index: FundamentalIndex) -> ColorIndex {
-        ColorIndex::Fundamental { index }
+impl From<TripletIndex> for ColorIndex {
+    fn from(index: TripletIndex) -> ColorIndex {
+        ColorIndex::Triplet { index }
+    }
+}
+impl From<AntiTripletIndex> for ColorIndex {
+    fn from(index: AntiTripletIndex) -> ColorIndex {
+        ColorIndex::AntiTriplet { index }
     }
 }
 impl From<SextetIndex> for ColorIndex {
@@ -173,8 +181,13 @@ impl From<SextetIndex> for ColorIndex {
         ColorIndex::Sextet { index }
     }
 }
-impl From<AdjointIndex> for ColorIndex {
-    fn from(index: AdjointIndex) -> ColorIndex {
-        ColorIndex::Adjoint { index }
+impl From<AntiSextetIndex> for ColorIndex {
+    fn from(index: AntiSextetIndex) -> ColorIndex {
+        ColorIndex::AntiSextet { index }
+    }
+}
+impl From<OctetIndex> for ColorIndex {
+    fn from(index: OctetIndex) -> ColorIndex {
+        ColorIndex::Octet { index }
     }
 }

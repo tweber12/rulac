@@ -4,6 +4,7 @@ use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::collections::HashMap;
 use std::fmt;
 use std::fs;
+use std::io::BufReader;
 use std::path;
 
 #[derive(Debug)]
@@ -30,7 +31,7 @@ impl UfoModel {
             Err(_) => HashMap::new(),
         };
         let vertex_file = fs::File::open(&path.as_ref().join("vertices.json"))?;
-        let vertices = serde_json::from_reader(vertex_file)?;
+        let vertices = serde_json::from_reader(BufReader::new(vertex_file))?;
         Ok(UfoModel {
             function_library,
             parameters,
@@ -71,7 +72,7 @@ where
     <T as Named>::Name: Eq + std::hash::Hash,
 {
     let file = fs::File::open(path.as_ref().join(name))?;
-    let list: Vec<T> = serde_json::from_reader(file)?;
+    let list: Vec<T> = serde_json::from_reader(BufReader::new(file))?;
     Ok(list.into_iter().map(|t| (t.name(), t)).collect())
 }
 

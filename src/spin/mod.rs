@@ -7,7 +7,7 @@ pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
 pub use vertex_structures::{StructureBuilder, VertexStructure};
 
 use crate::math_expr::parse;
-use crate::math_expr::{MathExpr, Tensor};
+use crate::math_expr::{MathExpr, Tensor, TensorIndex};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -36,6 +36,7 @@ pub enum SpinIndex {
     Lorentz { index: LorentzIndex },
     Spinor { index: SpinorIndex },
 }
+impl TensorIndex for SpinIndex {}
 impl From<LorentzIndex> for SpinIndex {
     fn from(index: LorentzIndex) -> SpinIndex {
         SpinIndex::Lorentz { index }

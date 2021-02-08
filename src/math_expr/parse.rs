@@ -1,6 +1,6 @@
 use crate::math_expr::{
     BinaryOperator, Comparison, ComparisonOperator, Function, MathExpr, Number, Tensor,
-    UnaryOperator,
+    TensorIndex, UnaryOperator,
 };
 use num_complex::Complex64;
 use num_traits::{ToPrimitive, Zero};
@@ -9,7 +9,7 @@ use rustpython_parser::ast::ExpressionType;
 use rustpython_parser::error;
 use rustpython_parser::parser;
 use serde::Deserialize;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::f64;
 use std::fmt;
 
@@ -169,36 +169,49 @@ impl<T> ResultExt for Result<T, ConversionError> {
 }
 
 #[derive(Debug, PartialEq, Eq)]
-struct Indices<T: std::hash::Hash + Eq> {
-    indices: HashSet<T>,
+struct Indices<T: TensorIndex> {
+    indices: HashMap<i64, T>,
     names: HashMap<String, i64>,
 }
-impl<T: std::hash::Hash + Eq + Copy> Indices<T> {
+impl<T: TensorIndex> Indices<T> {
     fn new() -> Indices<T> {
         Indices::with_aliases(HashMap::new())
     }
     fn with_aliases(aliases: HashMap<String, i64>) -> Indices<T> {
         Indices {
-            indices: HashSet::new(),
+            indices: HashMap::new(),
             names: aliases,
         }
     }
     fn len(&self) -> usize {
         self.indices.len()
     }
-    fn insert<I: Into<T>>(&mut self, index: I) {
-        self.indices.insert(index.into());
+    fn insert<I: Into<T>>(&mut self, number: i64, index: I) {
+        self.indices.insert(number, index.into().normalize());
     }
     fn add_differences(&mut self, i1: &Indices<T>, i2: &Indices<T>) {
-        for i in i1.indices.symmetric_difference(&i2.indices) {
-            self.indices.insert(*i);
+        for (k, v) in i1.indices.iter() {
+            if !i2.indices.contains_key(k) {
+                self.indices.insert(*k, *v);
+            }
+        }
+        for (k, v) in i2.indices.iter() {
+            if !i1.indices.contains_key(k) {
+                self.indices.insert(*k, *v);
+            }
         }
     }
     fn extend(&mut self, other: &Indices<T>) {
         self.indices.extend(&other.indices)
     }
     fn intersection<'a>(&'a self, other: &'a Indices<T>) -> impl Iterator<Item = &'a T> {
-        self.indices.intersection(&other.indices)
+        self.indices.iter().filter_map(move |(k, v)| {
+            if other.indices.contains_key(k) {
+                Some(v)
+            } else {
+                None
+            }
+        })
     }
     fn is_empty(&self) -> bool {
         self.indices.is_empty()
@@ -206,7 +219,7 @@ impl<T: std::hash::Hash + Eq + Copy> Indices<T> {
     fn single(&self) -> T {
         *self
             .indices
-            .iter()
+            .values()
             .next()
             .expect("BUG: Single called on empty index collection")
     }
@@ -555,12 +568,12 @@ fn convert_call_cmath<T: Tensor>(
     Ok(fun)
 }
 
-pub struct IndexParser<'a, T: std::hash::Hash + Eq + Copy> {
+pub struct IndexParser<'a, T: TensorIndex> {
     index: usize,
     args: &'a [ast::Expression],
     indices: &'a mut Indices<T>,
 }
-impl<'a, T: std::hash::Hash + Eq + Copy> IndexParser<'a, T> {
+impl<'a, T: TensorIndex> IndexParser<'a, T> {
     fn new(args: &'a [ast::Expression], indices: &'a mut Indices<T>) -> IndexParser<'a, T> {
         IndexParser {
             index: 0,
@@ -603,7 +616,7 @@ fn extract_index<T, U>(
     indices: &mut Indices<U>,
 ) -> Result<T, ConversionError>
 where
-    U: Copy + Eq + std::hash::Hash,
+    U: TensorIndex,
     T: Clone + From<i64> + Into<U>,
 {
     let number = match &expr.node {
@@ -631,7 +644,7 @@ where
     };
     let index = T::from(number);
     if number < 0 {
-        indices.insert(index.clone())
+        indices.insert(number, index.clone())
     }
     Ok(index)
 }

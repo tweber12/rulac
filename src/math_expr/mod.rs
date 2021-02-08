@@ -374,12 +374,18 @@ fn constant_propagation_binary<T: Tensor>(
 }
 
 pub trait Tensor: Clone + std::fmt::Debug + PartialEq {
-    type Indices: Copy + std::fmt::Debug + std::hash::Hash + Eq;
+    type Indices: TensorIndex;
     type ExternalComponent: Clone + std::fmt::Debug + PartialEq;
     fn parse(
         name: &str,
         indices: &mut parse::IndexParser<Self::Indices>,
     ) -> Result<Option<Self>, parse::ConversionError>;
+}
+
+pub trait TensorIndex: Copy + std::fmt::Debug + PartialEq {
+    fn normalize(self) -> Self {
+        self
+    }
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
@@ -396,6 +402,7 @@ impl Tensor for NoTensor {
 }
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct NoIndices {}
+impl TensorIndex for NoIndices {}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct NoComponents {}
 

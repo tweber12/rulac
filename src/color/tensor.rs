@@ -166,6 +166,23 @@ pub enum ColorIndex {
     AntiSextet { index: AntiSextetIndex },
     Octet { index: OctetIndex },
 }
+impl TensorIndex for ColorIndex {
+    fn normalize(self) -> ColorIndex {
+        match self {
+            ColorIndex::AntiTriplet {
+                index: AntiTripletIndex(i),
+            } => ColorIndex::Triplet {
+                index: TripletIndex(i),
+            },
+            ColorIndex::AntiSextet {
+                index: AntiSextetIndex(i),
+            } => ColorIndex::Sextet {
+                index: SextetIndex(i),
+            },
+            _ => self,
+        }
+    }
+}
 impl From<TripletIndex> for ColorIndex {
     fn from(index: TripletIndex) -> ColorIndex {
         ColorIndex::Triplet { index }

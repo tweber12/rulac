@@ -6,6 +6,7 @@ use crate::spin::propagators::{BasicPropagator, Propagators};
 use crate::spin::tensor_components::SpinTensorComponents;
 use crate::spin::{
     ExternalComponent, IndexIter, Indices, LorentzExpr, LorentzIndex, SpinIndex, SpinorIndex,
+    N_COMPONENTS,
 };
 use crate::ufo;
 use num_traits::Zero;
@@ -18,11 +19,11 @@ pub enum VertexStructure {
     },
     Vector {
         factor: LorentzExpr,
-        structure: [LorentzExpr; 4],
+        structure: [LorentzExpr; N_COMPONENTS],
     },
     Tensor {
         factor: LorentzExpr,
-        structure: Box<[[LorentzExpr; 4]; 4]>,
+        structure: Box<[[LorentzExpr; N_COMPONENTS]; N_COMPONENTS]>,
     },
 }
 
@@ -118,7 +119,7 @@ impl<'a> StructureBuilder<'a> {
         let ufo::UfoMath(ref str) = lorentz.structure;
         let expr = parse_math(str)?;
         let factor = amputated_factor(&lorentz.spins, external);
-        let mut structure: [LorentzExpr; 4] = Default::default();
+        let mut structure: [LorentzExpr; N_COMPONENTS] = Default::default();
         for (mut index_values, values) in
             IndexIter::new(&indices_for_spin(lorentz.spins[external], external))
         {
@@ -137,7 +138,7 @@ impl<'a> StructureBuilder<'a> {
         let ufo::UfoMath(ref str) = lorentz.structure;
         let expr = parse_math(str)?;
         let factor = amputated_factor(&lorentz.spins, external);
-        let mut structure: [[LorentzExpr; 4]; 4] = Default::default();
+        let mut structure: [[LorentzExpr; N_COMPONENTS]; N_COMPONENTS] = Default::default();
         for (mut index_values, values) in
             IndexIter::new(&indices_for_spin(lorentz.spins[external], external))
         {
@@ -187,7 +188,7 @@ impl<'a> StructureBuilder<'a> {
     fn add_propagator_vector(
         &mut self,
         factor: &LorentzExpr,
-        amputated_structure: &[LorentzExpr; 4],
+        amputated_structure: &[LorentzExpr; N_COMPONENTS],
         propagator: &BasicPropagator,
         spin: ufo::Spin,
         incoming: bool,
@@ -197,7 +198,7 @@ impl<'a> StructureBuilder<'a> {
         } else {
             (indices_for_spin(spin, 1), indices_for_spin(spin, 0))
         };
-        let mut structure: [LorentzExpr; 4] = Default::default();
+        let mut structure: [LorentzExpr; N_COMPONENTS] = Default::default();
         for (index_values_out, values_out) in IndexIter::new(&indices_out) {
             for (mut index_values_in, values_in) in
                 IndexIter::with_external(&indices_in, index_values_out)
@@ -221,7 +222,7 @@ impl<'a> StructureBuilder<'a> {
     fn add_propagator_tensor(
         &mut self,
         factor: &LorentzExpr,
-        amputated_structure: &[[LorentzExpr; 4]; 4],
+        amputated_structure: &[[LorentzExpr; N_COMPONENTS]; N_COMPONENTS],
         propagator: &BasicPropagator,
         spin: ufo::Spin,
         incoming: bool,
@@ -231,7 +232,7 @@ impl<'a> StructureBuilder<'a> {
         } else {
             (indices_for_spin(spin, 1), indices_for_spin(spin, 0))
         };
-        let mut structure: [[LorentzExpr; 4]; 4] = Default::default();
+        let mut structure: [[LorentzExpr; N_COMPONENTS]; N_COMPONENTS] = Default::default();
         for (index_values_out, values_out) in IndexIter::new(&indices_out) {
             for (mut index_values_in, values_in) in
                 IndexIter::with_external(&indices_in, index_values_out)

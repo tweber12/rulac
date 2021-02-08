@@ -1,5 +1,5 @@
-use crate::math_expr::{Number, TensorIndex};
-use crate::spin::{expand_sums, IndexIter, LorentzExpr, LorentzIndex, SpinorIndex};
+use crate::math_expr::Number;
+use crate::spin::{expand_sums, IndexIter, LorentzExpr, LorentzIndex, SpinorIndex, N_COMPONENTS};
 use num_complex::Complex64;
 use num_traits::Zero;
 use serde::Deserialize;
@@ -52,18 +52,18 @@ impl SpinTensorComponents {
     // Internal functions to derive the remaining lorentz structures
     fn compute_metric(diagonal: &[Number]) -> TensorComponents2 {
         let mut metric = TensorComponents2::new();
-        for (i, d) in LorentzIndex::range().zip(diagonal.iter()) {
-            metric.insert(i, i, *d);
+        for (i, d) in (0..N_COMPONENTS).zip(diagonal.iter()) {
+            metric.insert(i as u8, i as u8, *d);
         }
         metric
     }
     fn compute_gamma(matrix: &[[[Number; 4]; 4]]) -> TensorComponents3 {
         let mut gamma = TensorComponents3::new();
-        for mu in LorentzIndex::range() {
-            for i in SpinorIndex::range() {
-                for j in SpinorIndex::range() {
+        for mu in 0..N_COMPONENTS {
+            for i in 0..N_COMPONENTS {
+                for j in 0..N_COMPONENTS {
                     let value = matrix[mu as usize][i as usize][j as usize];
-                    gamma.insert(mu, i, j, value);
+                    gamma.insert(mu as u8, i as u8, j as u8, value);
                 }
             }
         }
@@ -71,18 +71,18 @@ impl SpinTensorComponents {
     }
     fn compute_charge_conjugation(matrix: &[[Number; 4]]) -> TensorComponents2 {
         let mut charge_conjugation = TensorComponents2::new();
-        for i in SpinorIndex::range() {
-            for j in SpinorIndex::range() {
+        for i in 0..N_COMPONENTS {
+            for j in 0..N_COMPONENTS {
                 let value = matrix[i as usize][j as usize];
-                charge_conjugation.insert(i, j, value);
+                charge_conjugation.insert(i as u8, j as u8, value);
             }
         }
         charge_conjugation
     }
     fn compute_identity() -> TensorComponents2 {
         let mut components = TensorComponents2::new();
-        for i in SpinorIndex::range() {
-            components.insert(i, i, Complex64::new(1f64, 0f64));
+        for i in 0..N_COMPONENTS {
+            components.insert(i as u8, i as u8, Complex64::new(1f64, 0f64));
         }
         components
     }
@@ -90,7 +90,7 @@ impl SpinTensorComponents {
         // The lorentz indices are NOT summed over but fixed
         for (mut indices, values) in IndexIter::new_split(&[], &relation.spinor) {
             for (i, &index) in relation.lorentz.iter().enumerate() {
-                indices.set_index(index, i as u8);
+                indices.set_index(index, i);
             }
             let expr = expand_sums(&relation.expr, self, &mut indices).constant_propagation();
             match expr.extract_number() {
@@ -140,7 +140,7 @@ impl SpinTensorComponents {
     }
     fn compute_epsilon(sign: Number) -> TensorComponents4 {
         let mut components = TensorComponents4::new();
-        let mut start: Vec<u8> = LorentzIndex::range().collect();
+        let mut start: Vec<u8> = (0..N_COMPONENTS as u8).collect();
         permutohedron::heap_recursive(&mut start, |permutation| {
             let even = is_permutation_even(permutation);
             let re = if even { sign } else { -sign };

@@ -22,13 +22,6 @@ pub enum Function {
     Other(String),
 }
 
-pub trait TensorIndex {
-    fn number_of_values() -> u8;
-    fn range() -> std::ops::Range<u8> {
-        0..Self::number_of_values()
-    }
-}
-
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UnaryOperator {

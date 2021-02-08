@@ -7,9 +7,11 @@ pub use tensor_components::{SpinComponentsError, SpinTensorComponents};
 pub use vertex_structures::{StructureBuilder, VertexStructure};
 
 use crate::math_expr::parse;
-use crate::math_expr::{MathExpr, Tensor, TensorIndex};
+use crate::math_expr::{MathExpr, Tensor};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+const N_COMPONENTS: usize = 4;
 
 pub type LorentzExpr = MathExpr<LorentzTensor>;
 
@@ -20,11 +22,6 @@ impl From<i64> for LorentzIndex {
         LorentzIndex(index)
     }
 }
-impl TensorIndex for LorentzIndex {
-    fn number_of_values() -> u8 {
-        4
-    }
-}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct SpinorIndex(i64);
@@ -33,24 +30,11 @@ impl From<i64> for SpinorIndex {
         SpinorIndex(index)
     }
 }
-impl TensorIndex for SpinorIndex {
-    fn number_of_values() -> u8 {
-        4
-    }
-}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum SpinIndex {
     Lorentz { index: LorentzIndex },
     Spinor { index: SpinorIndex },
-}
-impl SpinIndex {
-    fn range(&self) -> std::ops::Range<u8> {
-        match self {
-            SpinIndex::Lorentz { .. } => LorentzIndex::range(),
-            SpinIndex::Spinor { .. } => SpinorIndex::range(),
-        }
-    }
 }
 impl From<LorentzIndex> for SpinIndex {
     fn from(index: LorentzIndex) -> SpinIndex {
@@ -227,8 +211,8 @@ impl Indices {
             indices: HashMap::new(),
         }
     }
-    fn set_index<T: Into<SpinIndex>>(&mut self, index: T, value: u8) {
-        self.indices.insert(index.into(), value);
+    fn set_index<T: Into<SpinIndex>>(&mut self, index: T, value: usize) {
+        self.indices.insert(index.into(), value as u8);
     }
     fn unset_index<T: Into<SpinIndex>>(&mut self, index: T) {
         self.indices.remove(&index.into());
@@ -248,7 +232,7 @@ fn expand_sums(
 ) -> LorentzExpr {
     match expr {
         LorentzExpr::Sum { ref expr, index } => {
-            let terms = index.range().map(|i| {
+            let terms = (0..N_COMPONENTS).map(|i| {
                 indices.set_index(*index, i);
                 expand_sums(expr, components, indices)
             });
@@ -266,7 +250,7 @@ struct IndexIter {
     current: Vec<u8>,
     indices: Indices,
     index: SpinIndex,
-    iter: std::ops::Range<u8>,
+    iter: std::ops::Range<usize>,
 }
 impl IndexIter {
     pub fn new(indices: &[SpinIndex]) -> IndexIter {
@@ -307,7 +291,7 @@ impl IndexIter {
             current: Vec::new(),
             indices: external,
             index,
-            iter: index.range(),
+            iter: 0..N_COMPONENTS,
         }
     }
     fn node(internal: IndexIter, index: SpinIndex) -> IndexIter {
@@ -325,7 +309,7 @@ impl Iterator for IndexIter {
     fn next(&mut self) -> Option<(Indices, Vec<u8>)> {
         if let Some(i2) = self.iter.next() {
             let mut new = self.current.clone();
-            new.push(i2);
+            new.push(i2 as u8);
             let mut indices = self.indices.clone();
             indices.set_index(self.index, i2);
             return Some((indices, new));
@@ -333,7 +317,7 @@ impl Iterator for IndexIter {
         if let Some((indices, i1)) = self.internal.as_mut().and_then(|i| i.next()) {
             self.current = i1;
             self.indices = indices;
-            self.iter = self.index.range();
+            self.iter = 0..N_COMPONENTS;
             return self.next();
         }
         None

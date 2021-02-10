@@ -12,12 +12,36 @@ impl ColorFlow {
     pub fn iter(&self) -> impl Iterator<Item = &ColorMultiLine> {
         self.components.iter()
     }
+    pub fn get_line_with_external(
+        &self,
+        index: usize,
+        location: Location,
+        external: usize,
+    ) -> ColorLine {
+        let index = if index >= external { index - 1 } else { index };
+        self.components[index].get_line(location)
+    }
+    pub fn get_anti_line_with_external(
+        &self,
+        index: usize,
+        location: Location,
+        external: usize,
+    ) -> AntiColorLine {
+        let index = if index >= external { index - 1 } else { index };
+        self.components[index].get_anti_line(location)
+    }
 }
 impl Index<usize> for ColorFlow {
     type Output = ColorMultiLine;
     fn index(&self, index: usize) -> &ColorMultiLine {
         self.components.index(index)
     }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum Location {
+    IndexOne,
+    IndexTwo,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -28,6 +52,54 @@ pub enum ColorMultiLine {
     Sextet(ColorLine, ColorLine),
     AntiSextet(AntiColorLine, AntiColorLine),
     Octet(ColorLine, AntiColorLine),
+}
+impl ColorMultiLine {
+    fn get_line(&self, location: Location) -> ColorLine {
+        match self {
+            ColorMultiLine::Triplet(line) if location == Location::IndexOne => *line,
+            ColorMultiLine::Sextet(line, _) if location == Location::IndexOne => *line,
+            ColorMultiLine::Sextet(_, line) if location == Location::IndexTwo => *line,
+            ColorMultiLine::Octet(line, _) if location == Location::IndexOne => *line,
+            _ => panic!("BUG: Mismatch of color lines!"),
+        }
+    }
+    fn get_anti_line(&self, location: Location) -> AntiColorLine {
+        match self {
+            ColorMultiLine::AntiTriplet(line) if location == Location::IndexOne => *line,
+            ColorMultiLine::AntiSextet(line, _) if location == Location::IndexOne => *line,
+            ColorMultiLine::AntiSextet(_, line) if location == Location::IndexTwo => *line,
+            ColorMultiLine::Octet(_, line) if location == Location::IndexOne => *line,
+            _ => panic!("BUG: Mismatch of color lines!"),
+        }
+    }
+    pub fn from_flow_lines(lines: &[FlowLine]) -> ColorMultiLine {
+        match lines {
+            [] => ColorMultiLine::Singlet,
+            [FlowLine::Color { line, .. }] => ColorMultiLine::Triplet(*line),
+            [FlowLine::AntiColor { line, .. }] => ColorMultiLine::AntiTriplet(*line),
+            [FlowLine::Color { line: l, .. }, FlowLine::AntiColor { line: r, .. }] => {
+                ColorMultiLine::Octet(*l, *r)
+            }
+            [FlowLine::AntiColor { line: l, .. }, FlowLine::Color { line: r, .. }] => {
+                ColorMultiLine::Octet(*r, *l)
+            }
+            [FlowLine::Color { line: l, .. }, FlowLine::Color { line: r, .. }] => {
+                if *l < *r {
+                    ColorMultiLine::Sextet(*l, *r)
+                } else {
+                    ColorMultiLine::Sextet(*r, *l)
+                }
+            }
+            [FlowLine::AntiColor { line: l, .. }, FlowLine::AntiColor { line: r, .. }] => {
+                if *l < *r {
+                    ColorMultiLine::AntiSextet(*l, *r)
+                } else {
+                    ColorMultiLine::AntiSextet(*r, *l)
+                }
+            }
+            _ => panic!("BUG: Too many individual color lines for a Multiline!"),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -46,6 +118,18 @@ impl AntiColorLine {
         let AntiColorLine(i) = self;
         ColorLine(i)
     }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum FlowLine {
+    Color {
+        line: ColorLine,
+        location: Location,
+    },
+    AntiColor {
+        line: AntiColorLine,
+        location: Location,
+    },
 }
 
 pub struct ColorFlows {
@@ -78,6 +162,8 @@ impl ColorFlows {
     }
 }
 
+/// Takes all colorflow lines that appear in the event, in the current order
+/// and attaches them to the correct particles
 fn to_color_flow(
     particles: &[Color],
     colors: &[ColorLine],

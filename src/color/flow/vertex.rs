@@ -1,25 +1,179 @@
 use crate::color::flow::chain::{Chain, ChainBuilder};
+use crate::color::flow::{ColorFlow, ColorMultiLine, FlowLine, Location};
 use crate::color::tensor::{
     AntiSextetIndex, AntiTripletIndex, ColorIndex, ColorTensor, OctetIndex, SextetIndex,
     TripletIndex, UndefinedIndex,
 };
 use crate::ufo::{Color, UfoMath};
+use num_rational::Rational32;
+use num_traits::{ToPrimitive, Zero};
 
-const TF: f64 = 0.5;
-const N_COLORS: u8 = 3;
+const INV_TF: i32 = 2;
+const TF: Rational32 = Rational32::new_raw(1, INV_TF);
+const INV_SQRT_TF: f64 = std::f64::consts::SQRT_2;
+const N_COLORS: i32 = 3;
 
 const OFFSET_LEFT: i64 = 1000;
 const OFFSET_RIGHT: i64 = 2000;
 
-pub struct VertexFlow {}
-impl VertexFlow {
-    pub fn from_structure(structure: &UfoMath, external: &[Color]) -> VertexFlow {
-        let chains = ChainBuilder::from_expr(structure, external);
+pub struct VertexFlows {
+    flows: Vec<VertexFlow>,
+}
+impl VertexFlows {
+    pub fn from_structure(structure: &UfoMath, external: &[Color]) -> VertexFlows {
+        let chains = ChainBuilder::from_expr(structure);
         let chains = replace_tensors_initial(chains, external);
         let chains = add_external(chains, external);
         let chains = replace_octet_indices(chains);
-        println!("{:?}", chains);
-        unimplemented!();
+        let chains = replace_sextet_indices(chains);
+        let chains = replace_epsilon_pairs(chains);
+        let chains = replace_triplet_indices(chains);
+        let chains = chains.reduce();
+        let factor = get_external_factors(external);
+        let flows = chains
+            .chains
+            .into_iter()
+            .map(|chain| VertexFlow::from_chain(chain, factor))
+            .collect();
+        VertexFlows { flows }
+    }
+    pub fn matches(&self, flows: &ColorFlow, external: usize) -> Vec<Match> {
+        let mut matches: Vec<_> = self
+            .flows
+            .iter()
+            .filter_map(|flow| flow.matches(flows, external))
+            .collect();
+        matches.sort_by_key(|m| m.outgoing);
+        let mut iter = matches.into_iter();
+        let mut current = match iter.next() {
+            Some(m) => m,
+            None => return Vec::new(),
+        };
+        let mut out = Vec::new();
+        for m in iter {
+            if m.outgoing == current.outgoing {
+                current.factor += m.factor;
+            } else {
+                if !current.factor.is_zero() {
+                    out.push(current);
+                }
+                current = m;
+            }
+        }
+        if !current.factor.is_zero() {
+            out.push(current);
+        }
+        out
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct Match {
+    pub outgoing: ColorMultiLine,
+    pub factor: f64,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct VertexFlow {
+    factor: f64,
+    deltas: Vec<Delta>,
+}
+impl VertexFlow {
+    fn from_chain(chain: Chain, external: f64) -> VertexFlow {
+        let mut deltas = Vec::new();
+        for tensor in chain.tensors {
+            match tensor {
+                ColorTensor::KroneckerTriplet {
+                    i1: TripletIndex(i1),
+                    jb2: AntiTripletIndex(jb2),
+                } => deltas.push(Delta::from_kronecker(i1, jb2)),
+                _ => panic!("Unsupported tensor in vertex flow: {:?}", tensor),
+            }
+        }
+        VertexFlow {
+            deltas,
+            factor: chain
+                .factor
+                .to_f64()
+                .expect("BUG: Factor cannot be converted to f64")
+                * external,
+        }
+    }
+    fn matches(&self, flows: &ColorFlow, external: usize) -> Option<Match> {
+        let mut out = Vec::new();
+        for delta in self.deltas.iter() {
+            if delta.has_external(external) {
+                out.push(delta.get_color_out(flows, external));
+            } else if !delta.matches(flows, external) {
+                return None;
+            }
+        }
+        Some(Match {
+            outgoing: ColorMultiLine::from_flow_lines(&out),
+            factor: self.factor,
+        })
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct Delta {
+    triplet: usize,
+    anti: usize,
+    triplet_location: Location,
+    anti_location: Location,
+}
+impl Delta {
+    fn has_external(&self, particle: usize) -> bool {
+        self.triplet == particle || self.anti == particle
+    }
+
+    fn matches(&self, flows: &ColorFlow, external: usize) -> bool {
+        let line = flows.get_line_with_external(self.triplet, self.triplet_location, external);
+        let antiline = flows.get_anti_line_with_external(self.anti, self.anti_location, external);
+        line.invert() == antiline
+    }
+
+    fn get_color_out(&self, flows: &ColorFlow, external: usize) -> FlowLine {
+        if self.triplet == external {
+            let line = flows.get_anti_line_with_external(self.anti, self.anti_location, external);
+            FlowLine::AntiColor {
+                line,
+                location: self.triplet_location,
+            }
+        } else if self.anti == external {
+            let line = flows.get_line_with_external(self.anti, self.anti_location, external);
+            FlowLine::Color {
+                line,
+                location: self.triplet_location,
+            }
+        } else {
+            panic!("BUG: Outgoing color requested for internal delta!");
+        }
+    }
+
+    fn from_kronecker(mut triplet: i64, mut anti: i64) -> Delta {
+        let triplet_location = if triplet > OFFSET_RIGHT {
+            Location::IndexTwo
+        } else {
+            Location::IndexOne
+        };
+        while triplet > OFFSET_LEFT {
+            triplet -= OFFSET_LEFT;
+        }
+        let anti_location = if anti > OFFSET_RIGHT {
+            Location::IndexTwo
+        } else {
+            Location::IndexOne
+        };
+        while anti > OFFSET_LEFT {
+            anti -= OFFSET_LEFT;
+        }
+        Delta {
+            triplet: triplet as usize,
+            anti: anti as usize,
+            triplet_location,
+            anti_location,
+        }
     }
 }
 
@@ -65,7 +219,7 @@ fn replace_identity(
         (Color::Octet, Color::Octet) => Chain::new_trace(
             offset,
             &[OctetIndex(i1).into(), OctetIndex(i2).into()],
-            1f64 / TF,
+            INV_TF,
         ),
         (Color::Sextet, Color::AntiSextet) => Chain::new_trace(
             offset,
@@ -77,11 +231,9 @@ fn replace_identity(
             &[AntiSextetIndex(i1).into(), SextetIndex(i2).into()],
             1,
         ),
-        (a, b) => panic!("REPLACE: Unknown use of Identity!"),
+        _ => panic!("REPLACE: Unknown use of Identity!"),
     };
-    ChainBuilder {
-        chains: vec![chain],
-    }
+    ChainBuilder::from_chain(chain)
 }
 
 fn replace_structure_constant(
@@ -90,12 +242,10 @@ fn replace_structure_constant(
     a3: OctetIndex,
     offset: i64,
 ) -> ChainBuilder {
-    ChainBuilder {
-        chains: vec![
-            Chain::new_trace(offset, &[a1.into(), a2.into(), a3.into()], 1),
-            Chain::new_trace(offset, &[a2.into(), a1.into(), a3.into()], -1),
-        ],
-    }
+    ChainBuilder::from_chains(&[
+        Chain::new_trace(offset, &[a1.into(), a2.into(), a3.into()], INV_TF),
+        Chain::new_trace(offset, &[a2.into(), a1.into(), a3.into()], -INV_TF),
+    ])
 }
 
 fn replace_symmetric_tensor(
@@ -104,12 +254,10 @@ fn replace_symmetric_tensor(
     a3: OctetIndex,
     offset: i64,
 ) -> ChainBuilder {
-    ChainBuilder {
-        chains: vec![
-            Chain::new_trace(offset, &[a1.into(), a2.into(), a3.into()], 1),
-            Chain::new_trace(offset, &[a2.into(), a1.into(), a3.into()], 1),
-        ],
-    }
+    ChainBuilder::from_chains(&[
+        Chain::new_trace(offset, &[a1.into(), a2.into(), a3.into()], INV_TF),
+        Chain::new_trace(offset, &[a2.into(), a1.into(), a3.into()], INV_TF),
+    ])
 }
 
 fn replace_sextet_rep(
@@ -118,13 +266,11 @@ fn replace_sextet_rep(
     betab3: AntiSextetIndex,
     offset: i64,
 ) -> ChainBuilder {
-    ChainBuilder {
-        chains: vec![Chain::new_trace(
-            offset,
-            &[alpha2.into(), a1.into(), betab3.into()],
-            2,
-        )],
-    }
+    ChainBuilder::from_chain(Chain::new_trace(
+        offset,
+        &[alpha2.into(), a1.into(), betab3.into()],
+        2,
+    ))
 }
 
 fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBuilder {
@@ -139,9 +285,7 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
                     AntiTripletIndex(i + OFFSET_RIGHT),
                 );
                 chains.append_all(tensor);
-                for chain in chains.chains.iter_mut() {
-                    chain.octet_indices.push(index);
-                }
+                chains.add_index(index);
             }
             Color::Sextet => {
                 let index = SextetIndex(i);
@@ -151,9 +295,7 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
                     AntiTripletIndex(i + OFFSET_RIGHT),
                 );
                 chains.append_all(tensor);
-                for chain in chains.chains.iter_mut() {
-                    chain.sextet_indices.push(index);
-                }
+                chains.add_index(index);
             }
             Color::AntiSextet => {
                 let index = AntiSextetIndex(i);
@@ -163,9 +305,7 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
                     TripletIndex(i + OFFSET_RIGHT),
                 );
                 chains.append_all(tensor);
-                for chain in chains.chains.iter_mut() {
-                    chain.sextet_indices.push(SextetIndex(i));
-                }
+                chains.add_index(index);
             }
             _ => continue,
         }
@@ -173,20 +313,17 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
     chains
 }
 
-fn combine_octet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
-    match tensors {
-        [ColorTensor::FundamentalRep {
-            i2: il, jb3: jl, ..
-        }, ColorTensor::FundamentalRep {
-            i2: ir, jb3: jr, ..
-        }] => ChainBuilder {
-            chains: vec![
-                Chain::new_delta_chain(&[(*il, *jr), (*ir, *jl)], TF),
-                Chain::new_delta_chain(&[(*il, *jl), (*ir, *jr)], -TF / (N_COLORS as f64)),
-            ],
-        },
-        _ => panic!("BUG: Unsupported tensors in octet combination!"),
+fn get_external_factors(external: &[Color]) -> f64 {
+    let n_octet = external
+        .iter()
+        .filter(|c| matches!(c, Color::Octet))
+        .count();
+    // Avoid unnecessary instabilities by excessive multiplication of sqrt(2)
+    let mut factor = (INV_TF.pow(n_octet as u32 / 2)) as f64;
+    if n_octet % 2 != 0 {
+        factor *= INV_SQRT_TF;
     }
+    factor
 }
 
 fn replace_octet_indices(chains: ChainBuilder) -> ChainBuilder {
@@ -196,22 +333,154 @@ fn replace_octet_indices(chains: ChainBuilder) -> ChainBuilder {
     )
 }
 
+fn combine_octet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
+    match tensors {
+        [ColorTensor::FundamentalRep {
+            i2: il, jb3: jl, ..
+        }, ColorTensor::FundamentalRep {
+            i2: ir, jb3: jr, ..
+        }] => ChainBuilder::from_chains(&[
+            Chain::new_delta_chain(&[(*il, *jr), (*ir, *jl)], TF),
+            Chain::new_delta_chain(&[(*il, *jl), (*ir, *jr)], TF / N_COLORS),
+        ]),
+        _ => panic!("BUG: Unsupported tensors in octet combination!"),
+    }
+}
+
+fn replace_sextet_indices(chains: ChainBuilder) -> ChainBuilder {
+    chains.replace_indices(
+        &|index| matches!(index, ColorIndex::Sextet {..}),
+        &combine_sextet_tensors,
+    )
+}
+
+fn combine_sextet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
+    match tensors {
+        [ColorTensor::AntiSextetClebschGordan { .. }, ColorTensor::SextetClebschGordan { .. }] => {
+            // Only explicitly handle one order of tensors
+            combine_sextet_tensors(&[tensors[1], tensors[0]])
+        }
+        [ColorTensor::SextetClebschGordan {
+            ib2: il, jb3: jl, ..
+        }, ColorTensor::AntiSextetClebschGordan { i2: ir, j3: jr, .. }] => {
+            ChainBuilder::from_chains(&[
+                Chain::new_delta_chain(&[(*ir, *il), (*jr, *jl)], Rational32::new(1, 2)),
+                Chain::new_delta_chain(&[(*ir, *jl), (*jr, *il)], Rational32::new(1, 2)),
+            ])
+        }
+        _ => panic!("BUG: Unsupported tensors in octet combination!"),
+    }
+}
+
+fn replace_triplet_indices(chains: ChainBuilder) -> ChainBuilder {
+    chains.replace_indices(
+        &|index| matches!(index, ColorIndex::Triplet {..}),
+        &combine_triplet_tensors,
+    )
+}
+
+fn combine_triplet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
+    match tensors {
+        [ColorTensor::KroneckerTriplet { .. }] => ChainBuilder::empty(),
+        [ColorTensor::KroneckerTriplet { i1: il, jb2: jl }, ColorTensor::KroneckerTriplet { i1: ir, jb2: jr }] => {
+            if *il == jr.bar() {
+                ChainBuilder::from_chain(Chain::new_delta_chain(&[(*ir, *jl)], 1))
+            } else {
+                ChainBuilder::from_chain(Chain::new_delta_chain(&[(*il, *jr)], 1))
+            }
+        }
+        [ColorTensor::Epsilon { .. }, ColorTensor::KroneckerTriplet { .. }] => {
+            // Only handle one order of these
+            combine_triplet_tensors(&[tensors[1], tensors[0]])
+        }
+        [ColorTensor::KroneckerTriplet { i1: il, jb2: jl }, ColorTensor::Epsilon {
+            i1: ir1,
+            i2: ir2,
+            i3: ir3,
+        }] => {
+            let bar = jl.bar();
+            let tensor = if bar == *ir1 {
+                ColorTensor::new_epsilon(*il, *ir2, *ir3)
+            } else if bar == *ir2 {
+                ColorTensor::new_epsilon(*ir1, *il, *ir3)
+            } else {
+                ColorTensor::new_epsilon(*ir1, *ir2, *il)
+            };
+            ChainBuilder::from_tensor(tensor)
+        }
+        [ColorTensor::EpsilonBar { .. }, ColorTensor::KroneckerTriplet { .. }] => {
+            // Only handle one order of these
+            combine_triplet_tensors(&[tensors[1], tensors[0]])
+        }
+        [ColorTensor::KroneckerTriplet { i1: il, jb2: jl }, ColorTensor::EpsilonBar {
+            ib1: ir1,
+            ib2: ir2,
+            ib3: ir3,
+        }] => {
+            let bar = il.bar();
+            let tensor = if bar == *ir1 {
+                ColorTensor::new_epsilon_bar(*jl, *ir2, *ir3)
+            } else if bar == *ir2 {
+                ColorTensor::new_epsilon_bar(*ir1, *jl, *ir3)
+            } else {
+                ColorTensor::new_epsilon_bar(*ir1, *ir2, *jl)
+            };
+            ChainBuilder::from_tensor(tensor)
+        }
+        _ => panic!(
+            "BUG: Unsupported tensors in triplet combination!: {:?}",
+            tensors
+        ),
+    }
+}
+
+fn replace_epsilon_pairs(chains: ChainBuilder) -> ChainBuilder {
+    chains.combine_pairs(
+        &|t| matches!(t, ColorTensor::Epsilon {..}),
+        &|t| matches!(t, ColorTensor::EpsilonBar {..}),
+        &combine_epsilons,
+    )
+}
+
+fn combine_epsilons(eps: ColorTensor, bar: ColorTensor) -> ChainBuilder {
+    match (eps, bar) {
+        (ColorTensor::Epsilon { i1, i2, i3 }, ColorTensor::EpsilonBar { ib1, ib2, ib3 }) => {
+            ChainBuilder::from_chains(&[
+                Chain::new_delta_chain(&[(i1, ib1), (i2, ib2), (i3, ib3)], 1),
+                Chain::new_delta_chain(&[(i1, ib2), (i2, ib3), (i3, ib1)], 1),
+                Chain::new_delta_chain(&[(i1, ib3), (i2, ib1), (i3, ib2)], 1),
+                Chain::new_delta_chain(&[(i1, ib2), (i2, ib1), (i3, ib3)], -1),
+                Chain::new_delta_chain(&[(i1, ib1), (i2, ib3), (i3, ib2)], -1),
+                Chain::new_delta_chain(&[(i1, ib3), (i2, ib2), (i3, ib1)], -1),
+            ])
+        }
+        _ => panic!("BUG: Invalid inputs to combine epsilons!"),
+    }
+}
+
 #[cfg(test)]
 mod test {
-    use super::VertexFlow;
+    use super::VertexFlows;
     use crate::ufo::{Color, UfoMath};
 
     #[test]
     fn qqg() {
         let data = UfoMath("T(3,1,2)".to_string());
         let particle_colors = &[Color::Triplet, Color::AntiTriplet, Color::Octet];
-        VertexFlow::from_structure(&data, particle_colors);
+        VertexFlows::from_structure(&data, particle_colors);
     }
 
     #[test]
     fn ggg() {
         let data = UfoMath("f(1,2,3)".to_string());
         let particle_colors = &[Color::Octet, Color::Octet, Color::Octet];
-        VertexFlow::from_structure(&data, particle_colors);
+        VertexFlows::from_structure(&data, particle_colors);
+    }
+
+    #[test]
+    fn gggg() {
+        let data = UfoMath("f(1,2,-1)*f(3,4,-1)".to_string());
+        let particle_colors = &[Color::Octet, Color::Octet, Color::Octet, Color::Octet];
+        VertexFlows::from_structure(&data, particle_colors);
     }
 }

@@ -258,6 +258,7 @@ name = "helac_rs"
 version = "0.1.0"
 dependencies = [
  "num-complex",
+ "num-rational",
  "num-traits",
  "permutohedron",
  "rustpython-parser",
@@ -367,6 +368,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "num-bigint"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5e9a41747ae4633fce5adffb4d2e81ffc5e89593cb19917f8fb2cc5ff76507bf"
+dependencies = [
+ "autocfg 1.0.1",
+ "num-integer",
+ "num-traits",
+]
+
+[[package]]
 name = "num-complex"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -383,6 +395,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d2cc698a63b549a70bc047073d2949cce27cd1c7b0a4a862d08a8031bc2801db"
 dependencies = [
  "autocfg 1.0.1",
+ "num-traits",
+]
+
+[[package]]
+name = "num-rational"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "12ac428b1cb17fce6f731001d307d351ec70a6d202fc2e60f7d4c5e42d8f4f07"
+dependencies = [
+ "autocfg 1.0.1",
+ "num-bigint 0.3.1",
+ "num-integer",
  "num-traits",
 ]
 
@@ -643,7 +667,7 @@ dependencies = [
  "lalrpop",
  "lalrpop-util",
  "log",
- "num-bigint",
+ "num-bigint 0.2.6",
  "num-traits",
  "unic-emoji-char",
  "unic-ucd-ident",

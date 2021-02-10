@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 pub type ColorExpr = MathExpr<ColorTensor>;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, PartialOrd, Ord, Deserialize)]
 #[serde(tag = "tensor")]
 pub enum ColorTensor {
     #[serde(rename = "Identity")]
@@ -67,6 +67,7 @@ impl ColorTensor {
     pub fn new_fundamental(a1: OctetIndex, i2: TripletIndex, jb3: AntiTripletIndex) -> ColorTensor {
         ColorTensor::FundamentalRep { a1, i2, jb3 }
     }
+
     pub fn new_sextet(
         alpha1: SextetIndex,
         ib2: AntiTripletIndex,
@@ -74,6 +75,7 @@ impl ColorTensor {
     ) -> ColorTensor {
         ColorTensor::SextetClebschGordan { alpha1, ib2, jb3 }
     }
+
     pub fn new_anti_sextet(
         alphab1: AntiSextetIndex,
         i2: TripletIndex,
@@ -81,6 +83,7 @@ impl ColorTensor {
     ) -> ColorTensor {
         ColorTensor::AntiSextetClebschGordan { alphab1, i2, j3 }
     }
+
     pub fn new_kronecker_triplet<I, J>(i1: I, jb2: J) -> ColorTensor
     where
         I: Into<TripletIndex>,
@@ -91,6 +94,19 @@ impl ColorTensor {
             jb2: jb2.into(),
         }
     }
+
+    pub fn new_epsilon(i1: TripletIndex, i2: TripletIndex, i3: TripletIndex) -> ColorTensor {
+        ColorTensor::Epsilon { i1, i2, i3 }
+    }
+
+    pub fn new_epsilon_bar(
+        ib1: AntiTripletIndex,
+        ib2: AntiTripletIndex,
+        ib3: AntiTripletIndex,
+    ) -> ColorTensor {
+        ColorTensor::EpsilonBar { ib1, ib2, ib3 }
+    }
+
     pub fn has_normalized_index(&self, index: ColorIndex) -> bool {
         let index = index.normalize();
         match self {

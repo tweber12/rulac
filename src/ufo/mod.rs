@@ -145,6 +145,17 @@ pub enum Color {
     AntiSextet = -6,
     Octet = 8,
 }
+impl Color {
+    pub fn bar(self) -> Color {
+        match self {
+            Color::Triplet => Color::AntiTriplet,
+            Color::AntiTriplet => Color::Triplet,
+            Color::Sextet => Color::AntiSextet,
+            Color::AntiSextet => Color::Sextet,
+            _ => self,
+        }
+    }
+}
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CouplingOrder {

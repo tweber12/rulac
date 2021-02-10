@@ -892,6 +892,7 @@ mod test {
     }
 
     #[test]
+    #[ignore]
     fn parse_loop_mssm() {
         parse_model("tests/models_json/loop_MSSM");
     }

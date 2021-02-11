@@ -855,7 +855,7 @@ mod test {
             let ufo::UfoMath(ref expr) = lorentz.structure;
             let _: LorentzExpr = super::parse_math(&expr).unwrap();
         }
-        for vertex in model.vertices.iter() {
+        for vertex in model.vertices.values() {
             for c in vertex.color.iter() {
                 let ufo::UfoMath(ref expr) = c;
                 let _: ColorExpr = super::parse_math(&expr).unwrap();

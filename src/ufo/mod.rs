@@ -16,7 +16,7 @@ pub struct UfoModel {
     pub couplings: HashMap<String, Coupling>,
     pub lorentz_structures: HashMap<String, Lorentz>,
     pub decays: HashMap<PdgCode, Decay>,
-    pub vertices: Vec<Vertex>,
+    pub vertices: HashMap<String, Vertex>,
 }
 impl UfoModel {
     pub fn load<P: AsRef<path::Path>>(path: P) -> Result<UfoModel, UfoError> {
@@ -30,8 +30,7 @@ impl UfoModel {
             Ok(d) => d,
             Err(_) => HashMap::new(),
         };
-        let vertex_file = fs::File::open(&path.as_ref().join("vertices.json"))?;
-        let vertices = serde_json::from_reader(BufReader::new(vertex_file))?;
+        let vertices = read_into_map(&path, "vertices.json")?;
         Ok(UfoModel {
             function_library,
             parameters,
@@ -107,6 +106,7 @@ derive_named_string!(Coupling);
 derive_named_string!(FunctionDefinition);
 derive_named_string!(Lorentz);
 derive_named_string!(Parameter);
+derive_named_string!(Vertex);
 
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct UfoMath(pub String);

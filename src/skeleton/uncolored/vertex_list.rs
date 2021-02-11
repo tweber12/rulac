@@ -6,11 +6,11 @@ pub struct VertexList<'a> {
     pub contents: HashMap<PdgCode, VertexListParticle<'a>>,
 }
 impl<'a> VertexList<'a> {
-    pub fn with_filter<P>(vertices: &'a [Vertex], predicate: &P) -> VertexList<'a>
+    pub fn with_filter<P>(vertices: &'a HashMap<String, Vertex>, predicate: &P) -> VertexList<'a>
     where
         P: Fn(&Vertex) -> bool,
     {
-        VertexList::new_internal(vertices.iter().filter(|&v| predicate(v)))
+        VertexList::new_internal(vertices.values().filter(|&v| predicate(v)))
     }
     fn new_internal<I>(vertices: I) -> VertexList<'a>
     where

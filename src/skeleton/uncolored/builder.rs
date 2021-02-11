@@ -1,5 +1,5 @@
-use crate::skeleton::vertex_list::{VertexLeaf, VertexList, VertexListParticle};
-use crate::skeleton::{Bone, BoneFragment, Id, InternalId, Level, UncoloredSkeleton};
+use crate::skeleton::uncolored::vertex_list::{VertexLeaf, VertexList, VertexListParticle};
+use crate::skeleton::uncolored::{Bone, BoneFragment, Id, InternalId, Level, UncoloredSkeleton};
 use crate::ufo;
 use std::collections::HashMap;
 

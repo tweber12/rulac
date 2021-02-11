@@ -1,4 +1,5 @@
 mod builder;
+mod colorizer;
 mod vertex_list;
 
 use crate::ufo;
@@ -8,46 +9,9 @@ use std::fmt;
 use std::ops::Add;
 
 #[derive(Clone, Debug)]
-pub struct MultiMap<K, V> {
-    contents: HashMap<K, Vec<V>>,
-}
-impl<K, V> MultiMap<K, V> {
-    fn new() -> MultiMap<K, V> {
-        MultiMap {
-            contents: HashMap::new(),
-        }
-    }
-}
-impl<K, V> MultiMap<K, V>
-where
-    K: Eq + std::hash::Hash,
-{
-    fn insert(&mut self, key: K, value: V) {
-        self.contents.entry(key).or_default().push(value)
-    }
-
-    fn get(&self, key: &K) -> Option<&Vec<V>> {
-        self.contents.get(key)
-    }
-
-    fn iter_multi(&self) -> impl Iterator<Item = (&K, &Vec<V>)> {
-        self.contents.iter()
-    }
-}
-impl<K, V> std::ops::Index<&K> for MultiMap<K, V>
-where
-    K: Eq + std::hash::Hash,
-{
-    type Output = Vec<V>;
-    fn index(&self, index: &K) -> &Vec<V> {
-        self.contents.index(index)
-    }
-}
-
-#[derive(Clone, Debug)]
 pub struct UncoloredSkeleton {
     pub levels: Vec<Level>,
-    pub last_level: Vec<Bone>,
+    pub last_level: Vec<BoneFragment>,
 }
 impl UncoloredSkeleton {
     pub fn new(
@@ -60,7 +24,7 @@ impl UncoloredSkeleton {
     pub fn count_graphs(&self) -> usize {
         self.last_level.iter().map(|b| b.count_graphs(&self)).sum()
     }
-    fn get_bones(&self, id: Id) -> &[Bone] {
+    fn get_bone(&self, id: Id) -> &Bone {
         &self.levels[id.level() - 1].level[&id]
     }
     pub fn pretty_print(&self) {
@@ -77,15 +41,13 @@ impl UncoloredSkeleton {
 
 #[derive(Clone, Debug)]
 pub struct Level {
-    pub level: MultiMap<Id, Bone>,
+    pub level: HashMap<Id, Bone>,
 }
 impl Level {
     fn pretty_print(&self) {
-        for (i, bs) in self.level.iter_multi() {
+        for (i, bs) in self.level.iter() {
             println!("{} =", i);
-            for b in bs.iter() {
-                println!("\t {}", b);
-            }
+            bs.pretty_print();
             println!();
         }
     }
@@ -93,47 +55,53 @@ impl Level {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Bone {
-    External,
-    Combination {
-        vertex: String,
-        constituents: Vec<Id>,
-    },
+    External { particle: usize, flipped: bool },
+    Internal { fragments: Vec<BoneFragment> },
 }
 impl Bone {
     fn count_graphs(&self, skeleton: &UncoloredSkeleton) -> usize {
-        match *self {
-            Bone::External => 1,
-            Bone::Combination {
-                ref constituents, ..
-            } => constituents
-                .iter()
-                .map(|&id| {
-                    let n: usize = skeleton
-                        .get_bones(id)
-                        .iter()
-                        .map(|b| b.count_graphs(skeleton))
-                        .sum();
-                    n
-                })
-                .product(),
+        match self {
+            Bone::External { .. } => 1,
+            Bone::Internal { fragments } => {
+                fragments.iter().map(|bf| bf.count_graphs(skeleton)).sum()
+            }
+        }
+    }
+    fn pretty_print(&self) {
+        match self {
+            Bone::External { particle, .. } => print!("External({})", particle),
+            Bone::Internal { fragments } => {
+                for f in fragments {
+                    print!("{} ", f);
+                }
+            }
         }
     }
 }
-impl fmt::Display for Bone {
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct BoneFragment {
+    vertex: String,
+    constituents: Vec<Id>,
+}
+impl BoneFragment {
+    fn count_graphs(&self, skeleton: &UncoloredSkeleton) -> usize {
+        self.constituents
+            .iter()
+            .map(|&id| {
+                let n: usize = skeleton.get_bone(id).count_graphs(skeleton);
+                n
+            })
+            .product()
+    }
+}
+impl fmt::Display for BoneFragment {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Bone::External => write!(f, "External"),
-            Bone::Combination {
-                vertex,
-                constituents,
-            } => {
-                write!(f, "{} [", vertex)?;
-                for c in constituents {
-                    write!(f, "({})", c)?;
-                }
-                write!(f, "]")
-            }
+        write!(f, "{} [", self.vertex)?;
+        for c in self.constituents.iter() {
+            write!(f, "({})", c)?;
         }
+        write!(f, "]")
     }
 }
 
@@ -220,7 +188,7 @@ mod test {
         let inc: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let out: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
         let skeleton = super::UncoloredSkeleton::new(&inc, &out, model).unwrap();
-        skeleton.pretty_print();
+        // skeleton.pretty_print();
         skeleton.count_graphs()
     }
 

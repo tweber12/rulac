@@ -8,6 +8,7 @@ pub use vertex_structures::{StructureBuilder, VertexStructure};
 
 use crate::math_expr::parse;
 use crate::math_expr::{MathExpr, Tensor, TensorIndex};
+use crate::util::Combinations;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -247,81 +248,43 @@ fn expand_sums(
 }
 
 struct IndexIter {
-    internal: Option<Box<IndexIter>>,
-    current: Vec<u8>,
-    indices: Indices,
-    index: SpinIndex,
-    iter: std::ops::Range<usize>,
+    indices: Vec<SpinIndex>,
+    external: Indices,
+    internal: Combinations<Vec<u8>>,
 }
-impl IndexIter {
+impl<'a> IndexIter {
     pub fn new(indices: &[SpinIndex]) -> IndexIter {
-        IndexIter::new_internal(indices.iter().copied(), Indices::new())
-    }
-    pub fn with_external(indices: &[SpinIndex], external: Indices) -> IndexIter {
-        IndexIter::new_internal(indices.iter().copied(), external)
+        IndexIter::new_internal(indices.to_vec(), Indices::new())
     }
     pub fn new_split(lorentz: &[LorentzIndex], spinor: &[SpinorIndex]) -> IndexIter {
-        let indices = lorentz
-            .iter()
-            .map(|&i| SpinIndex::from(i))
-            .chain(spinor.iter().map(|&i| i.into()));
+        let mut indices: Vec<SpinIndex> = Vec::new();
+        indices.extend(lorentz.iter().map(|&i| SpinIndex::from(i)));
+        indices.extend(spinor.iter().map(|&i| SpinIndex::from(i)));
         IndexIter::new_internal(indices, Indices::new())
     }
-    fn new_internal<I: Iterator<Item = SpinIndex>>(mut indices: I, external: Indices) -> IndexIter {
-        let mut iter = match indices.next() {
-            Some(i) => IndexIter::leaf(i, external),
-            None => return IndexIter::empty(),
-        };
-        for i in indices {
-            iter = IndexIter::node(iter, i);
-        }
-        iter
+    pub fn with_external(indices: &[SpinIndex], external: Indices) -> IndexIter {
+        IndexIter::new_internal(indices.to_vec(), external)
     }
-    fn empty() -> IndexIter {
+    pub fn new_internal(indices: Vec<SpinIndex>, external: Indices) -> IndexIter {
+        let range: Vec<_> = (0..(N_COMPONENTS as u8)).collect();
+        let internal = vec![range; indices.len()];
         IndexIter {
-            internal: None,
-            current: Vec::new(),
-            indices: Indices::new(),
-            index: SpinIndex::from(SpinorIndex(0)),
-            iter: 0..0,
-        }
-    }
-    fn leaf(index: SpinIndex, external: Indices) -> IndexIter {
-        IndexIter {
-            internal: None,
-            current: Vec::new(),
-            indices: external,
-            index,
-            iter: 0..N_COMPONENTS,
-        }
-    }
-    fn node(internal: IndexIter, index: SpinIndex) -> IndexIter {
-        IndexIter {
-            internal: Some(Box::new(internal)),
-            current: Vec::new(),
-            indices: Indices::new(),
-            index,
-            iter: 0..0,
+            indices: indices.to_vec(),
+            external,
+            internal: Combinations::new(internal),
         }
     }
 }
 impl Iterator for IndexIter {
     type Item = (Indices, Vec<u8>);
     fn next(&mut self) -> Option<(Indices, Vec<u8>)> {
-        if let Some(i2) = self.iter.next() {
-            let mut new = self.current.clone();
-            new.push(i2 as u8);
-            let mut indices = self.indices.clone();
-            indices.set_index(self.index, i2);
-            return Some((indices, new));
-        }
-        if let Some((indices, i1)) = self.internal.as_mut().and_then(|i| i.next()) {
-            self.current = i1;
-            self.indices = indices;
-            self.iter = 0..N_COMPONENTS;
-            return self.next();
-        }
-        None
+        self.internal.next().map(|values| {
+            let mut indices = self.external.clone();
+            for (i, v) in self.indices.iter().zip(values.iter()) {
+                indices.set_index(*i, *v as usize);
+            }
+            (indices, values)
+        })
     }
 }
 

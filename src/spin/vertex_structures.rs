@@ -105,9 +105,9 @@ impl<'a> StructureBuilder<'a> {
     ) -> Result<VertexStructure, ParseError> {
         let ufo::UfoMath(ref str) = lorentz.structure;
         let expr = parse_math(str)?;
-        let mut external_indices = Indices::new();
+        let external_indices = Indices::new();
         let factor = amputated_factor(&lorentz.spins, external);
-        let structure = self.eval_component(&expr, &lorentz.spins, external, &mut external_indices);
+        let structure = self.eval_component(&expr, &lorentz.spins, external, external_indices);
         Ok(VertexStructure::Scalar { factor, structure })
     }
 
@@ -120,11 +120,11 @@ impl<'a> StructureBuilder<'a> {
         let expr = parse_math(str)?;
         let factor = amputated_factor(&lorentz.spins, external);
         let mut structure: [LorentzExpr; N_COMPONENTS] = Default::default();
-        for (mut index_values, values) in
+        for (index_values, values) in
             IndexIter::new(&indices_for_spin(lorentz.spins[external], external))
         {
             assert_eq!(values.len(), 1);
-            let component = self.eval_component(&expr, &lorentz.spins, external, &mut index_values);
+            let component = self.eval_component(&expr, &lorentz.spins, external, index_values);
             structure[values[0] as usize] = component;
         }
         Ok(VertexStructure::Vector { factor, structure })
@@ -139,11 +139,11 @@ impl<'a> StructureBuilder<'a> {
         let expr = parse_math(str)?;
         let factor = amputated_factor(&lorentz.spins, external);
         let mut structure: [[LorentzExpr; N_COMPONENTS]; N_COMPONENTS] = Default::default();
-        for (mut index_values, values) in
+        for (index_values, values) in
             IndexIter::new(&indices_for_spin(lorentz.spins[external], external))
         {
             assert_eq!(values.len(), 2);
-            let component = self.eval_component(&expr, &lorentz.spins, external, &mut index_values);
+            let component = self.eval_component(&expr, &lorentz.spins, external, index_values);
             structure[values[0] as usize][values[1] as usize] = component;
         }
         Ok(VertexStructure::Tensor {
@@ -157,13 +157,17 @@ impl<'a> StructureBuilder<'a> {
         structure: &LorentzExpr,
         spins: &[ufo::Spin],
         external: usize,
-        external_indices: &mut Indices,
+        mut external_indices: Indices,
     ) -> LorentzExpr {
         let summed_over = setup_summed_indices(spins, external);
+        if summed_over.is_empty() {
+            // This component is trivial, i.e. it does not depend on anything but external scalars
+            return spin::expand_sums(structure, self.components, &mut external_indices);
+        }
         let mut expr = LorentzExpr::Number {
             value: Number::zero(),
         };
-        for (mut indices, _) in IndexIter::with_external(&summed_over, external_indices.clone()) {
+        for (mut indices, _) in IndexIter::with_external(&summed_over, external_indices) {
             let mut summand = spin::expand_sums(structure, self.components, &mut indices);
             for component in get_external_components(spins, external, &indices).into_iter() {
                 summand = summand * LorentzExpr::ExternalComponent { component };
@@ -319,9 +323,41 @@ fn indices_for_spin(spin: ufo::Spin, particle: usize) -> Vec<SpinIndex> {
 
 #[cfg(test)]
 mod test {
+    use super::VertexStructure;
     use crate::spin::propagators::Propagators;
     use crate::spin::tensor_components::SpinTensorComponents;
+    use crate::spin::{ExternalComponent, LorentzExpr};
     use crate::ufo::{Spin, UfoModel};
+
+    #[test]
+    fn vss1() {
+        // Regression test for a structure generation bug that appeared when all incoming particles
+        // are scalar.
+        // In this case, using IndexIter for the external spins fails, since all spins are zero
+        // and there are no components to sum over, so this case needs to be handled on its own.
+        let components = SpinTensorComponents::load("models/common/spin_structures.toml").unwrap();
+        let propagators = Propagators::load("models/common/propagators.toml").unwrap();
+        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
+        let mut builder = super::StructureBuilder::new(&components, &propagators);
+        let structure = builder
+            .amputated_structure(&model.lorentz_structures["VSS1"], 0)
+            .unwrap();
+        match structure {
+            VertexStructure::Vector { structure, .. } => {
+                let left = |i| LorentzExpr::ExternalComponent {
+                    component: ExternalComponent::Momentum(2, i),
+                };
+                let right = |i| LorentzExpr::ExternalComponent {
+                    component: ExternalComponent::Momentum(3, i),
+                };
+                assert_eq!(structure[0], left(0) - right(0));
+                assert_eq!(structure[1], left(1) - right(1));
+                assert_eq!(structure[2], left(2) - right(2));
+                assert_eq!(structure[3], left(3) - right(3));
+            }
+            _ => panic!("Vector expected!"),
+        }
+    }
 
     #[test]
     fn sm_mg5_amputated() {

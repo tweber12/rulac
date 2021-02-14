@@ -239,9 +239,11 @@ impl Incomplete {
         constituents.push(particle_id);
         let internal = particle_id.internal + self.internal;
         if self.remaining.len() == 1 {
+            let (constituents, outgoing) = order_constituents(&self.vertex, constituents, model);
             let fragment = BoneFragment {
                 vertex: self.vertex.clone(),
                 constituents,
+                outgoing,
             };
             let id = Id {
                 pdg_code: model.anti_pdg_code(self.remaining[0]),
@@ -268,9 +270,11 @@ fn specialize_vertex(vertex: &VertexLeaf, p1: Id, p2: Id, model: &ufo::UfoModel)
     let mut constituents = vec![p1, p2];
     match vertex {
         VertexLeaf::Complete(c) => {
+            let (constituents, outgoing) = order_constituents(&c.vertex.name, constituents, model);
             let fragment = BoneFragment {
                 vertex: c.vertex.name.clone(),
                 constituents,
+                outgoing,
             };
             let id = Id {
                 pdg_code: model.anti_pdg_code(c.out),
@@ -291,5 +295,85 @@ fn specialize_vertex(vertex: &VertexLeaf, p1: Id, p2: Id, model: &ufo::UfoModel)
                 incomplete,
             }
         }
+    }
+}
+
+fn order_constituents(
+    vertex: &str,
+    constituents: Vec<Id>,
+    model: &ufo::UfoModel,
+) -> (Vec<Id>, usize) {
+    let particles = &model.vertices[vertex].particles;
+    order_constituents_internal(particles, constituents)
+}
+fn order_constituents_internal(
+    particles: &[ufo::PdgCode],
+    constituents: Vec<Id>,
+) -> (Vec<Id>, usize) {
+    let mut taken = vec![false; constituents.len()];
+    let mut ordered = Vec::with_capacity(constituents.len());
+    let mut outgoing = None;
+    for (i, p) in particles.iter().enumerate() {
+        let mut found = false;
+        for (&id, t) in constituents.iter().zip(taken.iter_mut()) {
+            if *t || id.pdg_code != *p {
+                continue;
+            }
+            ordered.push(id);
+            *t = true;
+            found = true;
+            break;
+        }
+        if !found {
+            assert_eq!(outgoing, None);
+            outgoing = Some(i);
+        }
+    }
+    let outgoing = match outgoing {
+        Some(o) => o,
+        None => unreachable!("BUG: There has to be an outgoing particle!"),
+    };
+    (ordered, outgoing)
+}
+
+#[cfg(test)]
+mod test {
+    use crate::skeleton::uncolored::{Id, InternalId};
+    use crate::ufo::PdgCode;
+
+    #[test]
+    fn order_constituents_v69() {
+        let particles = vec![PdgCode(23), PdgCode(23), PdgCode(25)];
+        let constituents = vec![
+            Id {
+                pdg_code: PdgCode(23),
+                internal: InternalId(8, 1),
+            },
+            Id {
+                pdg_code: PdgCode(23),
+                internal: InternalId(6, 2),
+            },
+        ];
+        let (cs, out) = super::order_constituents_internal(&particles, constituents.clone());
+        assert_eq!(out, 2);
+        assert_eq!(cs, constituents);
+    }
+
+    #[test]
+    fn order_constituents_v69_disordered() {
+        let particles = vec![PdgCode(23), PdgCode(23), PdgCode(25)];
+        let constituents = vec![
+            Id {
+                pdg_code: PdgCode(25),
+                internal: InternalId(8, 1),
+            },
+            Id {
+                pdg_code: PdgCode(23),
+                internal: InternalId(6, 2),
+            },
+        ];
+        let (cs, out) = super::order_constituents_internal(&particles, constituents.clone());
+        assert_eq!(out, 1);
+        assert_eq!(cs, vec![constituents[1], constituents[0]]);
     }
 }

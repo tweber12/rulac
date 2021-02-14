@@ -80,8 +80,9 @@ impl Bone {
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct BoneFragment {
-    vertex: String,
-    constituents: Vec<Id>,
+    pub vertex: String,
+    pub constituents: Vec<Id>,
+    pub outgoing: usize,
 }
 impl BoneFragment {
     fn count_graphs(&self, skeleton: &UncoloredSkeleton) -> usize {
@@ -191,6 +192,34 @@ mod test {
         skeleton.count_graphs()
     }
 
+    fn verify_ordering(incoming: &[i64], outgoing: &[i64], model: &UfoModel) {
+        let inc: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
+        let out: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
+        let skeleton = super::UncoloredSkeleton::new(&inc, &out, model).unwrap();
+        for level in skeleton.levels.iter() {
+            for (id, bone) in level.level.iter() {
+                let fragments = match bone {
+                    super::Bone::External { .. } => continue,
+                    super::Bone::Internal { fragments } => fragments,
+                };
+                for fragment in fragments.iter() {
+                    let vertex = &model.vertices[&fragment.vertex];
+                    assert_eq!(
+                        vertex.particles[fragment.outgoing],
+                        model.anti_pdg_code(id.pdg_code)
+                    );
+                    for (i, c) in fragment.constituents.iter().enumerate() {
+                        if i < fragment.outgoing {
+                            assert_eq!(vertex.particles[i], c.pdg_code);
+                        } else {
+                            assert_eq!(vertex.particles[i + 1], c.pdg_code);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // The expected number of graphs was computed using MG5_aMC@NLO version 2.8.2
     // using the 'sm-full' model and including all QCD and QED contributions.
 
@@ -248,15 +277,6 @@ mod test {
         };
         assert_eq!(n, 54312);
     }
-
-    // #[test]
-    // fn test_epem_epemepemepemaa() {
-    //     initialize();
-    //     let n = unsafe {
-    //         count_graphs(&[-11,11], &[-11,11,-11,11,-11,11,22], MODEL.as_ref().unwrap())
-    //     };
-    //     assert_eq!(n,138816);
-    // }
 
     #[test]
     fn test_uux_uux() {
@@ -514,5 +534,24 @@ mod test {
         initialize();
         let n = unsafe { count_graphs(&[21, 21], &[6, -6, 25, 25, 25], MODEL.as_ref().unwrap()) };
         assert_eq!(n, 266);
+    }
+
+    #[test]
+
+    fn test_ordering_epem_epvemumvmx() {
+        initialize();
+        unsafe { verify_ordering(&[11, -11], &[-11, 12, 13, -14], MODEL.as_ref().unwrap()) };
+    }
+
+    #[test]
+    fn test_ordering_gg_epvemumvmxbbxgg() {
+        initialize();
+        unsafe {
+            verify_ordering(
+                &[21, 21],
+                &[-11, 12, 13, -14, 5, -5, 21, 21],
+                MODEL.as_ref().unwrap(),
+            );
+        };
     }
 }

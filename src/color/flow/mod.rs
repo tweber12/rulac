@@ -1,6 +1,7 @@
 pub mod chain;
 pub mod vertex;
 
+use crate::color::tensor::MultiIndexLocation;
 use crate::ufo::{Color, PdgCode, UfoModel};
 use permutohedron::LexicalPermutation;
 use std::ops::Index;
@@ -18,7 +19,7 @@ impl ColorFlow {
     pub fn get_line_with_external(
         &self,
         index: usize,
-        location: Location,
+        location: MultiIndexLocation,
         external: usize,
     ) -> ColorLine {
         let index = if index >= external { index - 1 } else { index };
@@ -27,7 +28,7 @@ impl ColorFlow {
     pub fn get_anti_line_with_external(
         &self,
         index: usize,
-        location: Location,
+        location: MultiIndexLocation,
         external: usize,
     ) -> AntiColorLine {
         let index = if index >= external { index - 1 } else { index };
@@ -39,12 +40,6 @@ impl Index<usize> for ColorFlow {
     fn index(&self, index: usize) -> &ColorMultiLine {
         self.components.index(index)
     }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum Location {
-    IndexOne,
-    IndexTwo,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -66,21 +61,25 @@ impl ColorMultiLine {
             _ => *self,
         }
     }
-    fn get_line(&self, location: Location) -> ColorLine {
+    fn get_line(&self, location: MultiIndexLocation) -> ColorLine {
         match self {
-            ColorMultiLine::Triplet(line) if location == Location::IndexOne => *line,
-            ColorMultiLine::Sextet(line, _) if location == Location::IndexOne => *line,
-            ColorMultiLine::Sextet(_, line) if location == Location::IndexTwo => *line,
-            ColorMultiLine::Octet(line, _) if location == Location::IndexOne => *line,
+            ColorMultiLine::Triplet(line) if location == MultiIndexLocation::Single => *line,
+            ColorMultiLine::Sextet(line, _) if location == MultiIndexLocation::IndexOne => *line,
+            ColorMultiLine::Sextet(_, line) if location == MultiIndexLocation::IndexTwo => *line,
+            ColorMultiLine::Octet(line, _) if location == MultiIndexLocation::IndexOne => *line,
             _ => panic!("BUG: Mismatch of color lines!"),
         }
     }
-    fn get_anti_line(&self, location: Location) -> AntiColorLine {
+    fn get_anti_line(&self, location: MultiIndexLocation) -> AntiColorLine {
         match self {
-            ColorMultiLine::AntiTriplet(line) if location == Location::IndexOne => *line,
-            ColorMultiLine::AntiSextet(line, _) if location == Location::IndexOne => *line,
-            ColorMultiLine::AntiSextet(_, line) if location == Location::IndexTwo => *line,
-            ColorMultiLine::Octet(_, line) if location == Location::IndexOne => *line,
+            ColorMultiLine::AntiTriplet(line) if location == MultiIndexLocation::Single => *line,
+            ColorMultiLine::AntiSextet(line, _) if location == MultiIndexLocation::IndexOne => {
+                *line
+            }
+            ColorMultiLine::AntiSextet(_, line) if location == MultiIndexLocation::IndexTwo => {
+                *line
+            }
+            ColorMultiLine::Octet(_, line) if location == MultiIndexLocation::IndexTwo => *line,
             _ => panic!("BUG: Mismatch of color lines!"),
         }
     }
@@ -136,11 +135,11 @@ impl AntiColorLine {
 pub enum FlowLine {
     Color {
         line: ColorLine,
-        location: Location,
+        location: MultiIndexLocation,
     },
     AntiColor {
         line: AntiColorLine,
-        location: Location,
+        location: MultiIndexLocation,
     },
 }
 

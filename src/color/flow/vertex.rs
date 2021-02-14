@@ -1,8 +1,8 @@
 use crate::color::flow::chain::{Chain, ChainBuilder};
-use crate::color::flow::{ColorFlow, ColorMultiLine, FlowLine, Location};
+use crate::color::flow::{ColorFlow, ColorMultiLine, FlowLine};
 use crate::color::tensor::{
-    AntiSextetIndex, AntiTripletIndex, ColorIndex, ColorTensor, OctetIndex, SextetIndex,
-    TripletIndex, UndefinedIndex,
+    AntiSextetIndex, AntiTripletIndex, ColorIndex, ColorTensor, MultiIndexLocation, OctetIndex,
+    SextetIndex, TripletIndex, UndefinedIndex,
 };
 use crate::ufo::{Color, UfoMath};
 use num_rational::Rational32;
@@ -12,9 +12,6 @@ const INV_TF: i32 = 2;
 const TF: Rational32 = Rational32::new_raw(1, INV_TF);
 const INV_SQRT_TF: f64 = std::f64::consts::SQRT_2;
 const N_COLORS: i32 = 3;
-
-const OFFSET_LEFT: i64 = 1000;
-const OFFSET_RIGHT: i64 = 2000;
 
 pub struct VertexFlows {
     flows: Vec<VertexFlow>,
@@ -83,10 +80,9 @@ impl VertexFlow {
         let mut deltas = Vec::new();
         for tensor in chain.tensors {
             match tensor {
-                ColorTensor::KroneckerTriplet {
-                    i1: TripletIndex(i1),
-                    jb2: AntiTripletIndex(jb2),
-                } => deltas.push(Delta::from_kronecker(i1, jb2)),
+                ColorTensor::KroneckerTriplet { i1, jb2 } => {
+                    deltas.push(Delta::from_kronecker(i1, jb2))
+                }
                 _ => panic!("Unsupported tensor in vertex flow: {:?}", tensor),
             }
         }
@@ -119,8 +115,8 @@ impl VertexFlow {
 pub struct Delta {
     triplet: usize,
     anti: usize,
-    triplet_location: Location,
-    anti_location: Location,
+    triplet_location: MultiIndexLocation,
+    anti_location: MultiIndexLocation,
 }
 impl Delta {
     fn has_external(&self, particle: usize) -> bool {
@@ -151,28 +147,12 @@ impl Delta {
         }
     }
 
-    fn from_kronecker(mut triplet: i64, mut anti: i64) -> Delta {
-        let triplet_location = if triplet > OFFSET_RIGHT {
-            Location::IndexTwo
-        } else {
-            Location::IndexOne
-        };
-        while triplet > OFFSET_LEFT {
-            triplet -= OFFSET_LEFT;
-        }
-        let anti_location = if anti > OFFSET_RIGHT {
-            Location::IndexTwo
-        } else {
-            Location::IndexOne
-        };
-        while anti > OFFSET_LEFT {
-            anti -= OFFSET_LEFT;
-        }
+    fn from_kronecker(triplet: TripletIndex, anti: AntiTripletIndex) -> Delta {
         Delta {
-            triplet: triplet as usize,
-            anti: anti as usize,
-            triplet_location,
-            anti_location,
+            triplet: triplet.particle_index(),
+            anti: anti.particle_index(),
+            triplet_location: triplet.get_multi_location(),
+            anti_location: anti.get_multi_location(),
         }
     }
 }
@@ -281,8 +261,8 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
                 let index = OctetIndex(i);
                 let tensor = ColorTensor::new_fundamental(
                     index,
-                    TripletIndex(i + OFFSET_LEFT),
-                    AntiTripletIndex(i + OFFSET_RIGHT),
+                    TripletIndex::new_multi_index(i, MultiIndexLocation::IndexOne),
+                    AntiTripletIndex::new_multi_index(i, MultiIndexLocation::IndexTwo),
                 );
                 chains.append_all(tensor);
                 chains.add_index(index);
@@ -291,8 +271,8 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
                 let index = SextetIndex(i);
                 let tensor = ColorTensor::new_sextet(
                     index,
-                    AntiTripletIndex(i + OFFSET_LEFT),
-                    AntiTripletIndex(i + OFFSET_RIGHT),
+                    AntiTripletIndex::new_multi_index(i, MultiIndexLocation::IndexOne),
+                    AntiTripletIndex::new_multi_index(i, MultiIndexLocation::IndexTwo),
                 );
                 chains.append_all(tensor);
                 chains.add_index(index);
@@ -301,8 +281,8 @@ fn add_external(mut chains: ChainBuilder, particle_colors: &[Color]) -> ChainBui
                 let index = AntiSextetIndex(i);
                 let tensor = ColorTensor::new_anti_sextet(
                     index,
-                    TripletIndex(i + OFFSET_LEFT),
-                    TripletIndex(i + OFFSET_RIGHT),
+                    TripletIndex::new_multi_index(i, MultiIndexLocation::IndexOne),
+                    TripletIndex::new_multi_index(i, MultiIndexLocation::IndexTwo),
                 );
                 chains.append_all(tensor);
                 chains.add_index(index);

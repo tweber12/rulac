@@ -188,30 +188,100 @@ impl Tensor for ColorTensor {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub struct TripletIndex(pub i64);
-impl TripletIndex {
-    pub fn bar(self) -> AntiTripletIndex {
-        let TripletIndex(i) = self;
-        AntiTripletIndex(i)
-    }
+pub enum MultiIndexLocation {
+    Single,
+    IndexOne,
+    IndexTwo,
 }
-impl From<i64> for TripletIndex {
-    fn from(index: i64) -> TripletIndex {
-        TripletIndex(index)
+impl MultiIndexLocation {
+    fn bar(&self) -> MultiIndexLocation {
+        match self {
+            MultiIndexLocation::Single => MultiIndexLocation::Single,
+            MultiIndexLocation::IndexOne => MultiIndexLocation::IndexTwo,
+            MultiIndexLocation::IndexTwo => MultiIndexLocation::IndexOne,
+        }
     }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-pub struct AntiTripletIndex(pub i64);
+pub struct TripletIndex {
+    index: i64,
+    multi_index: MultiIndexLocation,
+}
+impl TripletIndex {
+    pub fn bar(self) -> AntiTripletIndex {
+        AntiTripletIndex {
+            index: self.index,
+            multi_index: self.multi_index.bar(),
+        }
+    }
+
+    pub fn particle_index(&self) -> usize {
+        if self.index > 0 {
+            self.index as usize - 1
+        } else {
+            panic!("BUG: Particle index for summed index requested!")
+        }
+    }
+
+    pub fn new_multi_index(ufo_index: i64, location: MultiIndexLocation) -> TripletIndex {
+        TripletIndex {
+            index: ufo_index,
+            multi_index: location,
+        }
+    }
+
+    pub fn get_multi_location(&self) -> MultiIndexLocation {
+        self.multi_index
+    }
+}
+impl From<i64> for TripletIndex {
+    fn from(index: i64) -> TripletIndex {
+        TripletIndex {
+            index,
+            multi_index: MultiIndexLocation::Single,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct AntiTripletIndex {
+    index: i64,
+    multi_index: MultiIndexLocation,
+}
 impl AntiTripletIndex {
     pub fn bar(self) -> TripletIndex {
-        let AntiTripletIndex(i) = self;
-        TripletIndex(i)
+        TripletIndex {
+            index: self.index,
+            multi_index: self.multi_index.bar(),
+        }
+    }
+
+    pub fn particle_index(&self) -> usize {
+        if self.index > 0 {
+            self.index as usize - 1
+        } else {
+            panic!("BUG: Particle index for summed index requested!")
+        }
+    }
+
+    pub fn new_multi_index(ufo_index: i64, location: MultiIndexLocation) -> AntiTripletIndex {
+        AntiTripletIndex {
+            index: ufo_index,
+            multi_index: location,
+        }
+    }
+
+    pub fn get_multi_location(&self) -> MultiIndexLocation {
+        self.multi_index
     }
 }
 impl From<i64> for AntiTripletIndex {
     fn from(index: i64) -> AntiTripletIndex {
-        AntiTripletIndex(index)
+        AntiTripletIndex {
+            index,
+            multi_index: MultiIndexLocation::Single,
+        }
     }
 }
 
@@ -272,10 +342,11 @@ pub enum ColorIndex {
 impl TensorIndex for ColorIndex {
     fn normalize(self) -> ColorIndex {
         match self {
-            ColorIndex::AntiTriplet {
-                index: AntiTripletIndex(i),
-            } => ColorIndex::Triplet {
-                index: TripletIndex(i),
+            ColorIndex::AntiTriplet { index } => ColorIndex::Triplet {
+                index: TripletIndex {
+                    index: index.index,
+                    multi_index: index.multi_index.bar(),
+                },
             },
             ColorIndex::AntiSextet {
                 index: AntiSextetIndex(i),

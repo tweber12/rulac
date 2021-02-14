@@ -242,9 +242,9 @@ pub struct Parameter {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct VertexCoupling {
     #[serde(rename = "color")]
-    pub color_index: u64,
+    pub color_index: usize,
     #[serde(rename = "lorentz")]
-    pub lorentz_index: u64,
+    pub lorentz_index: usize,
     pub coupling: String,
 }
 
@@ -255,6 +255,14 @@ pub struct Vertex {
     pub color: Vec<UfoMath>,
     pub lorentz: Vec<String>,
     pub couplings: Vec<VertexCoupling>,
+}
+impl Vertex {
+    pub fn get_particle_colors(&self, model: &UfoModel) -> Vec<Color> {
+        self.particles
+            .iter()
+            .map(|p| model.particles[p].color)
+            .collect()
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

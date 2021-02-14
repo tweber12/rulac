@@ -70,7 +70,11 @@ impl<'a> SkeletonBuilder<'a> {
             .map(|level| level.convert())
             .take(max_level - 1)
             .collect();
-        Some(UncoloredSkeleton { levels, last_level })
+        Some(UncoloredSkeleton {
+            levels,
+            last_level,
+            last_level_index: 0,
+        })
     }
 }
 

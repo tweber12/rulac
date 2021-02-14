@@ -6,9 +6,12 @@ use permutohedron::LexicalPermutation;
 use std::ops::Index;
 
 pub struct ColorFlow {
-    components: Vec<ColorMultiLine>,
+    pub components: Vec<ColorMultiLine>,
 }
 impl ColorFlow {
+    pub fn new(components: Vec<ColorMultiLine>) -> ColorFlow {
+        ColorFlow { components }
+    }
     pub fn iter(&self) -> impl Iterator<Item = &ColorMultiLine> {
         self.components.iter()
     }
@@ -54,6 +57,15 @@ pub enum ColorMultiLine {
     Octet(ColorLine, AntiColorLine),
 }
 impl ColorMultiLine {
+    pub fn invert(&self) -> ColorMultiLine {
+        match self {
+            ColorMultiLine::Triplet(line) => ColorMultiLine::AntiTriplet(line.invert()),
+            ColorMultiLine::AntiTriplet(line) => ColorMultiLine::Triplet(line.invert()),
+            ColorMultiLine::AntiSextet(l1, l2) => ColorMultiLine::Sextet(l2.invert(), l1.invert()),
+            ColorMultiLine::Sextet(l1, l2) => ColorMultiLine::AntiSextet(l2.invert(), l1.invert()),
+            _ => *self,
+        }
+    }
     fn get_line(&self, location: Location) -> ColorLine {
         match self {
             ColorMultiLine::Triplet(line) if location == Location::IndexOne => *line,

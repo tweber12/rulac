@@ -11,6 +11,7 @@ use std::ops::Add;
 pub struct UncoloredSkeleton {
     pub levels: Vec<Level>,
     pub last_level: Vec<BoneFragment>,
+    pub last_level_index: usize,
 }
 impl UncoloredSkeleton {
     pub fn new(

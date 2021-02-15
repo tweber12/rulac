@@ -1,7 +1,7 @@
 use crate::skeleton::uncolored::vertex_list::{VertexLeaf, VertexList, VertexListParticle};
 use crate::skeleton::uncolored::{Bone, BoneFragment, Id, InternalId, Level, UncoloredSkeleton};
 use crate::ufo;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 pub struct SkeletonBuilder<'a> {
     left_out: ufo::PdgCode,
@@ -20,6 +20,7 @@ impl<'a> SkeletonBuilder<'a> {
         for ilevel in 2..=max_level {
             builder.construct_level(ilevel);
         }
+        builder.remove_unused();
         builder.convert_levels()
     }
 
@@ -52,6 +53,20 @@ impl<'a> SkeletonBuilder<'a> {
             );
         }
         self.levels.push(builder);
+    }
+
+    fn remove_unused(&mut self) {
+        let max_level = self.levels.len();
+        let last = Id {
+            pdg_code: self.model.anti_pdg_code(self.left_out),
+            internal: InternalId((2 << (max_level - 1)) - 1, max_level),
+        };
+        let mut used = HashSet::new();
+        used.insert(last);
+        let mut iter = self.levels.iter_mut();
+        while let Some(level) = iter.next_back() {
+            level.remove_unused(&mut used);
+        }
     }
 
     fn convert_levels(mut self) -> Option<UncoloredSkeleton> {
@@ -217,6 +232,23 @@ impl LevelBuilder {
         Level {
             level: self.particles,
         }
+    }
+
+    fn remove_unused(&mut self, used: &mut HashSet<Id>) {
+        self.particles.retain(|i, v| {
+            if !used.contains(i) {
+                return false;
+            }
+            match v {
+                Bone::External { .. } => (),
+                Bone::Internal { fragments } => {
+                    for f in fragments {
+                        used.extend(f.constituents.iter());
+                    }
+                }
+            }
+            true
+        });
     }
 }
 

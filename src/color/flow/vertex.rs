@@ -13,6 +13,7 @@ const TF: Rational32 = Rational32::new_raw(1, INV_TF);
 const INV_SQRT_TF: f64 = std::f64::consts::SQRT_2;
 const N_COLORS: i32 = 3;
 
+#[derive(Debug)]
 pub struct VertexFlows {
     flows: Vec<VertexFlow>,
 }
@@ -95,7 +96,20 @@ impl VertexFlow {
                 * external,
         }
     }
+
     fn matches(&self, flows: &ColorFlow, external: usize) -> Option<Match> {
+        self.matches_internal(flows, external, true)
+    }
+
+    fn matches_internal(
+        &self,
+        flows: &ColorFlow,
+        external: usize,
+        check_phantom: bool,
+    ) -> Option<Match> {
+        if check_phantom && flows.components.contains(&ColorMultiLine::Phantom) {
+            return self.matches_phantom(flows, external);
+        }
         let mut out = Vec::new();
         for delta in self.deltas.iter() {
             if delta.has_external(external) {
@@ -108,6 +122,27 @@ impl VertexFlow {
             outgoing: ColorMultiLine::from_flow_lines(&out),
             factor: self.factor,
         })
+    }
+
+    fn matches_phantom(&self, flows: &ColorFlow, external: usize) -> Option<Match> {
+        let mut deltas = self.deltas.clone();
+        for (i, f) in flows.components.iter().enumerate() {
+            if *f == ColorMultiLine::Phantom {
+                deltas = eliminate_phantom(deltas, i);
+            }
+        }
+        if deltas.is_empty() {
+            Some(Match {
+                outgoing: ColorMultiLine::Phantom,
+                factor: self.factor,
+            })
+        } else {
+            VertexFlow {
+                deltas,
+                factor: self.factor,
+            }
+            .matches_internal(flows, external, false)
+        }
     }
 }
 
@@ -130,17 +165,19 @@ impl Delta {
     }
 
     fn get_color_out(&self, flows: &ColorFlow, external: usize) -> FlowLine {
-        if self.triplet == external {
+        if self.triplet == self.anti && self.triplet == external {
+            FlowLine::Phantom
+        } else if self.triplet == external {
             let line = flows.get_anti_line_with_external(self.anti, self.anti_location, external);
             FlowLine::AntiColor {
                 line,
                 location: self.triplet_location,
             }
         } else if self.anti == external {
-            let line = flows.get_line_with_external(self.anti, self.anti_location, external);
+            let line = flows.get_line_with_external(self.triplet, self.triplet_location, external);
             FlowLine::Color {
                 line,
-                location: self.triplet_location,
+                location: self.anti_location,
             }
         } else {
             panic!("BUG: Outgoing color requested for internal delta!");
@@ -153,6 +190,35 @@ impl Delta {
             anti: anti.particle_index(),
             triplet_location: triplet.get_multi_location(),
             anti_location: anti.get_multi_location(),
+        }
+    }
+}
+
+fn eliminate_phantom(deltas: Vec<Delta>, index: usize) -> Vec<Delta> {
+    let (phantom, mut deltas): (Vec<_>, Vec<_>) =
+        deltas.into_iter().partition(|d| d.has_external(index));
+    match &*phantom {
+        [_delta] => (),
+        [d1, d2] => deltas.push(join_deltas(d1.clone(), d2.clone(), index)),
+        _ => unreachable!("BUG: Phantoms can only be included in one or two deltas!"),
+    };
+    deltas
+}
+
+fn join_deltas(d1: Delta, d2: Delta, on_index: usize) -> Delta {
+    if d1.triplet == on_index {
+        Delta {
+            triplet: d2.triplet,
+            triplet_location: d2.triplet_location,
+            anti: d1.anti,
+            anti_location: d1.anti_location,
+        }
+    } else {
+        Delta {
+            triplet: d1.triplet,
+            triplet_location: d1.triplet_location,
+            anti: d2.anti,
+            anti_location: d2.anti_location,
         }
     }
 }

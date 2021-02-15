@@ -6,6 +6,7 @@ use crate::ufo::{Color, PdgCode, UfoModel};
 use permutohedron::LexicalPermutation;
 use std::ops::Index;
 
+#[derive(Debug)]
 pub struct ColorFlow {
     pub components: Vec<ColorMultiLine>,
 }
@@ -22,7 +23,7 @@ impl ColorFlow {
         location: MultiIndexLocation,
         external: usize,
     ) -> ColorLine {
-        let index = if index >= external { index - 1 } else { index };
+        let index = if index > external { index - 1 } else { index };
         self.components[index].get_line(location)
     }
     pub fn get_anti_line_with_external(
@@ -50,6 +51,7 @@ pub enum ColorMultiLine {
     Sextet(ColorLine, ColorLine),
     AntiSextet(AntiColorLine, AntiColorLine),
     Octet(ColorLine, AntiColorLine),
+    Phantom,
 }
 impl ColorMultiLine {
     pub fn invert(&self) -> ColorMultiLine {
@@ -58,6 +60,7 @@ impl ColorMultiLine {
             ColorMultiLine::AntiTriplet(line) => ColorMultiLine::Triplet(line.invert()),
             ColorMultiLine::AntiSextet(l1, l2) => ColorMultiLine::Sextet(l2.invert(), l1.invert()),
             ColorMultiLine::Sextet(l1, l2) => ColorMultiLine::AntiSextet(l2.invert(), l1.invert()),
+            ColorMultiLine::Octet(l1, l2) => ColorMultiLine::Octet(l2.invert(), l1.invert()),
             _ => *self,
         }
     }
@@ -86,6 +89,7 @@ impl ColorMultiLine {
     pub fn from_flow_lines(lines: &[FlowLine]) -> ColorMultiLine {
         match lines {
             [] => ColorMultiLine::Singlet,
+            [FlowLine::Phantom] => ColorMultiLine::Phantom,
             [FlowLine::Color { line, .. }] => ColorMultiLine::Triplet(*line),
             [FlowLine::AntiColor { line, .. }] => ColorMultiLine::AntiTriplet(*line),
             [FlowLine::Color { line: l, .. }, FlowLine::AntiColor { line: r, .. }] => {
@@ -114,7 +118,7 @@ impl ColorMultiLine {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ColorLine(u8);
+pub struct ColorLine(pub u8);
 impl ColorLine {
     pub fn invert(self) -> AntiColorLine {
         let ColorLine(i) = self;
@@ -123,7 +127,7 @@ impl ColorLine {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct AntiColorLine(u8);
+pub struct AntiColorLine(pub u8);
 impl AntiColorLine {
     pub fn invert(self) -> ColorLine {
         let AntiColorLine(i) = self;
@@ -141,30 +145,37 @@ pub enum FlowLine {
         line: AntiColorLine,
         location: MultiIndexLocation,
     },
+    Phantom,
 }
 
+#[derive(Debug)]
 pub struct ColorFlows {
     flows: Vec<ColorFlow>,
 }
 impl ColorFlows {
-    pub fn new(particles: &[PdgCode], model: &UfoModel) -> ColorFlows {
-        let particles: Vec<_> = particles.iter().map(|p| model.particles[p].color).collect();
-        let mut colors = Vec::new();
-        for color in particles.iter() {
+    pub fn new(incoming: &[PdgCode], outgoing: &[PdgCode], model: &UfoModel) -> ColorFlows {
+        let n_in = incoming.len();
+        let colors: Vec<_> = incoming
+            .iter()
+            .map(|p| model.particles[p].color)
+            .chain(outgoing.iter().map(|p| model.particles[p].color.bar()))
+            .collect();
+        let mut lines = Vec::new();
+        for color in colors.iter() {
             match color {
-                Color::Triplet => colors.push(ColorLine(colors.len() as u8 + 1)),
+                Color::Triplet => lines.push(ColorLine(lines.len() as u8 + 1)),
                 Color::Sextet => {
-                    colors.push(ColorLine(colors.len() as u8 + 1));
-                    colors.push(ColorLine(colors.len() as u8 + 1));
+                    lines.push(ColorLine(lines.len() as u8 + 1));
+                    lines.push(ColorLine(lines.len() as u8 + 1));
                 }
-                Color::Octet => colors.push(ColorLine(colors.len() as u8 + 1)),
+                Color::Octet => lines.push(ColorLine(lines.len() as u8 + 1)),
                 _ => continue,
             }
         }
-        let mut anti_colors: Vec<_> = colors.iter().map(|i| i.invert()).collect();
-        let mut flows = vec![to_color_flow(&particles, &colors, &anti_colors)];
-        while anti_colors.next_permutation() {
-            flows.push(to_color_flow(&particles, &colors, &anti_colors));
+        let mut anti_lines: Vec<_> = lines.iter().map(|i| i.invert()).collect();
+        let mut flows = vec![to_color_flow(&colors, &lines, &anti_lines, n_in)];
+        while anti_lines.next_permutation() {
+            flows.push(to_color_flow(&colors, &lines, &anti_lines, n_in));
         }
         ColorFlows { flows }
     }
@@ -179,6 +190,7 @@ fn to_color_flow(
     particles: &[Color],
     colors: &[ColorLine],
     anti_colors: &[AntiColorLine],
+    n_in: usize,
 ) -> ColorFlow {
     let mut i_color = 0;
     let mut i_anti = 0;
@@ -202,6 +214,8 @@ fn to_color_flow(
             Color::AntiSextet => ColorMultiLine::AntiSextet(next_anti(), next_anti()),
             Color::Octet => ColorMultiLine::Octet(next_color(), next_anti()),
         })
+        .enumerate()
+        .map(|(i, c)| if i < n_in { c } else { c.invert() })
         .collect();
     ColorFlow { components: flow }
 }

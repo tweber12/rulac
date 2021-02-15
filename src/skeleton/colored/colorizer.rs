@@ -1,11 +1,11 @@
-use crate::color::flow::vertex::{Match, VertexFlows};
+use crate::color::flow::vertex::{Match, VertexFlow, VertexFlows};
 use crate::color::flow::{ColorFlow, ColorMultiLine};
 use crate::skeleton::colored::{Bone, BoneFragment, BoneStructure, ColorId, Level, Skeleton};
 use crate::skeleton::uncolored;
 use crate::skeleton::uncolored::{Id, UncoloredSkeleton};
 use crate::ufo::{UfoModel, Vertex};
 use crate::util::Combinations;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 pub struct Colorizer<'a> {
     model: &'a UfoModel,
@@ -15,9 +15,13 @@ impl<'a> Colorizer<'a> {
     pub fn new(skeleton: UncoloredSkeleton, model: &'a UfoModel) -> Colorizer<'a> {
         Colorizer { model, skeleton }
     }
-    pub fn generate(&self, color_flow: &ColorFlow) -> Skeleton {
-        let mut level_builder =
-            LevelColorizer::new(color_flow, &self.skeleton.levels[0], &self.model);
+    pub fn generate(&self, color_flow: &ColorFlow) -> Option<Skeleton> {
+        let mut level_builder = LevelColorizer::new(
+            color_flow,
+            &self.skeleton.levels[0],
+            &self.model,
+            self.skeleton.last_level_index,
+        );
         for level in &self.skeleton.levels[1..] {
             level_builder.convert_level(level);
         }
@@ -25,10 +29,14 @@ impl<'a> Colorizer<'a> {
             &self.skeleton.last_level,
             color_flow.components[self.skeleton.last_level_index],
         );
-        Skeleton {
+        if last_level.is_empty() {
+            return None;
+        }
+        level_builder.remove_unused(&last_level);
+        Some(Skeleton {
             levels: level_builder.levels,
             last_level,
-        }
+        })
     }
 }
 
@@ -42,12 +50,18 @@ impl<'a> LevelColorizer<'a> {
         color_flow: &ColorFlow,
         external: &uncolored::Level,
         model: &'a UfoModel,
+        left_out: usize,
     ) -> LevelColorizer<'a> {
         let mut outgoing_colors = HashMap::new();
         let mut level_one = HashMap::new();
         for (&id, ex) in external.level.iter() {
             match *ex {
                 uncolored::Bone::External { particle, flipped } => {
+                    let particle = if particle >= left_out {
+                        particle + 1
+                    } else {
+                        particle
+                    };
                     let line = color_flow[particle];
                     if flipped {
                         outgoing_colors.insert(id, vec![line.invert()]);
@@ -107,6 +121,11 @@ impl<'a> LevelColorizer<'a> {
             for (c, f) in self.convert_fragment(fragment) {
                 if c == anti {
                     converted.push(f);
+                } else if c == ColorMultiLine::Phantom {
+                    match anti {
+                        ColorMultiLine::Octet(l1, l2) if l1.invert() == l2 => converted.push(f),
+                        _ => (),
+                    }
                 }
             }
         }
@@ -117,20 +136,47 @@ impl<'a> LevelColorizer<'a> {
         &self,
         fragment: &uncolored::BoneFragment,
     ) -> HashMap<ColorMultiLine, BoneFragment> {
-        let flows = self.get_incoming_colors(&fragment.constituents);
-        FragmentColorizer::colorize(fragment, flows, &self.model)
+        if let Some(flows) = self.get_incoming_colors(&fragment.constituents) {
+            FragmentColorizer::colorize(fragment, flows, &self.model)
+        } else {
+            HashMap::new()
+        }
     }
 
     fn insert_outgoing_color(&mut self, id: Id, color: ColorMultiLine) {
         self.outgoing_colors.entry(id).or_default().push(color);
     }
 
-    fn get_incoming_colors(&self, constituents: &[Id]) -> Vec<Vec<ColorMultiLine>> {
-        constituents
+    fn get_incoming_colors(&self, constituents: &[Id]) -> Option<Vec<Vec<ColorMultiLine>>> {
+        let out = constituents
             .iter()
-            .map(|c| &self.outgoing_colors[c])
-            .cloned()
-            .collect()
+            .map(|c| self.outgoing_colors.get(c).cloned())
+            .collect();
+        out
+    }
+
+    fn remove_unused(&mut self, last_level: &[BoneFragment]) {
+        let mut used: HashSet<ColorId> = HashSet::new();
+        for f in last_level {
+            used.extend(f.constituents.iter());
+        }
+        let mut iter = self.levels.iter_mut();
+        while let Some(level) = iter.next_back() {
+            level.bones.retain(|id, bone| {
+                if !used.contains(id) {
+                    return false;
+                }
+                match bone {
+                    Bone::External { .. } => (),
+                    Bone::Internal { fragments } => {
+                        for f in fragments {
+                            used.extend(f.constituents.iter());
+                        }
+                    }
+                }
+                true
+            });
+        }
     }
 }
 
@@ -183,6 +229,9 @@ impl<'a> FragmentColorizer<'a> {
             .iter()
             .map(|vf| vf.matches(combination, self.outgoing))
             .collect();
+        if matches.is_empty() {
+            return;
+        }
         let constituents: Vec<_> = self
             .constituents
             .iter()

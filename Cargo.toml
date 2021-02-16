@@ -16,3 +16,10 @@ num-traits = "0.2.14"
 num-rational = "0.3"
 rustpython-parser = "0.1.2"
 serde_repr = "0.1.6"
+
+[dev-dependencies]
+criterion = "0.3.4"
+
+[[bench]]
+name = "skeleton"
+harness = false

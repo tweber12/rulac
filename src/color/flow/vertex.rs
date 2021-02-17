@@ -13,7 +13,7 @@ const TF: Rational32 = Rational32::new_raw(1, INV_TF);
 const INV_SQRT_TF: f64 = std::f64::consts::SQRT_2;
 const N_COLORS: i32 = 3;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct VertexFlows {
     flows: Vec<VertexFlow>,
 }
@@ -374,7 +374,7 @@ fn get_external_factors(external: &[Color]) -> f64 {
 
 fn replace_octet_indices(chains: ChainBuilder) -> ChainBuilder {
     chains.replace_indices(
-        &|index| matches!(index, ColorIndex::Octet {..}),
+        &|index| matches!(index, ColorIndex::Octet { .. }),
         &combine_octet_tensors,
     )
 }
@@ -395,7 +395,7 @@ fn combine_octet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
 
 fn replace_sextet_indices(chains: ChainBuilder) -> ChainBuilder {
     chains.replace_indices(
-        &|index| matches!(index, ColorIndex::Sextet {..}),
+        &|index| matches!(index, ColorIndex::Sextet { .. }),
         &combine_sextet_tensors,
     )
 }
@@ -420,7 +420,7 @@ fn combine_sextet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
 
 fn replace_triplet_indices(chains: ChainBuilder) -> ChainBuilder {
     chains.replace_indices(
-        &|index| matches!(index, ColorIndex::Triplet {..}),
+        &|index| matches!(index, ColorIndex::Triplet { .. }),
         &combine_triplet_tensors,
     )
 }
@@ -482,8 +482,8 @@ fn combine_triplet_tensors(tensors: &[ColorTensor]) -> ChainBuilder {
 
 fn replace_epsilon_pairs(chains: ChainBuilder) -> ChainBuilder {
     chains.combine_pairs(
-        &|t| matches!(t, ColorTensor::Epsilon {..}),
-        &|t| matches!(t, ColorTensor::EpsilonBar {..}),
+        &|t| matches!(t, ColorTensor::Epsilon { .. }),
+        &|t| matches!(t, ColorTensor::EpsilonBar { .. }),
         &combine_epsilons,
     )
 }

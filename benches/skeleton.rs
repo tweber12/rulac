@@ -14,7 +14,7 @@ fn bench_epem_epem_colored(c: &mut Criterion) {
     let outgoing = convert_particles(&[-11, 11]);
     let flows = ColorFlows::new(&incoming, &outgoing, &model);
     let flow = flows.iter().next().unwrap();
-    let builder = Builder::new(&incoming, &outgoing, &model).unwrap();
+    let mut builder = Builder::new(&incoming, &outgoing, &model).unwrap();
     c.bench_function("epem_epem_colored", |b| {
         b.iter(|| builder.get_skeleton(flow))
     });
@@ -26,7 +26,7 @@ fn bench_gg_bbx_colored(c: &mut Criterion) {
     let outgoing = convert_particles(&[5, -5]);
     let flows = ColorFlows::new(&incoming, &outgoing, &model);
     let flow = flows.iter().next().unwrap();
-    let builder = Builder::new(&incoming, &outgoing, &model).unwrap();
+    let mut builder = Builder::new(&incoming, &outgoing, &model).unwrap();
     c.bench_function("gg_bbx_colored", |b| b.iter(|| builder.get_skeleton(flow)));
 }
 
@@ -36,7 +36,7 @@ fn bench_gg_epvemumvmxbbxgg_colored(c: &mut Criterion) {
     let outgoing = convert_particles(&[-11, 12, 13, -14, 5, -5, 21, 21]);
     let flows = ColorFlows::new(&incoming, &outgoing, &model);
     let flow = flows.iter().next().unwrap();
-    let builder = Builder::new(&incoming, &outgoing, &model).unwrap();
+    let mut builder = Builder::new(&incoming, &outgoing, &model).unwrap();
     c.bench_function("gg_epvemumvmxbbxgg_colored", |b| {
         b.iter(|| builder.get_skeleton(flow))
     });

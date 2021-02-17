@@ -21,23 +21,23 @@ impl<'a> Builder<'a> {
             colorizer: Colorizer::new(s, model),
         })
     }
-    pub fn get_skeleton(&self, color_flow: &ColorFlow) -> Option<Skeleton> {
+    pub fn get_skeleton(&mut self, color_flow: &ColorFlow) -> Option<Skeleton> {
         self.colorizer.generate(color_flow)
     }
 }
 
 #[cfg(test)]
 mod test {
-    use crate::color::flow::ColorFlows;
+    use crate::color::flow::{AntiColorLine, ColorFlow, ColorFlows, ColorLine, ColorMultiLine};
     use crate::ufo::{PdgCode, UfoModel};
 
     fn generate_all(incoming: &[i64], outgoing: &[i64], model: &UfoModel) {
         let incoming: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let outgoing: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
+        let mut builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
         let flows = ColorFlows::new(&incoming, &outgoing, model);
         for flow in flows.iter() {
-            builder.get_skeleton(flow).is_some();
+            println!("{:?} -> {:?}", flow, builder.get_skeleton(flow).is_some());
         }
     }
 
@@ -50,7 +50,7 @@ mod test {
     ) {
         let incoming: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let outgoing: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
+        let mut builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
         let result = builder.get_skeleton(flow);
         if exists {
             assert!(result.is_some())
@@ -77,7 +77,11 @@ mod test {
         generate_all(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21, 21], &model);
     }
 
-    use crate::color::flow::{AntiColorLine, ColorFlow, ColorLine, ColorMultiLine};
+    #[test]
+    fn test_gg_epvemumvmxbbxggg_generate() {
+        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
+        generate_all(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21, 21, 21], &model);
+    }
 
     #[test]
     fn test_gg_bbx_f1() {

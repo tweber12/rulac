@@ -113,6 +113,12 @@ pub struct UfoMath(pub String);
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 pub struct PdgCode(pub i64);
+impl PdgCode {
+    fn is_particle(&self) -> bool {
+        let PdgCode(c) = self;
+        *c > 0
+    }
+}
 impl fmt::Display for PdgCode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let PdgCode(p) = self;
@@ -197,6 +203,43 @@ impl Particle {
             self.pdg_code
         }
     }
+    pub fn fermion_kind(&self) -> FermionKind {
+        // This is much simpler than what Madgraph does. As such, this might have to be replaced by
+        // a more complicated and correct method. But since I don't quite understand how what
+        // Madgraph does actually works, and more importantly, why it is actually necessary to do
+        // what it does, I'll leave this the way it is for now.
+        // There they look at vertices of the form f f_bar ... and take the particle on the left to
+        // be the anti fermion and the one on the right as the fermion. This is correct, since UFO
+        // models guarantee that fermions will always be ordered in this `in` - `out` way. But using
+        // this to derive the fermion number of the particle requires that the vertex that they're
+        // looking at conserves fermion number. How they can know that the fermion number violation
+        // (that they do account for in other places) will always occur in other vertices but not
+        // the f f_bar ... ones, is not clear to me.
+        if (self.spin != Spin::OneHalf && self.spin != Spin::ThreeHalf) || self.self_conjugate() {
+            return FermionKind::None;
+        }
+        if self.pdg_code.is_particle() {
+            FermionKind::Fermion
+        } else {
+            FermionKind::AntiFermion
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum FermionKind {
+    /// The particle does not carry fermion number, i.e. it is either a boson or a Majorana fermion
+    None,
+    /// Fermion number flows in the same direction as the particle momentum
+    Fermion,
+    /// Fermion number flows in the opposite direction as the particle momentum
+    AntiFermion,
+}
+impl Default for FermionKind {
+    fn default() -> FermionKind {
+        FermionKind::None
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -248,6 +291,12 @@ pub struct VertexCoupling {
     pub coupling: String,
 }
 
+// Particles appear in the vertex in the following order:
+// Fermions -> Ghosts -> Vectors -> Scalars -> Tensors
+// (see `PYParticleOrder` in `PYIntVertices.m` of FeynRules)
+// The fermions are then sorted in a `in` -> `out` -> `in` -> `out` structure, with particles
+// that belong to the same fermion chain being adjacent to each other
+// (see `PYOrderFermions` in `PYIntVertices.m` of FeynRules)
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Vertex {
     pub name: String,

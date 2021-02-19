@@ -2,7 +2,7 @@ use crate::math_expr::parse::{
     deserialize_math_array_four, deserialize_math_expr, deserialize_math_map,
 };
 use crate::math_expr::{MathExprPlain, Number};
-use crate::ufo::Spin;
+use crate::ufo::{FermionKind, Particle, Spin};
 use num_traits::Zero;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -11,19 +11,6 @@ use std::io::Read;
 use std::path::Path;
 use std::str::FromStr;
 
-#[derive(Debug, Clone, Copy, Deserialize, Hash, Eq, PartialEq, PartialOrd, Ord)]
-pub enum ParticleDirection {
-    #[serde(rename = "in")]
-    Incoming,
-    #[serde(rename = "out")]
-    Outgoing,
-}
-#[derive(Debug, Clone, Copy, Deserialize, Hash, Eq, PartialEq, PartialOrd, Ord)]
-#[serde(rename_all = "snake_case")]
-pub enum ParticleKind {
-    Particle,
-    AntiParticle,
-}
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Polarization(i64);
 impl Polarization {
@@ -73,17 +60,48 @@ impl Wavefunctions {
         fs::File::open(path).unwrap().read_to_end(&mut contents)?;
         toml::from_slice(&contents).map_err(WavefunctionError::from)
     }
-    pub fn get(
+    pub fn get_incoming(
+        &self,
+        particle: &Particle,
+        mass: Number,
+        polarization: Polarization,
+    ) -> Wavefunction {
+        self.get(
+            particle.spin,
+            mass,
+            particle.fermion_kind(),
+            ParticleDirection::Incoming,
+            polarization,
+        )
+    }
+
+    pub fn get_outgoing(
+        &self,
+        particle: &Particle,
+        mass: Number,
+        polarization: Polarization,
+    ) -> Wavefunction {
+        self.get(
+            particle.spin,
+            mass,
+            particle.fermion_kind(),
+            ParticleDirection::Outgoing,
+            polarization,
+        )
+    }
+    fn get(
         &self,
         spin: Spin,
         mass: Number,
-        kind: ParticleKind,
+        fermion_kind: FermionKind,
         direction: ParticleDirection,
         polarization: Polarization,
     ) -> Wavefunction {
         match spin {
             Spin::Zero => Wavefunction::Scalar(self.spin_zero.clone()),
-            Spin::OneHalf => self.spin_one_half.get(mass, kind, direction, polarization),
+            Spin::OneHalf => self
+                .spin_one_half
+                .get(mass, direction, fermion_kind, polarization),
             Spin::One => self.spin_one.get(direction, polarization),
             _ => panic!("BUG: All other spins should have been handled in Builder!"),
         }
@@ -121,6 +139,14 @@ impl From<toml::de::Error> for WavefunctionError {
     }
 }
 
+#[derive(Debug, Clone, Copy, Deserialize, Hash, Eq, PartialEq, PartialOrd, Ord)]
+enum ParticleDirection {
+    #[serde(rename = "in")]
+    Incoming,
+    #[serde(rename = "out")]
+    Outgoing,
+}
+
 #[derive(Debug, Clone, Deserialize)]
 struct SpinOneHalfStored {
     massive: SpinOneHalfMassiveStored,
@@ -130,14 +156,14 @@ impl SpinOneHalfStored {
     fn get(
         &self,
         mass: Number,
-        kind: ParticleKind,
         direction: ParticleDirection,
+        fermion_kind: FermionKind,
         polarization: Polarization,
     ) -> Wavefunction {
         if mass.is_zero() {
-            self.massless.get(kind, direction, polarization)
+            self.massless.get(direction, fermion_kind, polarization)
         } else {
-            self.massive.get(kind, direction, polarization)
+            self.massive.get(direction, fermion_kind, polarization)
         }
     }
 }
@@ -147,19 +173,17 @@ struct SpinOneHalfMassiveStored {
     #[serde(deserialize_with = "deserialize_math_map")]
     definitions: HashMap<String, MathExprPlain>,
     #[serde(flatten)]
-    spinors: HashMap<
-        ParticleKind,
-        HashMap<ParticleDirection, HashMap<Polarization, WavefunctionStored>>,
-    >,
+    spinors:
+        HashMap<FermionKind, HashMap<ParticleDirection, HashMap<Polarization, WavefunctionStored>>>,
 }
 impl SpinOneHalfMassiveStored {
     fn get(
         &self,
-        kind: ParticleKind,
         direction: ParticleDirection,
+        fermion_kind: FermionKind,
         polarization: Polarization,
     ) -> Wavefunction {
-        let wf = &self.spinors[&kind][&direction][&polarization];
+        let wf = &self.spinors[&fermion_kind][&direction][&polarization];
         Wavefunction::Vector {
             definitions: self.definitions.clone(),
             components: Box::new(wf.components.clone()),
@@ -177,13 +201,14 @@ struct SpinOneHalfMasslessStored {
 impl SpinOneHalfMasslessStored {
     fn get(
         &self,
-        kind: ParticleKind,
         direction: ParticleDirection,
+        fermion_kind: FermionKind,
         polarization: Polarization,
     ) -> Wavefunction {
-        let wf = match kind {
-            ParticleKind::Particle => &self.spinors[&direction][&polarization],
-            ParticleKind::AntiParticle => &self.spinors[&direction][&polarization.flip()],
+        let wf = match fermion_kind {
+            FermionKind::Fermion => &self.spinors[&direction][&polarization],
+            FermionKind::AntiFermion => &self.spinors[&direction][&polarization.flip()],
+            FermionKind::None => unimplemented!("Majorana fermions are not supported yet!"),
         };
         Wavefunction::Vector {
             definitions: self.definitions.clone(),

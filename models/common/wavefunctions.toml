@@ -35,17 +35,16 @@ spin_zero = "1"
 
 ###################################
 # Spin 1/2
-
-[spin_one_half.massive.particle.in]
+[spin_one_half.massive.fermion.in]
 "+1" = ["rc", "arp", "-mbr", "-mrp"] # u_plus
 "-1" = ["-mrp", "-mbr", "-arp_star", "rc"] # u_minus
-[spin_one_half.massive.particle.out]
+[spin_one_half.massive.fermion.out]
 "+1" = ["mbr", "mrp_star", "-rc", "-arp_star"] # u_plus_bar
 "-1" = ["arp", "-rc", "-mrp", "mbr"] # u_minus_bar
-[spin_one_half.massive.anti_particle.in]
+[spin_one_half.massive.anti_fermion.in]
 "+1" = ["-mrp", "mbr", "-arp_star", "rc"] #v_plus
 "-1" = ["rc", "arp", "mbr", "mrp"] # v_minus
-[spin_one_half.massive.anti_particle.out]
+[spin_one_half.massive.anti_fermion.out]
 "+1" = ["arp", "-rc", "mrp", "-mbr"] # v_plus_bar
 "-1" = ["-mbr", "-mrp_star", "-rc", "-arp_star"] # v_minus_bar
 

@@ -5,6 +5,7 @@ use crate::color::tensor::{
     SextetIndex, TripletIndex, UndefinedIndex,
 };
 use crate::ufo::{Color, UfoMath};
+use cached::proc_macro::cached;
 use num_rational::Rational32;
 use num_traits::{ToPrimitive, Zero};
 
@@ -13,12 +14,17 @@ const TF: Rational32 = Rational32::new_raw(1, INV_TF);
 const INV_SQRT_TF: f64 = std::f64::consts::SQRT_2;
 const N_COLORS: i32 = 3;
 
+#[cached]
+pub fn get_vertex_flows(structure: UfoMath, external: Vec<Color>) -> VertexFlows {
+    VertexFlows::from_structure(&structure, &external)
+}
+
 #[derive(Clone, Debug)]
 pub struct VertexFlows {
     flows: Vec<VertexFlow>,
 }
 impl VertexFlows {
-    pub fn from_structure(structure: &UfoMath, external: &[Color]) -> VertexFlows {
+    fn from_structure(structure: &UfoMath, external: &[Color]) -> VertexFlows {
         let chains = ChainBuilder::from_expr(structure);
         let chains = replace_tensors_initial(chains, external);
         let chains = add_external(chains, external);

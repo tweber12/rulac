@@ -21,7 +21,7 @@ impl<'a> Builder<'a> {
             colorizer: Colorizer::new(s, model),
         })
     }
-    pub fn get_skeleton(&mut self, color_flow: &ColorFlow) -> Option<Skeleton> {
+    pub fn get_skeleton(&self, color_flow: &ColorFlow) -> Option<Skeleton> {
         self.colorizer.generate(color_flow)
     }
 }
@@ -34,7 +34,7 @@ mod test {
     fn generate_all(incoming: &[i64], outgoing: &[i64], model: &UfoModel) {
         let incoming: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let outgoing: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let mut builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
+        let builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
         let flows = ColorFlows::new(&incoming, &outgoing, model);
         for flow in flows.iter() {
             println!("{:?} -> {:?}", flow, builder.get_skeleton(flow).is_some());
@@ -50,7 +50,7 @@ mod test {
     ) {
         let incoming: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let outgoing: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let mut builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
+        let builder = super::Builder::new(&incoming, &outgoing, model).unwrap();
         let result = builder.get_skeleton(flow);
         if exists {
             assert!(result.is_some())

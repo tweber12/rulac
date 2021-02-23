@@ -1,0 +1,26 @@
+[MASS]
+MT = 172.0
+MB = 4.7
+MH = 125.0
+MZ = 91.1876
+
+[CKMBLOCK]
+cabi = 0.227736
+
+[YUKAWA]
+ymb = 4.7
+ymt = 172.0
+
+[LOOP]
+MU_R = 91.188
+
+[SMINPUTS]
+aEWM1 = 127.9
+aS = 0.1184
+Gf = 0.0000116637
+
+[DECAY]
+WT = 1.50833649
+WW = 2.085
+WZ = 2.4952
+WH = 0.00407

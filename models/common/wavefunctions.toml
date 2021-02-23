@@ -59,7 +59,7 @@ arp = "a/r*complex(px,py) if beam!=-1 else -sqrt_a"
 arp_star = "a/r*complex(px,-py) if beam!=-1 else -sqrt_a"
 mrp = "mass/r*complex(px,py) if beam!=-1 else -mass/sqrt_a"
 mrp_star = "mass/r*complex(px,-py) if beam!=-1 else -mass/sqrt_a"
-mbr = "mr*b if beam!=-1 else 0"
+mbr = "mass/r*b if beam!=-1 else 0"
 rc = "r/c if beam!=-1 else 0"
 
 [spin_one_half.massless.in]

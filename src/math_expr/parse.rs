@@ -761,7 +761,7 @@ mod test {
     use crate::math_expr::MathExprPlain;
     use crate::spin::LorentzExpr;
     use crate::ufo;
-    use crate::ufo::UfoModel;
+    use crate::ufo::{Parameter, UfoMath, UfoModel};
 
     #[test]
     fn expr1() {
@@ -847,7 +847,11 @@ mod test {
     fn parse_model(model: &str) {
         let model = UfoModel::load(model).unwrap();
         for parameter in model.parameters.values() {
-            if let ufo::ValOrExpr::Expr(ufo::UfoMath(ref expr)) = &parameter.value {
+            if let Parameter::Internal {
+                expr: UfoMath(expr),
+                ..
+            } = parameter
+            {
                 let _: MathExprPlain = super::parse_math(&expr).unwrap();
             }
         }

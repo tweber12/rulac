@@ -105,7 +105,6 @@ derive_named_string!(CouplingOrder);
 derive_named_string!(Coupling);
 derive_named_string!(FunctionDefinition);
 derive_named_string!(Lorentz);
-derive_named_string!(Parameter);
 derive_named_string!(Vertex);
 
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
@@ -244,23 +243,9 @@ impl Default for FermionKind {
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
-pub enum ParameterNature {
-    Internal,
-    External,
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "snake_case")]
 pub enum ParameterType {
     Real,
     Complex,
-}
-
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum ValOrExpr {
-    Value(f64),
-    Expr(UfoMath),
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -271,15 +256,38 @@ pub enum CouplingValue {
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Parameter {
-    pub name: String,
-    pub texname: String,
-    pub nature: ParameterNature,
-    #[serde(rename = "type")]
-    pub ptype: ParameterType,
-    pub value: ValOrExpr,
-    pub lhablock: Option<String>,
-    pub lhacode: Option<Vec<i64>>,
+#[serde(tag = "nature")]
+pub enum Parameter {
+    #[serde(rename = "external")]
+    External {
+        name: String,
+        #[serde(rename = "texname")]
+        tex_name: String,
+        value: f64,
+        #[serde(rename = "lhablock")]
+        lha_block: String,
+        #[serde(rename = "lhacode")]
+        lha_code: Vec<i64>,
+    },
+    #[serde(rename = "internal")]
+    Internal {
+        name: String,
+        #[serde(rename = "texname")]
+        tex_name: String,
+        #[serde(rename = "type")]
+        parameter_type: ParameterType,
+        #[serde(rename = "value")]
+        expr: UfoMath,
+    },
+}
+impl Named for Parameter {
+    type Name = String;
+    fn name(&self) -> String {
+        match self {
+            Parameter::External { name, .. } => name.clone(),
+            Parameter::Internal { name, .. } => name.clone(),
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

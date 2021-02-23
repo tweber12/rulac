@@ -2,7 +2,7 @@ use crate::ufo::{Parameter, UfoModel};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::Path;
 
 // A temporary way to handle external parameters. The main disadvantage of this is that the
@@ -41,6 +41,12 @@ impl ExternalParameters {
         }
         ExternalParameters { data: external }.write_toml_file(path)
     }
+
+    pub fn load<P: AsRef<Path>>(path: P) -> Result<ExternalParameters, ExternalError> {
+        let mut contents = Vec::new();
+        fs::File::open(path).unwrap().read_to_end(&mut contents)?;
+        toml::from_slice(&contents).map_err(ExternalError::from)
+    }
 }
 
 #[derive(Debug)]
@@ -52,6 +58,11 @@ pub enum ExternalError {
 impl From<toml::ser::Error> for ExternalError {
     fn from(err: toml::ser::Error) -> ExternalError {
         ExternalError::IntoToml(err)
+    }
+}
+impl From<toml::de::Error> for ExternalError {
+    fn from(err: toml::de::Error) -> ExternalError {
+        ExternalError::FromToml(err)
     }
 }
 impl From<std::io::Error> for ExternalError {

@@ -1,4 +1,4 @@
-mod parameters;
+pub mod parameters;
 
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};

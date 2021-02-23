@@ -6,6 +6,8 @@ use num_traits::identities::Zero;
 use serde::{Deserialize, Serialize};
 use std::ops;
 
+use crate::math_expr::eval::eval_expr;
+pub use eval::{EvalContext, EvalError};
 pub use number::Number;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
@@ -89,6 +91,8 @@ pub enum MathExpr<T: Tensor> {
         right: Box<MathExpr<T>>,
     },
     Conditional {
+        // The Comparison doesn't need to be boxed, it is however 32 bytes large, so that using it
+        // unboxed more than doubles the (minimum) size of MathExpr from 24 bytes to 56 bytes
         condition: Box<Comparison<T>>,
         if_true: Box<MathExpr<T>>,
         if_false: Box<MathExpr<T>>,
@@ -105,6 +109,9 @@ pub enum MathExpr<T: Tensor> {
     },
 }
 impl<T: Tensor> MathExpr<T> {
+    pub fn eval(&self, context: &EvalContext) -> Result<Number, EvalError> {
+        eval_expr(self, context)
+    }
     pub fn apply_on_subexpressions<F>(&self, fun: &mut F) -> MathExpr<T>
     where
         F: FnMut(&MathExpr<T>) -> MathExpr<T>,

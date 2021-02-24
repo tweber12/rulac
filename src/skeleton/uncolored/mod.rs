@@ -9,6 +9,7 @@ use std::ops::Add;
 
 #[derive(Clone, Debug)]
 pub struct UncoloredSkeleton {
+    pub first_level: HashMap<Id, External>,
     pub levels: Vec<Level>,
     pub last_level: Vec<BoneFragment>,
     pub last_level_index: usize,
@@ -25,11 +26,15 @@ impl UncoloredSkeleton {
         self.last_level.iter().map(|b| b.count_graphs(&self)).sum()
     }
     fn get_bone(&self, id: Id) -> &Bone {
-        &self.levels[id.level() - 1].level[&id]
+        &self.levels[id.level() - 2].level[&id]
     }
     pub fn pretty_print(&self) {
+        println!("First level = ");
+        for (i, ex) in self.first_level.iter() {
+            println!("{} = External({})", i, ex.particle);
+        }
         for (i, l) in self.levels.iter().enumerate() {
-            println!("Level {}:", i + 1);
+            println!("Level {}:", i + 2);
             l.pretty_print();
         }
         println!("Last level =");
@@ -54,27 +59,25 @@ impl Level {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub enum Bone {
-    External { particle: usize, flipped: bool },
-    Internal { fragments: Vec<BoneFragment> },
+pub struct External {
+    pub particle: usize,
+    pub flipped: bool,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Bone {
+    pub fragments: Vec<BoneFragment>,
 }
 impl Bone {
     fn count_graphs(&self, skeleton: &UncoloredSkeleton) -> usize {
-        match self {
-            Bone::External { .. } => 1,
-            Bone::Internal { fragments } => {
-                fragments.iter().map(|bf| bf.count_graphs(skeleton)).sum()
-            }
-        }
+        self.fragments
+            .iter()
+            .map(|bf| bf.count_graphs(skeleton))
+            .sum()
     }
     fn pretty_print(&self) {
-        match self {
-            Bone::External { particle, .. } => print!("External({})", particle),
-            Bone::Internal { fragments } => {
-                for f in fragments {
-                    print!("{} ", f);
-                }
-            }
+        for f in self.fragments.iter() {
+            print!("{} ", f);
         }
     }
 }
@@ -90,8 +93,11 @@ impl BoneFragment {
         self.constituents
             .iter()
             .map(|&id| {
-                let n: usize = skeleton.get_bone(id).count_graphs(skeleton);
-                n
+                if id.level() != 1 {
+                    skeleton.get_bone(id).count_graphs(skeleton)
+                } else {
+                    1
+                }
             })
             .product()
     }
@@ -194,16 +200,14 @@ mod test {
     }
 
     fn verify_ordering(incoming: &[i64], outgoing: &[i64], model: &UfoModel) {
+        // Verify that particles appear in each Fragment in the same order as in the corresponding
+        // vertex
         let inc: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let out: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
         let skeleton = super::UncoloredSkeleton::new(&inc, &out, model).unwrap();
         for level in skeleton.levels.iter() {
             for (id, bone) in level.level.iter() {
-                let fragments = match bone {
-                    super::Bone::External { .. } => continue,
-                    super::Bone::Internal { fragments } => fragments,
-                };
-                for fragment in fragments.iter() {
+                for fragment in bone.fragments.iter() {
                     let vertex = &model.vertices[&fragment.vertex];
                     assert_eq!(
                         vertex.particles[fragment.outgoing],

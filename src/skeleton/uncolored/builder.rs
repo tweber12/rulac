@@ -1,13 +1,16 @@
 use crate::skeleton::uncolored::vertex_list::{VertexLeaf, VertexList, VertexListParticle};
-use crate::skeleton::uncolored::{Bone, BoneFragment, Id, InternalId, Level, UncoloredSkeleton};
+use crate::skeleton::uncolored::{
+    Bone, BoneFragment, External, Id, InternalId, Level, UncoloredSkeleton,
+};
 use crate::ufo;
 use std::collections::{HashMap, HashSet};
 
 pub struct SkeletonBuilder<'a> {
-    left_out: ufo::PdgCode,
-    levels: Vec<LevelBuilder>,
+    external: ExternalLevel,
+    levels: Vec<InternalLevel>,
     model: &'a ufo::UfoModel,
     vertices: VertexList<'a>,
+    last: Id,
 }
 impl<'a> SkeletonBuilder<'a> {
     pub fn build(
@@ -29,9 +32,14 @@ impl<'a> SkeletonBuilder<'a> {
         outgoing: &[ufo::PdgCode],
         model: &'a ufo::UfoModel,
     ) -> SkeletonBuilder<'a> {
+        let max_level = incoming.len() + outgoing.len() - 1;
+        let last = Id {
+            pdg_code: model.anti_pdg_code(incoming[0]),
+            internal: InternalId((2 << (max_level - 1)) - 1, max_level),
+        };
         SkeletonBuilder {
-            left_out: incoming[0],
-            levels: vec![LevelBuilder::external(&incoming[1..], outgoing, model)],
+            external: ExternalLevel::new(&incoming[1..], outgoing, model),
+            levels: Vec::new(),
             vertices: VertexList::with_filter(&model.vertices, &|v: &ufo::Vertex| {
                 v.particles.iter().all(|p| {
                     let particle = &model.particles[p];
@@ -39,15 +47,26 @@ impl<'a> SkeletonBuilder<'a> {
                 })
             }),
             model,
+            last,
         }
     }
 
     fn construct_level(&mut self, ilevel: usize) {
-        let mut builder = LevelBuilder::new(ilevel as u8);
-        for i in 1..=(ilevel / 2) {
+        let mut builder = InternalLevel::new(ilevel as u8);
+        if ilevel == 2 {
+            builder.combine(&self.external, &self.external, &self.vertices, &self.model);
+        } else {
             builder.combine(
-                &self.levels[i - 1],
-                &self.levels[ilevel - i - 1],
+                &self.external,
+                &self.levels[ilevel - 3],
+                &self.vertices,
+                &self.model,
+            );
+        }
+        for i in 2..=(ilevel / 2) {
+            builder.combine(
+                &self.levels[i - 2],
+                &self.levels[ilevel - i - 2],
                 &self.vertices,
                 &self.model,
             );
@@ -56,13 +75,8 @@ impl<'a> SkeletonBuilder<'a> {
     }
 
     fn remove_unused(&mut self) {
-        let max_level = self.levels.len();
-        let last = Id {
-            pdg_code: self.model.anti_pdg_code(self.left_out),
-            internal: InternalId((2 << (max_level - 1)) - 1, max_level),
-        };
         let mut used = HashSet::new();
-        used.insert(last);
+        used.insert(self.last);
         let mut iter = self.levels.iter_mut();
         while let Some(level) = iter.next_back() {
             level.remove_unused(&mut used);
@@ -70,22 +84,18 @@ impl<'a> SkeletonBuilder<'a> {
     }
 
     fn convert_levels(mut self) -> Option<UncoloredSkeleton> {
-        let max_level = self.levels.len();
-        let last = Id {
-            pdg_code: self.model.anti_pdg_code(self.left_out),
-            internal: InternalId((2 << (max_level - 1)) - 1, max_level),
-        };
-        let last_level = match self.levels[max_level - 1].particles.remove(&last)? {
-            Bone::External { .. } => panic!("BUG: The outgoing particle is somehow External"),
-            Bone::Internal { fragments } => fragments,
-        };
+        let mut last_level = self
+            .levels
+            .pop()
+            .expect("BUG: There must be more than one level");
+        let last_level = last_level.particles.remove(&self.last)?.fragments;
         let levels = self
             .levels
             .into_iter()
             .map(|level| level.convert())
-            .take(max_level - 1)
             .collect();
         Some(UncoloredSkeleton {
+            first_level: self.external.convert(),
             levels,
             last_level,
             last_level_index: 0,
@@ -93,30 +103,29 @@ impl<'a> SkeletonBuilder<'a> {
     }
 }
 
-struct LevelBuilder {
-    ilevel: u8,
-    particles: HashMap<Id, Bone>,
+trait LevelBuilder {
+    type Particle;
+    fn level_number(&self) -> u8;
+    fn particles(&self) -> &HashMap<Id, Self::Particle>;
+    fn incomplete(&self) -> &HashMap<ufo::PdgCode, Vec<Incomplete>>;
+}
+
+#[derive(Clone, Debug)]
+struct ExternalLevel {
+    particles: HashMap<Id, External>,
     incomplete: HashMap<ufo::PdgCode, Vec<Incomplete>>,
 }
-impl LevelBuilder {
-    fn new(ilevel: u8) -> LevelBuilder {
-        LevelBuilder {
-            ilevel,
-            particles: HashMap::new(),
-            incomplete: HashMap::new(),
-        }
-    }
-
-    fn external(
+impl ExternalLevel {
+    fn new(
         incoming: &[ufo::PdgCode],
         outgoing: &[ufo::PdgCode],
         model: &ufo::UfoModel,
-    ) -> LevelBuilder {
+    ) -> ExternalLevel {
         let mut particles = HashMap::new();
         for (i, &p) in incoming.iter().enumerate() {
             particles.insert(
                 Id::from_external(p, i as u8),
-                Bone::External {
+                External {
                     particle: i,
                     flipped: false,
                 },
@@ -127,38 +136,67 @@ impl LevelBuilder {
             let i = i + incoming.len();
             particles.insert(
                 Id::from_external(anti, i as u8),
-                Bone::External {
+                External {
                     particle: i,
                     flipped: true,
                 },
             );
         }
-        LevelBuilder {
-            ilevel: 1,
+        ExternalLevel {
             particles,
             incomplete: HashMap::new(),
         }
     }
 
-    fn combine(
-        &mut self,
-        left: &LevelBuilder,
-        right: &LevelBuilder,
-        vertices: &VertexList,
-        model: &ufo::UfoModel,
-    ) {
-        for &left_id in left.particles.keys() {
+    fn convert(self) -> HashMap<Id, External> {
+        self.particles
+    }
+}
+impl LevelBuilder for ExternalLevel {
+    type Particle = External;
+    fn level_number(&self) -> u8 {
+        1
+    }
+    fn particles(&self) -> &HashMap<Id, External> {
+        &self.particles
+    }
+    fn incomplete(&self) -> &HashMap<ufo::PdgCode, Vec<Incomplete>> {
+        &self.incomplete
+    }
+}
+
+#[derive(Clone, Debug)]
+struct InternalLevel {
+    ilevel: u8,
+    particles: HashMap<Id, Bone>,
+    incomplete: HashMap<ufo::PdgCode, Vec<Incomplete>>,
+}
+impl InternalLevel {
+    fn new(ilevel: u8) -> InternalLevel {
+        InternalLevel {
+            ilevel,
+            particles: HashMap::new(),
+            incomplete: HashMap::new(),
+        }
+    }
+
+    fn combine<L, R>(&mut self, left: &L, right: &R, vertices: &VertexList, model: &ufo::UfoModel)
+    where
+        L: LevelBuilder,
+        R: LevelBuilder,
+    {
+        for &left_id in left.particles().keys() {
             let vl = &vertices.contents[&left_id.pdg_code];
-            for &right_id in right.particles.keys() {
+            for &right_id in right.particles().keys() {
                 self.add_complete_matches(left_id, right_id, &vl, model);
             }
-            if let Some(incomplete) = right.incomplete.get(&left_id.pdg_code) {
+            if let Some(incomplete) = right.incomplete().get(&left_id.pdg_code) {
                 self.add_incomplete_matches(left_id, incomplete, model);
             }
         }
-        if left.ilevel != right.ilevel {
-            for &right_id in right.particles.keys() {
-                if let Some(incomplete) = left.incomplete.get(&right_id.pdg_code) {
+        if left.level_number() != right.level_number() {
+            for &right_id in right.particles().keys() {
+                if let Some(incomplete) = left.incomplete().get(&right_id.pdg_code) {
                     self.add_incomplete_matches(right_id, incomplete, model);
                 }
             }
@@ -215,13 +253,10 @@ impl LevelBuilder {
     }
 
     fn insert_fragment(&mut self, id: Id, fragment: BoneFragment) {
-        let bone = self.particles.entry(id).or_insert_with(|| Bone::Internal {
+        let bone = self.particles.entry(id).or_insert_with(|| Bone {
             fragments: Vec::new(),
         });
-        match bone {
-            Bone::External { .. } => panic!("BUG: Inserting fragment into external bone"),
-            Bone::Internal { fragments } => fragments.push(fragment),
-        }
+        bone.fragments.push(fragment);
     }
 
     fn insert_incomplete(&mut self, pdg: ufo::PdgCode, incomplete: Incomplete) {
@@ -239,16 +274,23 @@ impl LevelBuilder {
             if !used.contains(i) {
                 return false;
             }
-            match v {
-                Bone::External { .. } => (),
-                Bone::Internal { fragments } => {
-                    for f in fragments {
-                        used.extend(f.constituents.iter());
-                    }
-                }
+            for f in v.fragments.iter() {
+                used.extend(f.constituents.iter());
             }
             true
         });
+    }
+}
+impl LevelBuilder for InternalLevel {
+    type Particle = Bone;
+    fn level_number(&self) -> u8 {
+        self.ilevel
+    }
+    fn particles(&self) -> &HashMap<Id, Bone> {
+        &self.particles
+    }
+    fn incomplete(&self) -> &HashMap<ufo::PdgCode, Vec<Incomplete>> {
+        &self.incomplete
     }
 }
 
@@ -263,6 +305,7 @@ enum Combination {
     },
 }
 
+#[derive(Clone, Debug)]
 struct Incomplete {
     internal: InternalId,
     vertex: String,

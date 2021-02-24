@@ -1,6 +1,8 @@
 use crate::color::flow::vertex::{get_vertex_flows, Match, VertexFlows};
 use crate::color::flow::{ColorFlow, ColorMultiLine};
-use crate::skeleton::colored::{Bone, BoneFragment, BoneStructure, ColorId, Level, Skeleton};
+use crate::skeleton::colored::{
+    Bone, BoneFragment, BoneStructure, ColorId, External, Level, Skeleton,
+};
 use crate::skeleton::uncolored;
 use crate::skeleton::uncolored::{Id, UncoloredSkeleton};
 use crate::ufo::{UfoModel, Vertex};
@@ -18,11 +20,11 @@ impl<'a> Colorizer<'a> {
     pub fn generate(&self, color_flow: &ColorFlow) -> Option<Skeleton> {
         let mut level_builder = LevelColorizer::new(
             color_flow,
-            &self.skeleton.levels[0],
+            &self.skeleton.first_level,
             &self.model,
             self.skeleton.last_level_index,
         );
-        for level in &self.skeleton.levels[1..] {
+        for level in &self.skeleton.levels {
             level_builder.convert_level(level);
         }
         let last_level = level_builder.convert_last_level(
@@ -34,6 +36,7 @@ impl<'a> Colorizer<'a> {
         }
         level_builder.remove_unused(&last_level);
         Some(Skeleton {
+            first_level: level_builder.first_level,
             levels: level_builder.levels,
             last_level,
         })
@@ -43,40 +46,43 @@ impl<'a> Colorizer<'a> {
 struct LevelColorizer<'a> {
     model: &'a UfoModel,
     outgoing_colors: HashMap<Id, Vec<ColorMultiLine>>,
+    first_level: HashMap<ColorId, External>,
     levels: Vec<Level>,
 }
 impl<'a> LevelColorizer<'a> {
     fn new(
         color_flow: &ColorFlow,
-        external: &uncolored::Level,
+        external: &HashMap<Id, uncolored::External>,
         model: &'a UfoModel,
         left_out: usize,
     ) -> LevelColorizer<'a> {
         let mut outgoing_colors = HashMap::new();
-        let mut level_one = HashMap::new();
-        for (&id, ex) in external.level.iter() {
-            match *ex {
-                uncolored::Bone::External { particle, flipped } => {
-                    let particle = if particle >= left_out {
-                        particle + 1
-                    } else {
-                        particle
-                    };
-                    let line = color_flow[particle];
-                    if flipped {
-                        outgoing_colors.insert(id, vec![line.invert()]);
-                    } else {
-                        outgoing_colors.insert(id, vec![line]);
-                    }
-                    level_one.insert(ColorId::new(id, line), Bone::External { particle, flipped });
-                }
-                _ => panic!("BUG: Composite skeleton object on level 1!"),
+        let mut first_level = HashMap::new();
+        for (&id, ex) in external.iter() {
+            let particle = if ex.particle >= left_out {
+                ex.particle + 1
+            } else {
+                ex.particle
+            };
+            let line = color_flow[particle];
+            if ex.flipped {
+                outgoing_colors.insert(id, vec![line.invert()]);
+            } else {
+                outgoing_colors.insert(id, vec![line]);
             }
+            first_level.insert(
+                ColorId::new(id, line),
+                External {
+                    particle: ex.particle,
+                    flipped: ex.flipped,
+                },
+            );
         }
         LevelColorizer {
+            first_level,
             outgoing_colors,
             model,
-            levels: vec![Level { bones: level_one }],
+            levels: Vec::new(),
         }
     }
 
@@ -92,21 +98,15 @@ impl<'a> LevelColorizer<'a> {
     }
 
     fn convert_bone(&mut self, bone: &uncolored::Bone) -> Vec<(ColorMultiLine, Bone)> {
-        let fragments = match bone {
-            uncolored::Bone::External { .. } => {
-                unreachable!("BUG: External skeleton object on level other than 1!")
-            }
-            uncolored::Bone::Internal { fragments } => fragments,
-        };
         let mut bones: HashMap<ColorMultiLine, Vec<BoneFragment>> = HashMap::new();
-        for fragment in fragments {
+        for fragment in bone.fragments.iter() {
             for (c, f) in self.convert_fragment(fragment) {
                 bones.entry(c).or_default().push(f);
             }
         }
         bones
             .into_iter()
-            .map(|(c, fs)| (c, Bone::Internal { fragments: fs }))
+            .map(|(c, fs)| (c, Bone { fragments: fs }))
             .collect()
     }
 
@@ -166,13 +166,8 @@ impl<'a> LevelColorizer<'a> {
                 if !used.contains(id) {
                     return false;
                 }
-                match bone {
-                    Bone::External { .. } => (),
-                    Bone::Internal { fragments } => {
-                        for f in fragments {
-                            used.extend(f.constituents.iter());
-                        }
-                    }
+                for f in bone.fragments.iter() {
+                    used.extend(f.constituents.iter());
                 }
                 true
             });

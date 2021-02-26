@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use std::ops;
 
 use crate::math_expr::eval::eval_expr;
-pub use eval::{EvalContext, EvalError};
+pub use eval::{eval_ufo_math, EvalContext, EvalError};
 pub use number::Number;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]

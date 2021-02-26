@@ -1,6 +1,8 @@
 mod builder;
+mod vertex_checker;
 mod vertex_list;
 
+use crate::math_expr::EvalContext;
 use crate::ufo;
 use builder::SkeletonBuilder;
 use std::collections::HashMap;
@@ -19,8 +21,9 @@ impl UncoloredSkeleton {
         incoming: &[ufo::PdgCode],
         outgoing: &[ufo::PdgCode],
         model: &ufo::UfoModel,
+        context: &EvalContext,
     ) -> Option<UncoloredSkeleton> {
-        SkeletonBuilder::build(incoming, outgoing, model)
+        SkeletonBuilder::build(incoming, outgoing, model, context)
     }
     pub fn count_graphs(&self) -> usize {
         self.last_level.iter().map(|b| b.count_graphs(&self)).sum()
@@ -179,32 +182,51 @@ impl Add<InternalId> for InternalId {
 
 #[cfg(test)]
 mod test {
+    use crate::math_expr::EvalContext;
+    use crate::ufo::param_card::ParamCard;
     use crate::ufo::{PdgCode, UfoModel};
     use std::sync::Once;
 
     static mut MODEL: Option<UfoModel> = None;
+    static mut CONTEXT: Option<EvalContext> = None;
+    static mut CONTEXT_RESTRICTED: Option<EvalContext> = None;
     static INIT: Once = Once::new();
 
     fn initialize() {
         INIT.call_once(|| unsafe {
-            MODEL = Some(UfoModel::load("tests/models_json/sm_mg5").unwrap());
+            let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
+            let restriction = ParamCard::read(&"tests/models/sm_mg5/restrict_default.dat").unwrap();
+            CONTEXT = Some(EvalContext::from_model(&model).unwrap());
+            CONTEXT_RESTRICTED =
+                Some(EvalContext::from_restricted_model(&model, &restriction).unwrap());
+            MODEL = Some(model);
         });
     }
 
-    fn count_graphs(incoming: &[i64], outgoing: &[i64], model: &UfoModel) -> usize {
+    fn count_graphs(
+        incoming: &[i64],
+        outgoing: &[i64],
+        model: &UfoModel,
+        context: &EvalContext,
+    ) -> usize {
         let inc: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let out: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let skeleton = super::UncoloredSkeleton::new(&inc, &out, model).unwrap();
+        let skeleton = super::UncoloredSkeleton::new(&inc, &out, model, context).unwrap();
         // skeleton.pretty_print();
         skeleton.count_graphs()
     }
 
-    fn verify_ordering(incoming: &[i64], outgoing: &[i64], model: &UfoModel) {
+    fn verify_ordering(
+        incoming: &[i64],
+        outgoing: &[i64],
+        model: &UfoModel,
+        context: &EvalContext,
+    ) {
         // Verify that particles appear in each Fragment in the same order as in the corresponding
         // vertex
         let inc: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
         let out: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let skeleton = super::UncoloredSkeleton::new(&inc, &out, model).unwrap();
+        let skeleton = super::UncoloredSkeleton::new(&inc, &out, model, context).unwrap();
         for level in skeleton.levels.iter() {
             for (id, bone) in level.level.iter() {
                 for fragment in bone.fragments.iter() {
@@ -225,338 +247,503 @@ mod test {
         }
     }
 
-    // The expected number of graphs was computed using MG5_aMC@NLO version 2.8.2
-    // using the 'sm-full' model and including all QCD and QED contributions.
+    mod unrestricted {
+        fn count_graphs(incoming: &[i64], outgoing: &[i64]) -> usize {
+            unsafe {
+                super::initialize();
+                super::count_graphs(
+                    incoming,
+                    outgoing,
+                    super::MODEL.as_ref().unwrap(),
+                    super::CONTEXT.as_ref().unwrap(),
+                )
+            }
+        }
 
-    #[test]
-    fn test_emem_emem() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, 11], &[11, 11], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 6);
-    }
+        fn verify_ordering(incoming: &[i64], outgoing: &[i64]) {
+            unsafe {
+                super::initialize();
+                super::verify_ordering(
+                    incoming,
+                    outgoing,
+                    super::MODEL.as_ref().unwrap(),
+                    super::CONTEXT.as_ref().unwrap(),
+                );
+            }
+        }
 
-    #[test]
-    fn test_ema_ema() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, 22], &[11, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 2);
-    }
+        // The expected number of graphs was computed using MG5_aMC@NLO version 2.8.2
+        // using the 'sm-full' model and including all QCD and QED contributions.
 
-    #[test]
-    fn test_ema_emaa() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, 22], &[11, 22, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 6);
-    }
+        #[test]
+        fn test_emem_emem() {
+            assert_eq!(count_graphs(&[11, 11], &[11, 11],), 6);
+        }
 
-    #[test]
-    fn test_emem_emema() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, 11], &[11, 11, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 24);
-    }
+        #[test]
+        fn test_ema_ema() {
+            assert_eq!(count_graphs(&[11, 22], &[11, 22],), 2);
+        }
 
-    #[test]
-    fn test_emem_ememepem() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, 11], &[11, 11, -11, 11], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 348);
-    }
+        #[test]
+        fn test_ema_emaa() {
+            assert_eq!(count_graphs(&[11, 22], &[11, 22, 22],), 6);
+        }
 
-    #[test]
-    fn test_epem_epemepem() {
-        initialize();
-        let n = unsafe { count_graphs(&[-11, 11], &[-11, 11, -11, 11], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 348);
-    }
+        #[test]
+        fn test_emem_emema() {
+            assert_eq!(count_graphs(&[11, 11], &[11, 11, 22],), 24);
+        }
 
-    #[test]
-    fn test_epem_epemepemepem() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[-11, 11],
-                &[-11, 11, -11, 11, -11, 11],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 54312);
-    }
+        #[test]
+        fn test_emem_ememepem() {
+            assert_eq!(count_graphs(&[11, 11], &[11, 11, -11, 11],), 348);
+        }
 
-    #[test]
-    fn test_uux_uux() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[2, -2], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 6);
-    }
+        #[test]
+        fn test_epem_epemepem() {
+            assert_eq!(count_graphs(&[-11, 11], &[-11, 11, -11, 11],), 348);
+        }
 
-    #[test]
-    fn test_uux_gg() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 3);
-    }
-
-    #[test]
-    fn test_uux_ggg() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[21, 21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 16);
-    }
-
-    #[test]
-    fn test_uux_gggg() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[21, 21, 21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 123);
-    }
-
-    #[test]
-    fn test_uux_ddxgg() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[1, -1, 21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 108);
-    }
-
-    #[test]
-    fn test_gg_gg() {
-        initialize();
-        let n = unsafe { count_graphs(&[21, 21], &[21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 4);
-    }
-
-    #[test]
-    fn test_gg_ggg() {
-        initialize();
-        let n = unsafe { count_graphs(&[21, 21], &[21, 21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 25);
-    }
-
-    #[test]
-    fn test_gg_gggg() {
-        initialize();
-        let n = unsafe { count_graphs(&[21, 21], &[21, 21, 21, 21], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 220);
-    }
-
-    #[test]
-    fn test_gg_gggggg() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[21, 21, 21, 21, 21, 21],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 34300);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbx() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 133);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxg() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5, 21],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 874);
-    }
-
-    #[test]
-    fn test_gg_bbxa() {
-        initialize();
-        let n = unsafe { count_graphs(&[21, 21], &[5, -5, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 8);
-    }
-
-    #[test]
-    fn test_epem_epvemumvmx() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, -11], &[-11, 12, 13, -14], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 24);
-    }
-
-    #[test]
-    fn test_uux_wpwm() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[24, -24], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 5);
-    }
-
-    #[test]
-    fn test_uux_wpwma() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[24, -24, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 25);
-    }
-
-    #[test]
-    fn test_uux_epvemumvmx() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[-11, 12, 13, -14], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 11);
-    }
-
-    #[test]
-    fn test_uux_epvemumvmxa() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[-11, 12, 13, -14, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 69);
-    }
-
-    #[test]
-    fn test_uux_bbxa() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[5, -5, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 17);
-    }
-
-    #[test]
-    fn test_uux_wpbtxa() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[24, 5, -6, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 92);
-    }
-
-    #[test]
-    fn test_uux_wpwmbbxa() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[24, -24, 5, -5, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 1909);
-    }
-
-    #[test]
-    fn test_epem_wpwmza() {
-        initialize();
-        let n = unsafe { count_graphs(&[11, -11], &[24, -24, 23, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 117);
-    }
-
-    #[test]
-    fn test_aa_wpwma() {
-        initialize();
-        let n = unsafe { count_graphs(&[22, 22], &[24, -24, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 12);
-    }
-
-    #[test]
-    fn test_az_wpwm() {
-        initialize();
-        let n = unsafe { count_graphs(&[22, 23], &[24, -24], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 3);
-    }
-
-    #[test]
-    fn test_uux_wpwmza() {
-        initialize();
-        let n = unsafe { count_graphs(&[2, -2], &[24, -24, 23, 22], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 160);
-    }
-
-    #[test]
-    fn test_uux_epvemumvmxbbxa() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[2, -2],
-                &[-11, 12, 13, -14, 5, -5, 22],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 5071);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxa() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5, 22],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 1078);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxvtvtx() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5, 16, -16],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 1746);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxag() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5, 22, 21],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 7636);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxgg() {
-        initialize();
-        let n = unsafe {
-            count_graphs(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5, 21, 21],
-                MODEL.as_ref().unwrap(),
-            )
-        };
-        assert_eq!(n, 7777);
-    }
-
-    #[test]
-    fn test_gg_ttxhhh() {
-        initialize();
-        let n = unsafe { count_graphs(&[21, 21], &[6, -6, 25, 25, 25], MODEL.as_ref().unwrap()) };
-        assert_eq!(n, 266);
-    }
-
-    #[test]
-
-    fn test_ordering_epem_epvemumvmx() {
-        initialize();
-        unsafe { verify_ordering(&[11, -11], &[-11, 12, 13, -14], MODEL.as_ref().unwrap()) };
-    }
-
-    #[test]
-    fn test_ordering_gg_epvemumvmxbbxgg() {
-        initialize();
-        unsafe {
-            verify_ordering(
-                &[21, 21],
-                &[-11, 12, 13, -14, 5, -5, 21, 21],
-                MODEL.as_ref().unwrap(),
+        #[test]
+        fn test_epem_epemepemepem() {
+            assert_eq!(
+                count_graphs(&[-11, 11], &[-11, 11, -11, 11, -11, 11],),
+                54312
             );
-        };
+        }
+
+        #[test]
+        fn test_uux_uux() {
+            assert_eq!(count_graphs(&[2, -2], &[2, -2],), 6);
+        }
+
+        #[test]
+        fn test_uux_gg() {
+            assert_eq!(count_graphs(&[2, -2], &[21, 21],), 3);
+        }
+
+        #[test]
+        fn test_uux_ggg() {
+            assert_eq!(count_graphs(&[2, -2], &[21, 21, 21],), 16);
+        }
+
+        #[test]
+        fn test_uux_gggg() {
+            assert_eq!(count_graphs(&[2, -2], &[21, 21, 21, 21],), 123);
+        }
+
+        #[test]
+        fn test_uux_ddxgg() {
+            assert_eq!(count_graphs(&[2, -2], &[1, -1, 21, 21],), 108);
+        }
+
+        #[test]
+        fn test_gg_gg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21],), 4);
+        }
+
+        #[test]
+        fn test_gg_ggg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21, 21],), 25);
+        }
+
+        #[test]
+        fn test_gg_gggg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21, 21, 21],), 220);
+        }
+
+        #[test]
+        fn test_gg_gggggg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21, 21, 21, 21, 21],), 34300);
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbx() {
+            assert_eq!(count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5],), 133);
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxg() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21],),
+                874
+            );
+        }
+
+        #[test]
+        fn test_gg_bbxa() {
+            assert_eq!(count_graphs(&[21, 21], &[5, -5, 22],), 8);
+        }
+
+        #[test]
+        fn test_epem_epvemumvmx() {
+            assert_eq!(count_graphs(&[11, -11], &[-11, 12, 13, -14],), 24);
+        }
+
+        #[test]
+        fn test_uux_wpwm() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24],), 5);
+        }
+
+        #[test]
+        fn test_uux_wpwma() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24, 22],), 25);
+        }
+
+        #[test]
+        fn test_uux_epvemumvmx() {
+            assert_eq!(count_graphs(&[2, -2], &[-11, 12, 13, -14],), 11);
+        }
+
+        #[test]
+        fn test_uux_epvemumvmxa() {
+            assert_eq!(count_graphs(&[2, -2], &[-11, 12, 13, -14, 22],), 69);
+        }
+
+        #[test]
+        fn test_uux_bbxa() {
+            assert_eq!(count_graphs(&[2, -2], &[5, -5, 22],), 17);
+        }
+
+        #[test]
+        fn test_uux_wpbtxa() {
+            assert_eq!(count_graphs(&[2, -2], &[24, 5, -6, 22],), 92);
+        }
+
+        #[test]
+        fn test_uux_wpwmbbxa() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24, 5, -5, 22],), 1909);
+        }
+
+        #[test]
+        fn test_epem_wpwmza() {
+            assert_eq!(count_graphs(&[11, -11], &[24, -24, 23, 22],), 117);
+        }
+
+        #[test]
+        fn test_aa_wpwma() {
+            assert_eq!(count_graphs(&[22, 22], &[24, -24, 22],), 12);
+        }
+
+        #[test]
+        fn test_az_wpwm() {
+            assert_eq!(count_graphs(&[22, 23], &[24, -24],), 3);
+        }
+
+        #[test]
+        fn test_uux_wpwmza() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24, 23, 22],), 160);
+        }
+
+        #[test]
+        fn test_uux_epvemumvmxbbxa() {
+            assert_eq!(
+                count_graphs(&[2, -2], &[-11, 12, 13, -14, 5, -5, 22],),
+                5071
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxa() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 22],),
+                1078
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxvtvtx() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 16, -16],),
+                1746
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxag() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 22, 21],),
+                7636
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxgg() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21, 21],),
+                7777
+            );
+        }
+
+        #[test]
+        fn test_gg_ttxhhh() {
+            assert_eq!(count_graphs(&[21, 21], &[6, -6, 25, 25, 25],), 266);
+        }
+
+        #[test]
+        fn test_uux_usxuxs() {
+            assert_eq!(count_graphs(&[2, -2], &[2, -3, 3, -2],), 178);
+        }
+
+        #[test]
+        fn test_ordering_epem_epvemumvmx() {
+            verify_ordering(&[11, -11], &[-11, 12, 13, -14])
+        }
+
+        #[test]
+        fn test_ordering_gg_epvemumvmxbbxgg() {
+            verify_ordering(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21, 21]);
+        }
+    }
+
+    mod restricted_default {
+        fn count_graphs(incoming: &[i64], outgoing: &[i64]) -> usize {
+            unsafe {
+                super::initialize();
+                super::count_graphs(
+                    incoming,
+                    outgoing,
+                    super::MODEL.as_ref().unwrap(),
+                    super::CONTEXT_RESTRICTED.as_ref().unwrap(),
+                )
+            }
+        }
+
+        fn verify_ordering(incoming: &[i64], outgoing: &[i64]) {
+            unsafe {
+                super::initialize();
+                super::verify_ordering(
+                    incoming,
+                    outgoing,
+                    super::MODEL.as_ref().unwrap(),
+                    super::CONTEXT_RESTRICTED.as_ref().unwrap(),
+                );
+            }
+        }
+
+        // The expected number of graphs was computed using MG5_aMC@NLO version 2.8.2
+        // using the 'sm' model and including all QCD and QED contributions.
+
+        #[test]
+        fn test_emem_emem() {
+            assert_eq!(count_graphs(&[11, 11], &[11, 11]), 4);
+        }
+
+        #[test]
+        fn test_ema_ema() {
+            assert_eq!(count_graphs(&[11, 22], &[11, 22],), 2);
+        }
+
+        #[test]
+        fn test_ema_emaa() {
+            assert_eq!(count_graphs(&[11, 22], &[11, 22, 22],), 6);
+        }
+
+        #[test]
+        fn test_emem_emema() {
+            assert_eq!(count_graphs(&[11, 11], &[11, 11, 22],), 16);
+        }
+
+        #[test]
+        fn test_emem_ememepem() {
+            assert_eq!(count_graphs(&[11, 11], &[11, 11, -11, 11],), 144);
+        }
+
+        #[test]
+        fn test_epem_epemepem() {
+            assert_eq!(count_graphs(&[-11, 11], &[-11, 11, -11, 11],), 144);
+        }
+
+        #[test]
+        fn test_epem_epemepemepem() {
+            assert_eq!(
+                count_graphs(&[-11, 11], &[-11, 11, -11, 11, -11, 11],),
+                13896
+            );
+        }
+
+        #[test]
+        fn test_uux_uux() {
+            assert_eq!(count_graphs(&[2, -2], &[2, -2],), 6);
+        }
+
+        #[test]
+        fn test_uux_gg() {
+            assert_eq!(count_graphs(&[2, -2], &[21, 21],), 3);
+        }
+
+        #[test]
+        fn test_uux_ggg() {
+            assert_eq!(count_graphs(&[2, -2], &[21, 21, 21],), 16);
+        }
+
+        #[test]
+        fn test_uux_gggg() {
+            assert_eq!(count_graphs(&[2, -2], &[21, 21, 21, 21],), 123);
+        }
+
+        #[test]
+        fn test_uux_ddxgg() {
+            assert_eq!(count_graphs(&[2, -2], &[1, -1, 21, 21],), 108);
+        }
+
+        #[test]
+        fn test_gg_gg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21],), 4);
+        }
+
+        #[test]
+        fn test_gg_ggg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21, 21],), 25);
+        }
+
+        #[test]
+        fn test_gg_gggg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21, 21, 21],), 220);
+        }
+
+        #[test]
+        fn test_gg_gggggg() {
+            assert_eq!(count_graphs(&[21, 21], &[21, 21, 21, 21, 21, 21],), 34300);
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbx() {
+            assert_eq!(count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5],), 87);
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxg() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21],),
+                558
+            );
+        }
+
+        #[test]
+        fn test_gg_bbxa() {
+            assert_eq!(count_graphs(&[21, 21], &[5, -5, 22],), 8);
+        }
+
+        #[test]
+        fn test_epem_epvemumvmx() {
+            assert_eq!(count_graphs(&[11, -11], &[-11, 12, 13, -14],), 18);
+        }
+
+        #[test]
+        fn test_uux_wpwm() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24],), 3);
+        }
+
+        #[test]
+        fn test_uux_wpwma() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24, 22],), 15);
+        }
+
+        #[test]
+        fn test_uux_epvemumvmx() {
+            assert_eq!(count_graphs(&[2, -2], &[-11, 12, 13, -14],), 9);
+        }
+
+        #[test]
+        fn test_uux_epvemumvmxa() {
+            assert_eq!(count_graphs(&[2, -2], &[-11, 12, 13, -14, 22],), 55);
+        }
+
+        #[test]
+        fn test_uux_bbxa() {
+            assert_eq!(count_graphs(&[2, -2], &[5, -5, 22],), 12);
+        }
+
+        #[test]
+        fn test_uux_wpbtxa() {
+            assert_eq!(count_graphs(&[2, -2], &[24, 5, -6, 22],), 57);
+        }
+
+        #[test]
+        fn test_uux_wpwmbbxa() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24, 5, -5, 22],), 625);
+        }
+
+        #[test]
+        fn test_epem_wpwmza() {
+            assert_eq!(count_graphs(&[11, -11], &[24, -24, 23, 22],), 90);
+        }
+
+        #[test]
+        fn test_aa_wpwma() {
+            assert_eq!(count_graphs(&[22, 22], &[24, -24, 22],), 12);
+        }
+
+        #[test]
+        fn test_az_wpwm() {
+            assert_eq!(count_graphs(&[22, 23], &[24, -24],), 3);
+        }
+
+        #[test]
+        fn test_uux_wpwmza() {
+            assert_eq!(count_graphs(&[2, -2], &[24, -24, 23, 22],), 96);
+        }
+
+        #[test]
+        fn test_uux_epvemumvmxbbxa() {
+            assert_eq!(
+                count_graphs(&[2, -2], &[-11, 12, 13, -14, 5, -5, 22],),
+                2221
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxa() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 22],),
+                690
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxvtvtx() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 16, -16],),
+                1174
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxag() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 22, 21],),
+                4764
+            );
+        }
+
+        #[test]
+        fn test_gg_epvemumvmxbbxgg() {
+            assert_eq!(
+                count_graphs(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21, 21],),
+                4875
+            );
+        }
+
+        #[test]
+        fn test_gg_ttxhhh() {
+            assert_eq!(count_graphs(&[21, 21], &[6, -6, 25, 25, 25],), 266);
+        }
+
+        #[test]
+        fn test_uux_usxuxs() {
+            assert_eq!(count_graphs(&[2, -2], &[2, -3, 3, -2],), 110);
+        }
+
+        #[test]
+        fn test_ordering_epem_epvemumvmx() {
+            verify_ordering(&[11, -11], &[-11, 12, 13, -14])
+        }
+
+        #[test]
+        fn test_ordering_gg_epvemumvmxbbxgg() {
+            verify_ordering(&[21, 21], &[-11, 12, 13, -14, 5, -5, 21, 21]);
+        }
     }
 }

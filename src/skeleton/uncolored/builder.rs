@@ -1,4 +1,8 @@
-use crate::skeleton::uncolored::vertex_list::{VertexLeaf, VertexList, VertexListParticle};
+use crate::math_expr::EvalContext;
+use crate::skeleton::uncolored::vertex_checker::VertexChecker;
+use crate::skeleton::uncolored::vertex_list::{
+    VertexLeaf, VertexLeafState, VertexList, VertexListParticle,
+};
 use crate::skeleton::uncolored::{
     Bone, BoneFragment, External, Id, InternalId, Level, UncoloredSkeleton,
 };
@@ -9,6 +13,7 @@ pub struct SkeletonBuilder<'a> {
     external: ExternalLevel,
     levels: Vec<InternalLevel>,
     model: &'a ufo::UfoModel,
+    vertex_checker: VertexChecker<'a>,
     vertices: VertexList<'a>,
     last: Id,
 }
@@ -17,8 +22,9 @@ impl<'a> SkeletonBuilder<'a> {
         incoming: &[ufo::PdgCode],
         outgoing: &[ufo::PdgCode],
         model: &ufo::UfoModel,
+        context: &'a EvalContext,
     ) -> Option<UncoloredSkeleton> {
-        let mut builder = SkeletonBuilder::new(incoming, outgoing, model);
+        let mut builder = SkeletonBuilder::new(incoming, outgoing, model, context);
         let max_level = incoming.len() + outgoing.len() - 1;
         for ilevel in 2..=max_level {
             builder.construct_level(ilevel);
@@ -31,12 +37,14 @@ impl<'a> SkeletonBuilder<'a> {
         incoming: &[ufo::PdgCode],
         outgoing: &[ufo::PdgCode],
         model: &'a ufo::UfoModel,
+        context: &'a EvalContext,
     ) -> SkeletonBuilder<'a> {
         let max_level = incoming.len() + outgoing.len() - 1;
         let last = Id {
             pdg_code: model.anti_pdg_code(incoming[0]),
             internal: InternalId((2 << (max_level - 1)) - 1, max_level),
         };
+        let vertex_checker = VertexChecker::new(context, model);
         SkeletonBuilder {
             external: ExternalLevel::new(&incoming[1..], outgoing, model),
             levels: Vec::new(),
@@ -47,6 +55,7 @@ impl<'a> SkeletonBuilder<'a> {
                 })
             }),
             model,
+            vertex_checker,
             last,
         }
     }
@@ -54,13 +63,20 @@ impl<'a> SkeletonBuilder<'a> {
     fn construct_level(&mut self, ilevel: usize) {
         let mut builder = InternalLevel::new(ilevel as u8);
         if ilevel == 2 {
-            builder.combine(&self.external, &self.external, &self.vertices, &self.model);
+            builder.combine(
+                &self.external,
+                &self.external,
+                &self.vertices,
+                &self.model,
+                &mut self.vertex_checker,
+            );
         } else {
             builder.combine(
                 &self.external,
                 &self.levels[ilevel - 3],
                 &self.vertices,
                 &self.model,
+                &mut self.vertex_checker,
             );
         }
         for i in 2..=(ilevel / 2) {
@@ -69,6 +85,7 @@ impl<'a> SkeletonBuilder<'a> {
                 &self.levels[ilevel - i - 2],
                 &self.vertices,
                 &self.model,
+                &mut self.vertex_checker,
             );
         }
         self.levels.push(builder);
@@ -180,15 +197,21 @@ impl InternalLevel {
         }
     }
 
-    fn combine<L, R>(&mut self, left: &L, right: &R, vertices: &VertexList, model: &ufo::UfoModel)
-    where
+    fn combine<L, R>(
+        &mut self,
+        left: &L,
+        right: &R,
+        vertices: &VertexList,
+        model: &ufo::UfoModel,
+        checker: &mut VertexChecker,
+    ) where
         L: LevelBuilder,
         R: LevelBuilder,
     {
         for &left_id in left.particles().keys() {
             let vl = &vertices.contents[&left_id.pdg_code];
             for &right_id in right.particles().keys() {
-                self.add_complete_matches(left_id, right_id, &vl, model);
+                self.add_complete_matches(left_id, right_id, &vl, checker, model);
             }
             if let Some(incomplete) = right.incomplete().get(&left_id.pdg_code) {
                 self.add_incomplete_matches(left_id, incomplete, model);
@@ -208,6 +231,7 @@ impl InternalLevel {
         left_id: Id,
         right_id: Id,
         vertices: &VertexListParticle,
+        checker: &mut VertexChecker,
         model: &ufo::UfoModel,
     ) {
         if !left_id.is_independent(right_id) {
@@ -221,6 +245,9 @@ impl InternalLevel {
             None => return,
         };
         for v in vs.iter() {
+            if !checker.check_vertex(v.vertex) {
+                continue;
+            }
             let combination = specialize_vertex(v, left_id, right_id, model);
             self.insert_combination(combination);
         }
@@ -347,30 +374,31 @@ impl Incomplete {
 fn specialize_vertex(vertex: &VertexLeaf, p1: Id, p2: Id, model: &ufo::UfoModel) -> Combination {
     let internal = p1.internal + p2.internal;
     let mut constituents = vec![p1, p2];
-    match vertex {
-        VertexLeaf::Complete(c) => {
-            let (constituents, outgoing) = order_constituents(&c.vertex.name, constituents, model);
+    match &vertex.state {
+        VertexLeafState::Complete(out) => {
+            let (constituents, outgoing) =
+                order_constituents(&vertex.vertex.name, constituents, model);
             let fragment = BoneFragment {
-                vertex: c.vertex.name.clone(),
+                vertex: vertex.vertex.name.clone(),
                 constituents,
                 outgoing,
             };
             let id = Id {
-                pdg_code: model.anti_pdg_code(c.out),
+                pdg_code: model.anti_pdg_code(*out),
                 internal,
             };
             Combination::Complete { id, fragment }
         }
-        VertexLeaf::Incomplete(c) => {
+        VertexLeafState::Incomplete(remaining) => {
             constituents.sort();
             let incomplete = Incomplete {
                 internal,
-                vertex: c.vertex.name.clone(),
-                remaining: c.remaining[1..].to_owned(),
+                vertex: vertex.vertex.name.clone(),
+                remaining: remaining[1..].to_owned(),
                 constituents,
             };
             Combination::Incomplete {
-                pdg: c.remaining[0],
+                pdg: remaining[0],
                 incomplete,
             }
         }

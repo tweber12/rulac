@@ -2,6 +2,7 @@ use crate::ufo::{PdgCode, Vertex};
 use permutohedron::LexicalPermutation;
 use std::collections::HashMap;
 
+#[derive(Debug)]
 pub struct VertexList<'a> {
     pub contents: HashMap<PdgCode, VertexListParticle<'a>>,
 }
@@ -37,6 +38,7 @@ impl<'a> VertexList<'a> {
         }
     }
 }
+#[derive(Debug)]
 pub struct VertexListParticle<'a> {
     pub contents: HashMap<PdgCode, Vec<VertexLeaf<'a>>>,
 }
@@ -53,32 +55,27 @@ impl<'a> VertexListParticle<'a> {
             .push(VertexLeaf::new(particles, vertex));
     }
 }
-pub struct CompleteParticle<'a> {
+
+#[derive(Debug)]
+pub struct VertexLeaf<'a> {
     pub vertex: &'a Vertex,
-    pub out: PdgCode,
-}
-pub struct IncompleteVertex<'a> {
-    pub vertex: &'a Vertex,
-    pub remaining: Vec<PdgCode>,
-}
-pub enum VertexLeaf<'a> {
-    Complete(CompleteParticle<'a>),
-    Incomplete(IncompleteVertex<'a>),
+    pub state: VertexLeafState,
 }
 impl<'a> VertexLeaf<'a> {
     fn new(particles: &[PdgCode], vertex: &'a Vertex) -> VertexLeaf<'a> {
-        if particles.len() == 3 {
-            VertexLeaf::Complete(CompleteParticle {
-                vertex,
-                out: particles[2],
-            })
+        let state = if particles.len() == 3 {
+            VertexLeafState::Complete(particles[2])
         } else {
-            VertexLeaf::Incomplete(IncompleteVertex {
-                vertex,
-                remaining: particles[2..].to_owned(),
-            })
-        }
+            VertexLeafState::Incomplete(particles[2..].to_owned())
+        };
+        VertexLeaf { vertex, state }
     }
+}
+
+#[derive(Debug)]
+pub enum VertexLeafState {
+    Complete(PdgCode),
+    Incomplete(Vec<PdgCode>),
 }
 
 #[cfg(test)]

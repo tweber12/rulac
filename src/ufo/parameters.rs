@@ -1,4 +1,4 @@
-use crate::ufo::{Parameter, UfoModel};
+use crate::ufo::{LhaBlock, Parameter, UfoModel};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
@@ -25,7 +25,7 @@ impl ExternalParameters {
     ) -> Result<(), ExternalError> {
         let mut external = HashMap::new();
         for parameter in model.parameters.values() {
-            let (block, name, value) = match parameter {
+            let (LhaBlock(block), name, value) = match parameter {
                 Parameter::Internal { .. } => continue,
                 Parameter::External {
                     lha_block,

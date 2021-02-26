@@ -17,6 +17,7 @@ num-rational = "0.3"
 rustpython-parser = "0.1.2"
 serde_repr = "0.1.6"
 cached = "0.23.0"
+nom = "6.1.2"
 
 [dev-dependencies]
 criterion = "0.3.4"

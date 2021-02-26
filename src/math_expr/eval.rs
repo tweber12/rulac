@@ -3,6 +3,7 @@ use crate::math_expr::{
     BinaryOperator, Comparison, ComparisonOperator, Function, MathExpr, MathExprPlain, Number,
     Tensor, UnaryOperator,
 };
+use crate::ufo::param_card::ParamCard;
 use crate::ufo::parameters::ExternalParameters;
 use crate::ufo::{Parameter, UfoMath, UfoModel};
 use num_complex::Complex64;
@@ -32,6 +33,56 @@ impl EvalContext {
         context.add_computed_variables(internal)?;
         Ok(context)
     }
+
+    pub fn from_model(model: &UfoModel) -> Result<EvalContext, EvalError> {
+        let mut context = EvalContext::new();
+        let mut internal = Vec::new();
+        for param in model.parameters.values() {
+            match param {
+                Parameter::Internal { name, expr, .. } => {
+                    internal.push((name, expr));
+                }
+                Parameter::External { name, value, .. } => {
+                    context.add_variable(name.clone(), *value);
+                }
+            }
+        }
+        context.add_computed_variables(internal.into_iter())?;
+        Ok(context)
+    }
+
+    pub fn from_restricted_model(
+        model: &UfoModel,
+        restrict: &ParamCard,
+    ) -> Result<EvalContext, EvalError> {
+        let mut context = EvalContext::new();
+        let mut internal = Vec::new();
+        for param in model.parameters.values() {
+            match param {
+                Parameter::Internal { name, expr, .. } => {
+                    internal.push((name, expr));
+                }
+                Parameter::External {
+                    name,
+                    value,
+                    lha_block,
+                    lha_code,
+                    ..
+                } => {
+                    if lha_code.len() > 1 {
+                        context.add_variable(name.clone(), *value);
+                    } else if let Some(value) = restrict.lookup(lha_block, &lha_code[0]) {
+                        context.add_variable(name.clone(), Number::from(value));
+                    } else {
+                        context.add_variable(name.clone(), *value);
+                    }
+                }
+            }
+        }
+        context.add_computed_variables(internal.into_iter())?;
+        Ok(context)
+    }
+
     pub fn add_variable<N: Into<Number>>(&mut self, name: String, value: N) {
         self.variables.insert(name, value.into());
     }
@@ -222,6 +273,7 @@ fn eval_condition<T: Tensor>(
 mod test {
     use crate::math_expr::eval::{eval_ufo_math, EvalContext};
     use crate::math_expr::Number;
+    use crate::ufo::param_card::ParamCard;
     use crate::ufo::parameters::ExternalParameters;
     use crate::ufo::{UfoMath, UfoModel};
     use num_complex::Complex64;
@@ -346,6 +398,40 @@ mod test {
         let etaws = 0.341_f64;
         let rhows = 0.132_f64;
         let ymb = 4.2_f64;
+        // Internal
+        let aew = 1. / aewm1;
+        let mw = (mz.powi(2) / 2.
+            + (mz.powi(4) / 4. - (aew * PI * mz.powi(2)) / (gf * SQRT_2)).sqrt())
+        .sqrt();
+        let sw = (1. - mw.powi(2) / mz.powi(2)).sqrt();
+        let ckm1x3 = aws * lamws.powi(3) * (-(etaws * Complex64::i()) + rhows);
+        let ee = 2. * aew.sqrt() * PI.sqrt();
+        let vev = (2. * mw * sw) / ee;
+        let yb = (ymb * SQRT_2) / vev;
+        let i4x13 = ckm1x3 * yb;
+        assert_eq!(context.lookup("aEW").unwrap(), Number::from(aew));
+        assert_eq!(context.lookup("MW").unwrap(), Number::from(mw));
+        assert_eq!(context.lookup("sw").unwrap(), Number::from(sw));
+        assert_eq!(context.lookup("CKM1x3").unwrap(), Number::from(ckm1x3));
+        assert_eq!(context.lookup("I4x13").unwrap(), Number::from(i4x13));
+    }
+
+    #[test]
+    fn load_parameters_restricted() {
+        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
+        let restrict = ParamCard::read(&"tests/models/sm_mg5/restrict_default.dat").unwrap();
+        let context = EvalContext::from_restricted_model(&model, &restrict).unwrap();
+        assert_eq!(context.lookup("Me"), Some(Number::Real(0.0)));
+        assert_eq!(context.lookup("yme"), Some(Number::Real(0.0)));
+        // External
+        let mz = 91.188_f64;
+        let aewm1 = 1.325070e+02_f64;
+        let gf = 0.0000116639_f64;
+        let aws = Complex64::new(0.808, 0.);
+        let lamws = 0.0f64;
+        let etaws = 0.0f64;
+        let rhows = 0.0f64;
+        let ymb = 4.7_f64;
         // Internal
         let aew = 1. / aewm1;
         let mw = (mz.powi(2) / 2.

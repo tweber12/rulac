@@ -1,7 +1,8 @@
+pub mod param_card;
 pub mod parameters;
 
 use serde::de::DeserializeOwned;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::collections::HashMap;
 use std::fmt;
@@ -126,6 +127,27 @@ impl fmt::Display for PdgCode {
         p.fmt(f)
     }
 }
+
+/// The name of a block in a param card
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Serialize)]
+pub struct LhaBlock(String);
+impl<'de> Deserialize<'de> for LhaBlock {
+    fn deserialize<D>(deserializer: D) -> Result<Self, <D as Deserializer<'de>>::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let name = String::deserialize(deserializer)?;
+        Ok(LhaBlock(name.to_ascii_lowercase()))
+    }
+}
+
+/// The code for a parameter that is set in the param card
+///
+/// In the Supersymmetry Les Houches Accord, each parameter that can be set is represented by an
+/// integer. The file then contains a mapping of these integer codes to the value that is assigned
+/// to the parameter.
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct LhaCode(i64);
 
 #[derive(
     Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize_repr, Deserialize_repr,
@@ -267,9 +289,9 @@ pub enum Parameter {
         tex_name: String,
         value: f64,
         #[serde(rename = "lhablock")]
-        lha_block: String,
+        lha_block: LhaBlock,
         #[serde(rename = "lhacode")]
-        lha_code: Vec<i64>,
+        lha_code: Vec<LhaCode>,
     },
     #[serde(rename = "internal")]
     Internal {

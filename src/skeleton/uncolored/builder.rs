@@ -1,19 +1,25 @@
 use crate::math_expr::EvalContext;
+use crate::skeleton::uncolored::coupling_orders::CouplingOrderRestriction;
 use crate::skeleton::uncolored::vertex_checker::VertexChecker;
 use crate::skeleton::uncolored::vertex_list::{
     VertexLeaf, VertexLeafState, VertexList, VertexListParticle,
 };
-use crate::skeleton::uncolored::{
-    Bone, BoneFragment, External, Id, InternalId, Level, UncoloredSkeleton,
-};
-use crate::ufo;
-use std::collections::{HashMap, HashSet};
+use crate::skeleton::uncolored::{Id, InternalId, UncoloredSkeleton};
+use crate::skeleton::External;
+use crate::ufo::{PdgCode, UfoModel};
+use crate::{skeleton, ufo};
+use std::collections::hash_map::RandomState;
+use std::collections::HashMap;
+
+type Bone = skeleton::Bone<Id, String>;
+type BoneFragment = skeleton::BoneFragment<Id, String>;
 
 pub struct SkeletonBuilder<'a> {
-    external: ExternalLevel,
-    levels: Vec<InternalLevel>,
+    first_level: FirstLevel,
+    levels: Vec<Level>,
     model: &'a ufo::UfoModel,
     vertex_checker: VertexChecker<'a>,
+    order_restriction: &'a CouplingOrderRestriction,
     vertices: VertexList<'a>,
     last: Id,
 }
@@ -23,14 +29,21 @@ impl<'a> SkeletonBuilder<'a> {
         outgoing: &[ufo::PdgCode],
         model: &ufo::UfoModel,
         context: &'a EvalContext,
+        order_restriction: &'a CouplingOrderRestriction,
     ) -> Option<UncoloredSkeleton> {
-        let mut builder = SkeletonBuilder::new(incoming, outgoing, model, context);
+        let mut builder =
+            SkeletonBuilder::new(incoming, outgoing, model, context, order_restriction);
         let max_level = incoming.len() + outgoing.len() - 1;
         for ilevel in 2..=max_level {
             builder.construct_level(ilevel);
         }
-        builder.remove_unused();
-        builder.convert_levels()
+        let last = builder.extract_last_level();
+        if last.fragments.is_empty() {
+            return None;
+        }
+        let mut skeleton = builder.convert(last);
+        skeleton.remove_unused();
+        Some(skeleton)
     }
 
     fn new(
@@ -38,15 +51,17 @@ impl<'a> SkeletonBuilder<'a> {
         outgoing: &[ufo::PdgCode],
         model: &'a ufo::UfoModel,
         context: &'a EvalContext,
+        order_restriction: &'a CouplingOrderRestriction,
     ) -> SkeletonBuilder<'a> {
         let max_level = incoming.len() + outgoing.len() - 1;
         let last = Id {
-            pdg_code: model.anti_pdg_code(incoming[0]),
-            internal: InternalId((2 << (max_level - 1)) - 1, max_level),
+            pdg_code: incoming[0], //model.anti_pdg_code(incoming[0]),
+            internal: InternalId((2 << (max_level - 1)) - 1),
+            order: Default::default(),
         };
         let vertex_checker = VertexChecker::new(context, model);
         SkeletonBuilder {
-            external: ExternalLevel::new(&incoming[1..], outgoing, model),
+            first_level: FirstLevel::new(&incoming[1..], outgoing, model),
             levels: Vec::new(),
             vertices: VertexList::with_filter(&model.vertices, &|v: &ufo::Vertex| {
                 v.particles.iter().all(|p| {
@@ -56,171 +71,199 @@ impl<'a> SkeletonBuilder<'a> {
             }),
             model,
             vertex_checker,
+            order_restriction,
             last,
         }
     }
 
     fn construct_level(&mut self, ilevel: usize) {
-        let mut builder = InternalLevel::new(ilevel as u8);
-        if ilevel == 2 {
-            builder.combine(
-                &self.external,
-                &self.external,
-                &self.vertices,
-                &self.model,
-                &mut self.vertex_checker,
-            );
-        } else {
-            builder.combine(
-                &self.external,
-                &self.levels[ilevel - 3],
-                &self.vertices,
-                &self.model,
-                &mut self.vertex_checker,
-            );
+        let mut builder = LevelBuilder::new(
+            ilevel as u8,
+            &self.vertices,
+            &self.model,
+            &self.order_restriction,
+            &mut self.vertex_checker,
+        );
+        for i in 1..=(ilevel / 2) {
+            let left = i;
+            let right = ilevel - i;
+            match (left, right) {
+                (1, 1) => builder.combine(&self.first_level, &self.first_level),
+                (1, r) => builder.combine(&self.first_level, &self.levels[r - 2]),
+                (l, r) => builder.combine(&self.levels[l - 2], &self.levels[r - 2]),
+            }
         }
-        for i in 2..=(ilevel / 2) {
-            builder.combine(
-                &self.levels[i - 2],
-                &self.levels[ilevel - i - 2],
-                &self.vertices,
-                &self.model,
-                &mut self.vertex_checker,
-            );
-        }
-        self.levels.push(builder);
+        self.levels.push(builder.into_level())
     }
 
-    fn remove_unused(&mut self) {
-        let mut used = HashSet::new();
-        used.insert(self.last);
-        let mut iter = self.levels.iter_mut();
-        while let Some(level) = iter.next_back() {
-            level.remove_unused(&mut used);
-        }
-    }
-
-    fn convert_levels(mut self) -> Option<UncoloredSkeleton> {
-        let mut last_level = self
-            .levels
-            .pop()
-            .expect("BUG: There must be more than one level");
-        let last_level = last_level.particles.remove(&self.last)?.fragments;
-        let levels = self
-            .levels
+    fn extract_last_level(&mut self) -> Bone {
+        let last_level = self.levels.pop().map(|l| l.complete).unwrap_or_default();
+        let last_level: Vec<_> = last_level
             .into_iter()
-            .map(|level| level.convert())
+            .filter(|(id, _)| id.pdg_code == self.last.pdg_code)
             .collect();
-        Some(UncoloredSkeleton {
-            first_level: self.external.convert(),
-            levels,
-            last_level,
-            last_level_index: 0,
-        })
+        let mut fragments = Vec::new();
+        for bone in self.order_restriction.select_last_level(last_level) {
+            fragments.extend(bone.fragments)
+        }
+        Bone {
+            pdg_code: self.last.pdg_code,
+            id: self.last.internal,
+            fragments,
+        }
+    }
+
+    fn convert(self, last: Bone) -> UncoloredSkeleton {
+        skeleton::Skeleton {
+            external: self.first_level.convert(),
+            internal: self.levels.into_iter().map(|l| l.convert()).collect(),
+            left_out: 0,
+            last,
+        }
     }
 }
 
-trait LevelBuilder {
-    type Particle;
+trait AnyLevel {
+    type Item;
     fn level_number(&self) -> u8;
-    fn particles(&self) -> &HashMap<Id, Self::Particle>;
-    fn incomplete(&self) -> &HashMap<ufo::PdgCode, Vec<Incomplete>>;
+    fn complete(&self) -> &HashMap<Id, Self::Item>;
+    fn incomplete(&self) -> &HashMap<PdgCode, Vec<Incomplete>>;
 }
 
-#[derive(Clone, Debug)]
-struct ExternalLevel {
-    particles: HashMap<Id, External>,
-    incomplete: HashMap<ufo::PdgCode, Vec<Incomplete>>,
+struct FirstLevel {
+    complete: HashMap<Id, External>,
+    incomplete: HashMap<PdgCode, Vec<Incomplete>>,
 }
-impl ExternalLevel {
-    fn new(
-        incoming: &[ufo::PdgCode],
-        outgoing: &[ufo::PdgCode],
-        model: &ufo::UfoModel,
-    ) -> ExternalLevel {
-        let mut particles = HashMap::new();
-        for (i, &p) in incoming.iter().enumerate() {
-            particles.insert(
-                Id::from_external(p, i as u8),
-                External {
-                    particle: i,
-                    flipped: false,
-                },
-            );
-        }
-        for (i, &p) in outgoing.iter().enumerate() {
-            let anti = model.anti_pdg_code(p);
-            let i = i + incoming.len();
-            particles.insert(
-                Id::from_external(anti, i as u8),
-                External {
-                    particle: i,
-                    flipped: true,
-                },
-            );
-        }
-        ExternalLevel {
-            particles,
+impl FirstLevel {
+    fn new(incoming: &[PdgCode], outgoing: &[PdgCode], model: &UfoModel) -> FirstLevel {
+        let complete = incoming
+            .iter()
+            .map(|p| (p, true))
+            .chain(outgoing.iter().map(|p| (p, false)))
+            .enumerate()
+            .map(|(i, (pdg, flipped))| new_external(i, *pdg, flipped, model))
+            .collect();
+        FirstLevel {
+            complete,
             incomplete: HashMap::new(),
         }
     }
 
     fn convert(self) -> HashMap<Id, External> {
-        self.particles
+        self.complete
     }
 }
-impl LevelBuilder for ExternalLevel {
-    type Particle = External;
+impl AnyLevel for FirstLevel {
+    type Item = External;
     fn level_number(&self) -> u8 {
         1
     }
-    fn particles(&self) -> &HashMap<Id, External> {
-        &self.particles
+
+    fn complete(&self) -> &HashMap<Id, External> {
+        &self.complete
     }
-    fn incomplete(&self) -> &HashMap<ufo::PdgCode, Vec<Incomplete>> {
+
+    fn incomplete(&self) -> &HashMap<PdgCode, Vec<Incomplete>, RandomState> {
         &self.incomplete
     }
 }
 
-#[derive(Clone, Debug)]
-struct InternalLevel {
-    ilevel: u8,
-    particles: HashMap<Id, Bone>,
-    incomplete: HashMap<ufo::PdgCode, Vec<Incomplete>>,
+struct Level {
+    level_number: u8,
+    complete: HashMap<Id, Bone>,
+    incomplete: HashMap<PdgCode, Vec<Incomplete>>,
 }
-impl InternalLevel {
-    fn new(ilevel: u8) -> InternalLevel {
-        InternalLevel {
+impl Level {
+    fn convert(self) -> HashMap<Id, Bone> {
+        self.complete
+    }
+}
+
+impl AnyLevel for Level {
+    type Item = Bone;
+
+    fn level_number(&self) -> u8 {
+        self.level_number
+    }
+
+    fn complete(&self) -> &HashMap<Id, Self::Item, RandomState> {
+        &self.complete
+    }
+
+    fn incomplete(&self) -> &HashMap<PdgCode, Vec<Incomplete>, RandomState> {
+        &self.incomplete
+    }
+}
+
+fn new_external(
+    particle: usize,
+    pdg_code: PdgCode,
+    flipped: bool,
+    model: &UfoModel,
+) -> (Id, External) {
+    let pdg_code = if flipped {
+        model.anti_pdg_code(pdg_code)
+    } else {
+        pdg_code
+    };
+    let id = Id::from_external(pdg_code, particle as u8);
+    let internal = id.internal;
+    let external = External {
+        particle,
+        flipped,
+        pdg_code,
+        id: internal,
+    };
+    (id, external)
+}
+
+struct LevelBuilder<'a, 'b> {
+    ilevel: u8,
+    complete: HashMap<Id, Bone>,
+    incomplete: HashMap<ufo::PdgCode, Vec<Incomplete>>,
+    vertices: &'b VertexList<'a>,
+    model: &'a ufo::UfoModel,
+    order_checker: &'b CouplingOrderRestriction,
+    checker: &'b mut VertexChecker<'a>,
+}
+impl<'a, 'b> LevelBuilder<'a, 'b> {
+    fn new(
+        ilevel: u8,
+        vertices: &'b VertexList<'a>,
+        model: &'a ufo::UfoModel,
+        order_checker: &'b CouplingOrderRestriction,
+        checker: &'b mut VertexChecker<'a>,
+    ) -> LevelBuilder<'a, 'b> {
+        LevelBuilder {
             ilevel,
-            particles: HashMap::new(),
+            vertices,
+            model,
+            order_checker,
+            checker,
+            complete: HashMap::new(),
             incomplete: HashMap::new(),
         }
     }
 
-    fn combine<L, R>(
-        &mut self,
-        left: &L,
-        right: &R,
-        vertices: &VertexList,
-        model: &ufo::UfoModel,
-        checker: &mut VertexChecker,
-    ) where
-        L: LevelBuilder,
-        R: LevelBuilder,
+    fn combine<L, R>(&mut self, left: &L, right: &R)
+    where
+        L: AnyLevel,
+        R: AnyLevel,
     {
-        for &left_id in left.particles().keys() {
-            let vl = &vertices.contents[&left_id.pdg_code];
-            for &right_id in right.particles().keys() {
-                self.add_complete_matches(left_id, right_id, &vl, checker, model);
+        let same_level = left.level_number() == right.level_number();
+        for left_id in left.complete().keys() {
+            let vl = &self.vertices.contents[&left_id.pdg_code];
+            for right_id in right.complete().keys() {
+                self.add_complete_matches(&left_id, &right_id, &vl, same_level);
             }
             if let Some(incomplete) = right.incomplete().get(&left_id.pdg_code) {
-                self.add_incomplete_matches(left_id, incomplete, model);
+                self.add_incomplete_matches(&left_id, incomplete);
             }
         }
-        if left.level_number() != right.level_number() {
-            for &right_id in right.particles().keys() {
+        if !same_level {
+            for right_id in right.complete().keys() {
                 if let Some(incomplete) = left.incomplete().get(&right_id.pdg_code) {
-                    self.add_incomplete_matches(right_id, incomplete, model);
+                    self.add_incomplete_matches(&right_id, incomplete);
                 }
             }
         }
@@ -228,16 +271,15 @@ impl InternalLevel {
 
     fn add_complete_matches(
         &mut self,
-        left_id: Id,
-        right_id: Id,
+        left_id: &Id,
+        right_id: &Id,
         vertices: &VertexListParticle,
-        checker: &mut VertexChecker,
-        model: &ufo::UfoModel,
+        same_level: bool,
     ) {
         if !left_id.is_independent(right_id) {
             return;
         }
-        if left_id.level() == right_id.level() && left_id.internal > right_id.internal {
+        if same_level && left_id.internal > right_id.internal {
             return;
         }
         let vs = match vertices.contents.get(&right_id.pdg_code) {
@@ -245,29 +287,37 @@ impl InternalLevel {
             None => return,
         };
         for v in vs.iter() {
-            if !checker.check_vertex(v.vertex) {
+            if !self.checker.check_vertex(v.vertex) {
                 continue;
             }
-            let combination = specialize_vertex(v, left_id, right_id, model);
+            let order = match self.order_checker.add_vertex(
+                &left_id.order,
+                &right_id.order,
+                &v.vertex,
+                &self.model,
+            ) {
+                Some(order) => order,
+                None => continue,
+            };
+            let combination = specialize_vertex(v, left_id, right_id, &self.model, order);
             self.insert_combination(combination);
         }
     }
 
-    fn add_incomplete_matches(
-        &mut self,
-        left_id: Id,
-        incomplete: &[Incomplete],
-        model: &ufo::UfoModel,
-    ) {
+    fn add_incomplete_matches(&mut self, left_id: &Id, incomplete: &[Incomplete]) {
         for inc in incomplete {
-            let max = *inc
-                .constituents
-                .last()
-                .expect("BUG: The list of constituents of an incomplete vertex cannot be empty!");
-            if !left_id.internal.is_independent(inc.internal) || left_id < max {
+            let max =
+                inc.constituents.last().map(|id| id.internal).expect(
+                    "BUG: The list of constituents of an incomplete vertex cannot be empty!",
+                );
+            if !left_id.internal.is_independent(inc.internal) || left_id.internal < max {
                 continue;
             }
-            let combination = inc.add_particle(left_id, model);
+            let order = match self.order_checker.add_particle(&inc.order, &left_id.order) {
+                Some(order) => order,
+                None => continue,
+            };
+            let combination = inc.add_particle(left_id, order, &self.model);
             self.insert_combination(combination);
         }
     }
@@ -280,7 +330,9 @@ impl InternalLevel {
     }
 
     fn insert_fragment(&mut self, id: Id, fragment: BoneFragment) {
-        let bone = self.particles.entry(id).or_insert_with(|| Bone {
+        let bone = self.complete.entry(id).or_insert_with_key(|id| Bone {
+            pdg_code: id.pdg_code,
+            id: id.internal,
             fragments: Vec::new(),
         });
         bone.fragments.push(fragment);
@@ -290,34 +342,12 @@ impl InternalLevel {
         self.incomplete.entry(pdg).or_default().push(incomplete);
     }
 
-    fn convert(self) -> Level {
+    fn into_level(self) -> Level {
         Level {
-            level: self.particles,
+            level_number: self.ilevel,
+            complete: self.complete,
+            incomplete: self.incomplete,
         }
-    }
-
-    fn remove_unused(&mut self, used: &mut HashSet<Id>) {
-        self.particles.retain(|i, v| {
-            if !used.contains(i) {
-                return false;
-            }
-            for f in v.fragments.iter() {
-                used.extend(f.constituents.iter());
-            }
-            true
-        });
-    }
-}
-impl LevelBuilder for InternalLevel {
-    type Particle = Bone;
-    fn level_number(&self) -> u8 {
-        self.ilevel
-    }
-    fn particles(&self) -> &HashMap<Id, Bone> {
-        &self.particles
-    }
-    fn incomplete(&self) -> &HashMap<ufo::PdgCode, Vec<Incomplete>> {
-        &self.incomplete
     }
 }
 
@@ -335,25 +365,27 @@ enum Combination {
 #[derive(Clone, Debug)]
 struct Incomplete {
     internal: InternalId,
+    order: Vec<u8>,
     vertex: String,
     constituents: Vec<Id>,
     remaining: Vec<ufo::PdgCode>,
 }
 impl Incomplete {
-    fn add_particle(&self, particle_id: Id, model: &ufo::UfoModel) -> Combination {
+    fn add_particle(&self, particle_id: &Id, order: Vec<u8>, model: &ufo::UfoModel) -> Combination {
         let mut constituents = self.constituents.clone();
-        constituents.push(particle_id);
+        constituents.push(particle_id.clone());
         let internal = particle_id.internal + self.internal;
         if self.remaining.len() == 1 {
             let (constituents, outgoing) = order_constituents(&self.vertex, constituents, model);
             let fragment = BoneFragment {
-                vertex: self.vertex.clone(),
+                content: self.vertex.clone(),
                 constituents,
                 outgoing,
             };
             let id = Id {
                 pdg_code: model.anti_pdg_code(self.remaining[0]),
                 internal,
+                order,
             };
             Combination::Complete { id, fragment }
         } else {
@@ -362,6 +394,7 @@ impl Incomplete {
                 vertex: self.vertex.clone(),
                 constituents,
                 remaining: self.remaining[1..].to_owned(),
+                order,
             };
             Combination::Incomplete {
                 pdg: self.remaining[0],
@@ -371,31 +404,39 @@ impl Incomplete {
     }
 }
 
-fn specialize_vertex(vertex: &VertexLeaf, p1: Id, p2: Id, model: &ufo::UfoModel) -> Combination {
+fn specialize_vertex(
+    vertex: &VertexLeaf,
+    p1: &Id,
+    p2: &Id,
+    model: &ufo::UfoModel,
+    order: Vec<u8>,
+) -> Combination {
     let internal = p1.internal + p2.internal;
-    let mut constituents = vec![p1, p2];
+    let mut constituents = vec![p1.clone(), p2.clone()];
     match &vertex.state {
         VertexLeafState::Complete(out) => {
             let (constituents, outgoing) =
                 order_constituents(&vertex.vertex.name, constituents, model);
             let fragment = BoneFragment {
-                vertex: vertex.vertex.name.clone(),
+                content: vertex.vertex.name.clone(),
                 constituents,
                 outgoing,
             };
             let id = Id {
                 pdg_code: model.anti_pdg_code(*out),
                 internal,
+                order,
             };
             Combination::Complete { id, fragment }
         }
         VertexLeafState::Incomplete(remaining) => {
-            constituents.sort();
+            constituents.sort_by_key(|id| id.internal);
             let incomplete = Incomplete {
                 internal,
                 vertex: vertex.vertex.name.clone(),
                 remaining: remaining[1..].to_owned(),
                 constituents,
+                order,
             };
             Combination::Incomplete {
                 pdg: remaining[0],
@@ -415,32 +456,34 @@ fn order_constituents(
 }
 fn order_constituents_internal(
     particles: &[ufo::PdgCode],
-    constituents: Vec<Id>,
+    mut constituents: Vec<Id>,
 ) -> (Vec<Id>, usize) {
-    let mut taken = vec![false; constituents.len()];
-    let mut ordered = Vec::with_capacity(constituents.len());
+    let mut sorted = 0;
     let mut outgoing = None;
-    for (i, p) in particles.iter().enumerate() {
-        let mut found = false;
-        for (&id, t) in constituents.iter().zip(taken.iter_mut()) {
-            if *t || id.pdg_code != *p {
-                continue;
+    for (o, p) in particles.iter().enumerate() {
+        let mut location = None;
+        for (i, id) in constituents.iter().enumerate().skip(sorted) {
+            if id.pdg_code == *p {
+                location = Some(i);
+                break;
             }
-            ordered.push(id);
-            *t = true;
-            found = true;
-            break;
         }
-        if !found {
-            assert_eq!(outgoing, None);
-            outgoing = Some(i);
+        match location {
+            Some(l) => {
+                constituents.swap(sorted, l);
+                sorted += 1;
+            }
+            None => {
+                assert_eq!(outgoing, None);
+                outgoing = Some(o);
+            }
         }
     }
     let outgoing = match outgoing {
         Some(o) => o,
         None => unreachable!("BUG: There has to be an outgoing particle!"),
     };
-    (ordered, outgoing)
+    (constituents, outgoing)
 }
 
 #[cfg(test)]
@@ -454,11 +497,13 @@ mod test {
         let constituents = vec![
             Id {
                 pdg_code: PdgCode(23),
-                internal: InternalId(8, 1),
+                internal: InternalId(8),
+                order: Vec::new(),
             },
             Id {
                 pdg_code: PdgCode(23),
-                internal: InternalId(6, 2),
+                internal: InternalId(6),
+                order: Vec::new(),
             },
         ];
         let (cs, out) = super::order_constituents_internal(&particles, constituents.clone());
@@ -472,15 +517,17 @@ mod test {
         let constituents = vec![
             Id {
                 pdg_code: PdgCode(25),
-                internal: InternalId(8, 1),
+                internal: InternalId(8),
+                order: Vec::new(),
             },
             Id {
                 pdg_code: PdgCode(23),
-                internal: InternalId(6, 2),
+                internal: InternalId(6),
+                order: Vec::new(),
             },
         ];
         let (cs, out) = super::order_constituents_internal(&particles, constituents.clone());
         assert_eq!(out, 1);
-        assert_eq!(cs, vec![constituents[1], constituents[0]]);
+        assert_eq!(cs, vec![constituents[1].clone(), constituents[0].clone()]);
     }
 }

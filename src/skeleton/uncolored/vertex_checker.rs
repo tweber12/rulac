@@ -28,7 +28,6 @@ impl<'a> VertexChecker<'a> {
             present = present && !value.is_zero();
         }
         self.vertices.insert(vertex.name.clone(), present);
-        println!("{} -> {}", vertex.name, present);
         present
     }
 
@@ -41,7 +40,6 @@ impl<'a> VertexChecker<'a> {
             _ => unimplemented!(),
         };
         self.couplings.insert(name.to_string(), value);
-        println!("\t{} -> {:?}", name, value);
         value
     }
 }

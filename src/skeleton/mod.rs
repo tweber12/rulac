@@ -1,193 +1,105 @@
 pub mod colored;
 pub mod uncolored;
 
-pub use colored::{Bone, BoneFragment, BoneStructure, ColorId, Level, Skeleton};
+use crate::skeleton::uncolored::InternalId;
+use crate::ufo::PdgCode;
+use std::collections::{HashMap, HashSet};
+use std::hash::Hash;
 
-use crate::color::flow::ColorFlow;
-use crate::math_expr::EvalContext;
-use crate::ufo::{PdgCode, UfoModel};
-use colored::colorizer::Colorizer;
-use uncolored::UncoloredSkeleton;
-
-pub struct Builder<'a> {
-    colorizer: Colorizer<'a>,
-}
-impl<'a> Builder<'a> {
-    pub fn new(
-        incoming: &[PdgCode],
-        outgoing: &[PdgCode],
-        model: &'a UfoModel,
-        context: &EvalContext,
-    ) -> Option<Builder<'a>> {
-        UncoloredSkeleton::new(incoming, outgoing, model, context).map(|s| Builder {
-            colorizer: Colorizer::new(s, model),
-        })
-    }
-    pub fn get_skeleton(&self, color_flow: &ColorFlow) -> Option<Skeleton> {
-        self.colorizer.generate(color_flow)
-    }
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct External {
+    pub pdg_code: PdgCode,
+    pub id: InternalId,
+    pub particle: usize,
+    pub flipped: bool,
 }
 
-#[cfg(test)]
-mod test {
-    use crate::color::flow::{AntiColorLine, ColorFlow, ColorFlows, ColorLine, ColorMultiLine};
-    use crate::math_expr::EvalContext;
-    use crate::ufo::{PdgCode, UfoModel};
+pub trait SkeletonId {
+    fn level(&self) -> usize;
+}
 
-    fn generate_all(incoming: &[i64], outgoing: &[i64], model: &UfoModel, context: &EvalContext) {
-        let incoming: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
-        let outgoing: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let builder = super::Builder::new(&incoming, &outgoing, model, context).unwrap();
-        let flows = ColorFlows::new(&incoming, &outgoing, model);
-        for flow in flows.iter() {
-            println!("{:?} -> {:?}", flow, builder.get_skeleton(flow).is_some());
+pub type ExternalLevel<I> = HashMap<I, External>;
+pub type InternalLevel<I, T> = HashMap<I, Bone<I, T>>;
+
+#[derive(Clone, Debug)]
+pub struct Skeleton<I, T> {
+    pub external: ExternalLevel<I>,
+    pub internal: Vec<InternalLevel<I, T>>,
+    pub left_out: usize,
+    pub last: Bone<I, T>,
+}
+impl<I: Hash + Eq + Clone + SkeletonId, T> Skeleton<I, T> {
+    pub fn count_graphs(&self) -> u64 {
+        self.last.count_graphs(&self)
+    }
+    fn get_bone(&self, level: usize, id: &I) -> &Bone<I, T> {
+        &self.internal[level - 2][id]
+    }
+    fn remove_unused(&mut self) {
+        let mut used = Used::new(&self.last);
+        let mut iter = self.internal.iter_mut();
+        while let Some(level) = iter.next_back() {
+            used.remove_unused(level);
         }
     }
+}
 
-    fn generate_one(
-        incoming: &[i64],
-        outgoing: &[i64],
-        model: &UfoModel,
-        context: &EvalContext,
-        flow: &ColorFlow,
-        exists: bool,
-    ) {
-        let incoming: Vec<_> = incoming.iter().map(|i| PdgCode(*i)).collect();
-        let outgoing: Vec<_> = outgoing.iter().map(|i| PdgCode(*i)).collect();
-        let builder = super::Builder::new(&incoming, &outgoing, model, context).unwrap();
-        let result = builder.get_skeleton(flow);
-        if exists {
-            assert!(result.is_some())
-        } else {
-            assert!(result.is_none())
+#[derive(Clone, Debug)]
+pub struct Bone<I, T> {
+    pub pdg_code: PdgCode,
+    pub id: InternalId,
+    pub fragments: Vec<BoneFragment<I, T>>,
+}
+impl<I: Hash + Eq + Clone + SkeletonId, T> Bone<I, T> {
+    fn count_graphs(&self, skeleton: &Skeleton<I, T>) -> u64 {
+        self.fragments
+            .iter()
+            .map(|f| f.count_graphs(skeleton))
+            .sum()
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct BoneFragment<I, T> {
+    pub constituents: Vec<I>,
+    pub outgoing: usize,
+    pub content: T,
+}
+impl<I: Hash + Eq + Clone + SkeletonId, T> BoneFragment<I, T> {
+    fn count_graphs(&self, skeleton: &Skeleton<I, T>) -> u64 {
+        self.constituents
+            .iter()
+            .map(|id| match id.level() {
+                1 => 1,
+                l => skeleton.get_bone(l, id).count_graphs(skeleton),
+            })
+            .product()
+    }
+}
+
+struct Used<I> {
+    used: HashSet<I>,
+}
+impl<I: Hash + Eq + Clone> Used<I> {
+    fn new<T>(start: &Bone<I, T>) -> Used<I> {
+        let mut used = HashSet::new();
+        for f in start.fragments.iter() {
+            for c in f.constituents.iter() {
+                used.insert(c.clone());
+            }
         }
+        Used { used }
     }
 
-    #[test]
-    fn test_epem_epem_generate() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        generate_all(&[-11, 11], &[-11, 11], &model, &context);
-    }
-
-    #[test]
-    fn test_gg_bbx_generate() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        generate_all(&[21, 21], &[5, -5], &model, &context);
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxgg_generate() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        generate_all(
-            &[21, 21],
-            &[-11, 12, 13, -14, 5, -5, 21, 21],
-            &model,
-            &context,
-        );
-    }
-
-    #[test]
-    fn test_gg_epvemumvmxbbxggg_generate() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        generate_all(
-            &[21, 21],
-            &[-11, 12, 13, -14, 5, -5, 21, 21, 21],
-            &model,
-            &context,
-        );
-    }
-
-    #[test]
-    fn test_gg_bbx_f1() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        let flow = ColorFlow {
-            components: vec![
-                ColorMultiLine::Octet(ColorLine(1), AntiColorLine(1)),
-                ColorMultiLine::Octet(ColorLine(2), AntiColorLine(2)),
-                ColorMultiLine::Triplet(ColorLine(3)),
-                ColorMultiLine::AntiTriplet(AntiColorLine(3)),
-            ],
-        };
-        generate_one(&[21, 21], &[5, -5], &model, &context, &flow, true);
-    }
-
-    #[test]
-    fn test_gg_bbx_f2() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        let flow = ColorFlow {
-            components: vec![
-                ColorMultiLine::Octet(ColorLine(1), AntiColorLine(1)),
-                ColorMultiLine::Octet(ColorLine(2), AntiColorLine(3)),
-                ColorMultiLine::Triplet(ColorLine(2)),
-                ColorMultiLine::AntiTriplet(AntiColorLine(3)),
-            ],
-        };
-        generate_one(&[21, 21], &[5, -5], &model, &context, &flow, true);
-    }
-
-    #[test]
-    fn test_gg_bbx_f3() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        let flow = ColorFlow {
-            components: vec![
-                ColorMultiLine::Octet(ColorLine(1), AntiColorLine(2)),
-                ColorMultiLine::Octet(ColorLine(2), AntiColorLine(1)),
-                ColorMultiLine::Triplet(ColorLine(3)),
-                ColorMultiLine::AntiTriplet(AntiColorLine(3)),
-            ],
-        };
-        generate_one(&[21, 21], &[5, -5], &model, &context, &flow, false);
-    }
-
-    #[test]
-    fn test_gg_bbx_f4() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        let flow = ColorFlow {
-            components: vec![
-                ColorMultiLine::Octet(ColorLine(1), AntiColorLine(2)),
-                ColorMultiLine::Octet(ColorLine(2), AntiColorLine(3)),
-                ColorMultiLine::Triplet(ColorLine(1)),
-                ColorMultiLine::AntiTriplet(AntiColorLine(3)),
-            ],
-        };
-        generate_one(&[21, 21], &[5, -5], &model, &context, &flow, true);
-    }
-
-    #[test]
-    fn test_gg_bbx_f5() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        let flow = ColorFlow {
-            components: vec![
-                ColorMultiLine::Octet(ColorLine(1), AntiColorLine(3)),
-                ColorMultiLine::Octet(ColorLine(2), AntiColorLine(1)),
-                ColorMultiLine::Triplet(ColorLine(2)),
-                ColorMultiLine::AntiTriplet(AntiColorLine(3)),
-            ],
-        };
-        generate_one(&[21, 21], &[5, -5], &model, &context, &flow, true);
-    }
-
-    #[test]
-    fn test_gg_bbx_f6() {
-        let model = UfoModel::load("tests/models_json/sm_mg5").unwrap();
-        let context = EvalContext::from_model(&model).unwrap();
-        let flow = ColorFlow {
-            components: vec![
-                ColorMultiLine::Octet(ColorLine(1), AntiColorLine(3)),
-                ColorMultiLine::Octet(ColorLine(2), AntiColorLine(2)),
-                ColorMultiLine::Triplet(ColorLine(1)),
-                ColorMultiLine::AntiTriplet(AntiColorLine(3)),
-            ],
-        };
-        generate_one(&[21, 21], &[5, -5], &model, &context, &flow, true);
+    fn remove_unused<T>(&mut self, level: &mut HashMap<I, Bone<I, T>>) {
+        level.retain(|i, v| {
+            if !self.used.contains(i) {
+                return false;
+            }
+            for f in v.fragments.iter() {
+                self.used.extend(f.constituents.iter().cloned());
+            }
+            true
+        });
     }
 }
